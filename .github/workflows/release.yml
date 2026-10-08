@@ -1,0 +1,59 @@
+name: Publicar versão
+
+# Rode manualmente em Actions → "Publicar versão" → Run workflow.
+# Antes: aumente "version" em src-tauri/tauri.conf.json, package.json e src-tauri/Cargo.toml.
+# Precisa dos secrets TAURI_SIGNING_PRIVATE_KEY e TAURI_SIGNING_PRIVATE_KEY_PASSWORD
+# (conteúdo de keys/csboost-updater.key e keys/senha.txt).
+on:
+  workflow_dispatch:
+    inputs:
+      notes:
+        description: "O que mudou nesta versão (aparece no aviso de atualização e na página da release)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - run: npm ci
+      - name: Gerar instalador assinado
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: npm run tauri build -- --bundles nsis
+      - name: Gerar latest.json
+        shell: bash
+        env:
+          NOTES: ${{ inputs.notes }}
+        run: node scripts/make-latest-json.mjs src-tauri/target/release/bundle/nsis "$NOTES"
+      - name: Publicar release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NOTES: ${{ inputs.notes }}
+        run: |
+          V=$(node -p "require('./src-tauri/tauri.conf.json').version")
+          EXE=$(ls release/*_x64-setup.exe)
+          SHA=$(sha256sum "$EXE" | cut -d' ' -f1)
+          {
+            echo "$NOTES"
+            echo
+            echo "**Download:** \`$(basename "$EXE")\` abaixo. Windows 10/11 64 bits."
+            echo
+            echo "**SHA256 do instalador:** \`$SHA\`"
+            echo
+            echo "Se o Windows mostrar \"O Windows protegeu o computador\", clique em *Mais informações → Executar assim mesmo* (o instalador ainda não tem certificado de assinatura)."
+          } > notes.md
+          gh release create "v$V" release/* --title "CSBoost $V" --notes-file notes.md

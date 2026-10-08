@@ -1,0 +1,41 @@
+# CSBoost — regras do projeto
+
+## REGRA Nº 1 (prioritária, acima de qualquer outra): nunca causar VAC ban
+
+Nenhum recurso, ajuste ou atalho vale o risco de um usuário levar VAC ban.
+Na dúvida, o recurso NÃO entra.
+
+O CSBoost só pode mexer em:
+- configurações do **Windows** (registro, plano de energia, monitor, ponto de restauração);
+- arquivos de **configuração do usuário** do CS2 (`game/csgo/cfg/*.cfg`, opções de inicialização).
+
+O CSBoost **nunca**:
+- abre handle, lê ou escreve memória, injeta DLL/thread ou faz hook no `cs2.exe` (nem em nenhum outro processo);
+- desenha overlay dentro do jogo;
+- altera binários, VPKs ou qualquer arquivo do jogo que não seja `.cfg` do usuário;
+- sugere ou grava `-allow_third_party_software` (desliga o Trusted Mode);
+- liga recursos de driver que atuam dentro do processo do jogo sem confirmação pública de compatibilidade com o VAC (lembrar do AMD Anti-Lag+ em 2023).
+
+### Como isso é garantido no código
+`src-tauri/build.rs` tem o **VAC guard**: a compilação falha se aparecer
+`OpenProcess`, `ReadProcessMemory`, `WriteProcessMemory`, `CreateRemoteThread`,
+`SetWindowsHookEx` e afins no Rust, crates de injeção no `Cargo.toml`,
+launch options com `-allow_third_party_software` na interface, ou tipo de ação
+não aprovado no catálogo. Não remova itens da lista; se um recurso "precisa"
+de uma dessas APIs, o recurso está errado.
+
+### Para recursos futuros
+- **Modo Sessão / prioridade do jogo:** nada de abrir o processo. Usar o próprio Windows (ex.: `PerfOptions` do cs2.exe no registro, plano de energia) — validar antes.
+- **Benchmark (implementado na 0.3):** o CSBoost só inicia o PresentMon oficial da Intel (embutido, sem modificação) como processo filho. O PresentMon lê eventos ETW do Windows; o CSBoost não abre o processo do jogo. É a mesma base do NVIDIA FrameView e do CapFrameX.
+- **Overlay de FPS:** se existir um dia, só como janela externa — nunca dentro do jogo.
+- Qualquer recurso novo que interaja com o jogo precisa de justificativa escrita aqui antes de ser implementado.
+
+## Configs de pros (`catalog/pros.json`)
+- Só exibição e cópia. O app nunca grava a config de um pro no jogo sozinho.
+- Cada jogador tem fonte e data de conferência. Nunca preencher valor de memória: se não achou numa fonte aberta, fica `null`.
+- `launch_options` nunca contém `-allow_third_party_software` (o VAC guard bloqueia o build).
+
+## Outras regras
+- Todo ajuste precisa de `detect` + `apply` + `revert` e grava o valor anterior no journal.
+- Nada de PowerShell/CMD executado pelo app.
+- Interface em português (pt-BR), cores do logo (ver README).

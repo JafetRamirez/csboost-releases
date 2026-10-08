@@ -1,0 +1,2057 @@
+{
+ "version": 1,
+ "updated": "2026-10-08",
+ "source_note": "Dados públicos compilados do csdb.gg (e Draft5 no caso do snow). Pros mudam de config com frequência.",
+ "players": [
+  {
+   "id": "zywoo",
+   "nick": "ZywOo",
+   "name": "Mathieu Herbaut",
+   "country": "FR",
+   "country_name": "França",
+   "team": "Team Vitality",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 1.9,
+    "edpi": 760,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-nCfX7-54ue9-aC5eV-6Womf-Q6izO",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 2",
+     "cl_crosshairgap -3",
+     "cl_crosshairthickness 0.5",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "400",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Alta",
+    "Filtragem de texturas": "Anisotropic 4x",
+    "Detalhe de shaders": "Alta",
+    "Detalhe de partículas": "Alta",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Pulsar ZywOo The Chosen Mouse Gen.2",
+    "mousepad": "The Chosen Mousepad",
+    "keyboard": "ASUS ROG Falchion Ace HFX ZywOo Edition",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "SteelSeries Arctis Nova Pro"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/zywoo/"
+   ],
+   "checked": "2026-10-08",
+   "notes": "Removemos -allow_third_party_software das opções de inicialização: ela desliga o Trusted Mode do CS2."
+  },
+  {
+   "id": "s1mple",
+   "nick": "s1mple",
+   "name": "Oleksandr Kostyliev",
+   "country": "UA",
+   "country_name": "Ucrânia",
+   "team": "BC.Game",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 3.09,
+    "edpi": 1236,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-Szdm6-DMpG7-tQ33i-c6YTS-o2OtQ",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "110%",
+    "Realçar contraste dos jogadores": "Desativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "Sem limite (0)",
+    "Anti-aliasing": "8x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Desativado",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X Superlight 2 Cyan",
+    "mousepad": "SteelSeries QcK Performance Speed",
+    "keyboard": "Logitech G Pro X TKL Keyboard Black (GX Brown Tactile)",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "SteelSeries Arctis Nova Pro Wireless"
+   },
+   "launch_options": "-freq 600 -console +fps_max 999",
+   "sources": [
+    "https://csdb.gg/player/s1mple/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "donk",
+   "nick": "donk",
+   "name": "Danil Kryshkovets",
+   "country": "RU",
+   "country_name": "Rússia",
+   "team": "Team Spirit",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 1.25,
+    "edpi": 1000,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-P4yuH-FPFL8-2xD9G-n4qUn-QT43L",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1.5",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "87%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "600",
+    "Anti-aliasing": "8x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Desativado",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "ZOWIE x donk Mouse (Unreleased)",
+    "mousepad": "SteelSeries QcK Large Black",
+    "keyboard": "Wooting 80HE Frost",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "HyperX Cloud II"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/donk/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "m0nesy",
+   "nick": "m0NESY",
+   "name": null,
+   "country": "RU",
+   "country_name": "Rússia",
+   "team": "Falcons Esports",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 2.3,
+    "edpi": 920,
+    "zoom_sens": 1,
+    "polling_hz": 2000
+   },
+   "crosshair": {
+    "code": "CSGO-kNweN-Y49Xt-wFjGv-CeNoB-JG8nM",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "999",
+    "Anti-aliasing": "8x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Desativado",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X Superlight 2 White",
+    "mousepad": "SteelSeries QcK Heavy",
+    "keyboard": "Logitech G Pro X2 RAPID White (Unreleased)",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "Logitech G PRO X 2 Headset Black"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/m0nesy/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "niko",
+   "nick": "NiKo",
+   "name": null,
+   "country": "BA",
+   "country_name": "Bósnia",
+   "team": "Falcons Esports",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 0.815,
+    "edpi": 652,
+    "zoom_sens": 0.9,
+    "polling_hz": 2000
+   },
+   "crosshair": {
+    "code": "CSGO-p6EjX-NnfrY-ea7EX-evBaL-HOkTL",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 0",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 2",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Desativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "400",
+    "Anti-aliasing": "8x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Trilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Desativado",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Razer DeathAdder V4 Pro NiKo Edition",
+    "mousepad": "Artisan Ninja FX Zero Soft Black",
+    "keyboard": "Razer Huntsman V3 Pro TKL 8KHz NiKo Edition",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "Razer BlackShark V3 Pro NiKo Edition"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/niko/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "ropz",
+   "nick": "ropz",
+   "name": null,
+   "country": "EE",
+   "country_name": "Estônia",
+   "team": "Team Vitality",
+   "monitor": {
+    "resolution": "1920x1080",
+    "aspect": "16:9",
+    "scaling": "Nativo",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 1.77,
+    "edpi": 708,
+    "zoom_sens": 1,
+    "polling_hz": 2000
+   },
+   "crosshair": {
+    "code": "CSGO-qUwva-wZeXs-uK5dJ-3OHq2-WsdqA",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 2",
+     "cl_crosshairgap -3",
+     "cl_crosshairthickness 0.5",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "999",
+    "Anti-aliasing": "2x MSAA",
+    "Qualidade das sombras": "Baixa",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Razer DeathAdder V3 HyperSpeed",
+    "mousepad": "VAXEE PA Black",
+    "keyboard": "ASUS ROG Falchion Ace 75 HE White",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "SteelSeries Arctis Nova Pro Wireless"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/ropz/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "device",
+   "nick": "device",
+   "name": null,
+   "country": "DK",
+   "country_name": "Dinamarca",
+   "team": "100 Thieves",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 400
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 0.95,
+    "edpi": 760,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-3xJLZ-XJ4NS-UpanM-yfUdf-9ApEM",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "100%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "960",
+    "Anti-aliasing": "2x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Anisotropic 16x",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X2 SUPERSTRIKE",
+    "mousepad": "ZOWIE G-TR",
+    "keyboard": "Wooting 60HE v2 Silver",
+    "monitor": "ZOWIE XL2566X+",
+    "headset": "Razer BlackShark V3 Pro Black"
+   },
+   "launch_options": "-console +exec myconfig.cfg",
+   "sources": [
+    "https://csdb.gg/player/device/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "sh1ro",
+   "nick": "sh1ro",
+   "name": "Dmitriy Sokolov",
+   "country": "RU",
+   "country_name": "Rússia",
+   "team": "Team Spirit",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 1.04,
+    "edpi": 832,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-9Xqnn-EfrJy-eq2pc-M8Yxa-zqLDR",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "500",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Alta",
+    "Filtragem de texturas": "Anisotropic 2x",
+    "Detalhe de shaders": "Alta",
+    "Detalhe de partículas": "Alta",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X2 SUPERSTRIKE",
+    "mousepad": "SteelSeries QcK Heavy",
+    "keyboard": "Logitech G Pro X TKL RAPID White",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "HyperX Cloud II"
+   },
+   "launch_options": "-console +exec autoexec.cfg",
+   "sources": [
+    "https://csdb.gg/player/sh1ro/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "twistzz",
+   "nick": "Twistzz",
+   "name": "Russel Van Dulken",
+   "country": "CA",
+   "country_name": "Canadá",
+   "team": "FaZe Clan",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 240
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 1.7,
+    "edpi": 680,
+    "zoom_sens": 1.1,
+    "polling_hz": 2000
+   },
+   "crosshair": {
+    "code": "CSGO-Q3Syz-WOaGL-9WTqW-9N3iJ-e64RG",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -7",
+     "cl_crosshairthickness 0",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "92%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "Sem limite (0)",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Baixa",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Anisotropic 16x",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Razer Viper V4 Pro White",
+    "mousepad": "Artisan Ninja FX Zero Soft Black",
+    "keyboard": "Wooting 60HE v2 Silver",
+    "monitor": "ZOWIE XL2546K",
+    "headset": "SteelSeries Arctis Nova Pro Wireless"
+   },
+   "launch_options": "-noreflex",
+   "sources": [
+    "https://csdb.gg/player/twistzz/"
+   ],
+   "checked": "2026-10-08",
+   "notes": "Removemos -allow_third_party_software das opções de inicialização: ela desliga o Trusted Mode do CS2."
+  },
+  {
+   "id": "broky",
+   "nick": "broky",
+   "name": "Helvijs Saukants",
+   "country": "LV",
+   "country_name": "Letônia",
+   "team": "FaZe Clan",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 1.9,
+    "edpi": 760,
+    "zoom_sens": 1.2,
+    "polling_hz": 8000
+   },
+   "crosshair": {
+    "code": "CSGO-QZdPx-JyvRW-eXbKf-w4LMg-cBnTH",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 2",
+     "cl_crosshairgap -3",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "999",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Média",
+    "Filtragem de texturas": "Anisotropic 4x",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Alta",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "WLMouse x DRG Beast X Max Green",
+    "mousepad": "Freefall SV BASE Control+ v3",
+    "keyboard": "Wooting 60HE+",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "SteelSeries Arctis Nova Pro Wireless White"
+   },
+   "launch_options": "-refresh 240 +exec autoexec +fps_max 500",
+   "sources": [
+    "https://csdb.gg/player/broky/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "frozen",
+   "nick": "frozen",
+   "name": "David Čerňanský",
+   "country": "SK",
+   "country_name": "Eslováquia",
+   "team": "FaZe Clan",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 2,
+    "edpi": 800,
+    "zoom_sens": 0.8,
+    "polling_hz": 4000
+   },
+   "crosshair": {
+    "code": "CSGO-fhT35-p4je7-fDqhM-U4xpR-TDhnL",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "112%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "Sem limite (0)",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Média",
+    "Filtragem de texturas": "Anisotropic 4x",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Razer DeathAdder V4 Pro Black",
+    "mousepad": "Odin Gaming Andromeda Pro",
+    "keyboard": "Corsair MAKR Pro 75",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "HyperX Cloud Alpha Wireless"
+   },
+   "launch_options": "-freq 360 +rate 786432 +fps_max 500",
+   "sources": [
+    "https://csdb.gg/player/frozen/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "jl",
+   "nick": "jL",
+   "name": "Justinas Lekavicius",
+   "country": "LT",
+   "country_name": "Lituânia",
+   "team": "Team Vitality",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 540
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 1,
+    "edpi": 800,
+    "zoom_sens": 1,
+    "polling_hz": 4000
+   },
+   "crosshair": {
+    "code": "CSGO-uQQ9c-zFs2R-EKaAL-7h48e-QMXoN",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1.4",
+     "cl_crosshairgap -2.7",
+     "cl_crosshairthickness 0.4",
+     "cl_crosshairdot 1",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 2",
+     "viewmodel_offset_z -2"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Desativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "503",
+    "Anti-aliasing": "2x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Média",
+    "Filtragem de texturas": "Anisotropic 4x",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X2 SUPERSTRIKE",
+    "mousepad": "ESPTIGER Pioneer Tang Dao Pink",
+    "keyboard": "Razer Huntsman V3 Pro TKL White",
+    "monitor": "ASUS ROG Swift PG27AQWP-W",
+    "headset": "Logitech G PRO X 2 Headset Magenta"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/jl/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "b1t",
+   "nick": "b1t",
+   "name": "Valerii Vakhovskyi",
+   "country": "UA",
+   "country_name": "Ucrânia",
+   "team": "Natus Vincere",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 0.825,
+    "edpi": 660,
+    "zoom_sens": 1,
+    "polling_hz": 2000
+   },
+   "crosshair": {
+    "code": "CSGO-TC3Vf-rbTcv-xm7zM-bRuiY-8Bu8O",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "400",
+    "Anti-aliasing": "8x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Alta",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X Superlight 2 Cyan",
+    "mousepad": "ZOWIE G-TR",
+    "keyboard": "Logitech G Pro X TKL Keyboard Black",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "Logitech G PRO X 2 Headset Magenta"
+   },
+   "launch_options": "+fps_max 500 -freq 360 -console -rate 786432",
+   "sources": [
+    "https://csdb.gg/player/b1t/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "xantares",
+   "nick": "XANTARES",
+   "name": "İsmailcan Dörtkardeş",
+   "country": "TR",
+   "country_name": "Turquia",
+   "team": "Aurora",
+   "monitor": {
+    "resolution": "1024x768",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 540
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 2.3,
+    "edpi": 920,
+    "zoom_sens": 1.1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-xbpe2-E24RJ-YXNuO-pQvt8-ppNAK",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 3",
+     "cl_crosshairgap 0",
+     "cl_crosshairthickness 0.5",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 60",
+     "viewmodel_offset_x 1",
+     "viewmodel_offset_y 1",
+     "viewmodel_offset_z -1"
+    ]
+   },
+   "video": {
+    "Brilho": "100%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "600",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Baixa",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Anisotropic 4x",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Desativado",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "ZOWIE FK1-C",
+    "mousepad": "Logitech G640 Original",
+    "keyboard": "Corsair K70 RGB TKL",
+    "monitor": "ZOWIE XL2586X",
+    "headset": "HyperX Cloud III Wireless"
+   },
+   "launch_options": "-freq 360 -console",
+   "sources": [
+    "https://csdb.gg/player/xantares/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "elige",
+   "nick": "EliGE",
+   "name": "Jonathan Jablonowski",
+   "country": "US",
+   "country_name": "Estados Unidos",
+   "team": "Team Liquid",
+   "monitor": {
+    "resolution": "1680x1050",
+    "aspect": "16:10",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 1600,
+    "sens": 0.6,
+    "edpi": 960,
+    "zoom_sens": 0.8,
+    "polling_hz": 2000
+   },
+   "crosshair": {
+    "code": "CSGO-KDCtE-2sdBV-tJ2Lq-GaEOs-vYWjM",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 2.5",
+     "cl_crosshairgap -8",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 1"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 1",
+     "viewmodel_offset_y 2",
+     "viewmodel_offset_z -1"
+    ]
+   },
+   "video": {
+    "Brilho": "97%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "999",
+    "Anti-aliasing": "2x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X2 SUPERSTRIKE",
+    "mousepad": "TENTA-X The Last Stand v2",
+    "keyboard": "Wooting 80HE Black",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "HyperX Cloud II Wireless"
+   },
+   "launch_options": "+fps_max 999 +rate 786432 -nojoy",
+   "sources": [
+    "https://csdb.gg/player/elige/"
+   ],
+   "checked": "2026-10-08",
+   "notes": "Removemos -allow_third_party_software das opções de inicialização: ela desliga o Trusted Mode do CS2."
+  },
+  {
+   "id": "hunter",
+   "nick": "huNter-",
+   "name": "Nemanja Kovač",
+   "country": "BA",
+   "country_name": "Bósnia",
+   "team": "G2 Esports",
+   "monitor": {
+    "resolution": "1350x1080",
+    "aspect": "5:4",
+    "scaling": "Esticado",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 1.25,
+    "edpi": 1000,
+    "zoom_sens": 1,
+    "polling_hz": 4000
+   },
+   "crosshair": {
+    "code": "CSGO-UZZrY-2yHCw-8URMu-dHkb6-5pZQM",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "130%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "Anti-aliasing": "8x MSAA",
+    "Qualidade das sombras": "Média",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Anisotropic 16x",
+    "Detalhe de shaders": "Baixa"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X2 SUPERSTRIKE",
+    "mousepad": "Artisan Ninja FX Zero Soft Black",
+    "keyboard": "Wooting 60HE v2 Silver",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "Logitech G PRO X 2 Headset White"
+   },
+   "launch_options": "-freq 360 -console",
+   "sources": [
+    "https://csdb.gg/player/hunter/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "spinx",
+   "nick": "Spinx",
+   "name": "Lotan Giladi",
+   "country": "IL",
+   "country_name": "Israel",
+   "team": "MOUZ",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 900,
+    "sens": 1.1,
+    "edpi": 990,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-jnwN6-L5Z8y-Rmym4-hpi79-w4GSQ",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 0.8",
+     "cl_crosshairgap -4.1",
+     "cl_crosshairthickness 1.2",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "500",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Muito alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Anisotropic 4x",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Desativado",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Razer Deathadder V3 Pro White",
+    "mousepad": "Razer Gigantus V2 Dragon Lore Edition",
+    "keyboard": "Razer Prototype Keyboard (Unreleased)",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "Razer BlackShark V3 Pro White"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/spinx/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "apex",
+   "nick": "apEX",
+   "name": "Dan Madesclaire",
+   "country": "FR",
+   "country_name": "França",
+   "team": "Team Vitality",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 1.91,
+    "edpi": 764,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-b2QRn-F4vKp-w6UTh-A9MeJ-cXj3L",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 2.5",
+     "cl_crosshairgap -3",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 60",
+     "viewmodel_offset_x 2",
+     "viewmodel_offset_y 2",
+     "viewmodel_offset_z -2"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "400",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Alta",
+    "Filtragem de texturas": "Anisotropic 2x",
+    "Detalhe de shaders": "Alta",
+    "Detalhe de partículas": "Alta",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "ZOWIE EC2-DW Black",
+    "mousepad": "ZOWIE G-TR",
+    "keyboard": "ASUS ROG Falchion Ace HFX Black",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "ASUS ROG Delta II"
+   },
+   "launch_options": "-console -refresh 360",
+   "sources": [
+    "https://csdb.gg/player/apex/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "karrigan",
+   "nick": "karrigan",
+   "name": "Finn Andersen",
+   "country": "DK",
+   "country_name": "Dinamarca",
+   "team": "Falcons Esports",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 0.9,
+    "edpi": 720,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-7er9p-dWfdr-MsBpm-FxyCU-8Bu8O",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 3",
+     "cl_crosshairgap -3",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "Sem limite (0)",
+    "Anti-aliasing": "8x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Anisotropic 8x",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Razer DeathAdder V3 HyperSpeed",
+    "mousepad": "SteelSeries QcK Heavy",
+    "keyboard": "Wooting 80HE Frost",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "SteelSeries Arctis Nova Pro Wireless White"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/karrigan/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "fallen",
+   "nick": "FalleN",
+   "name": "Gabriel Toledo",
+   "country": "BR",
+   "country_name": "Brasil",
+   "team": "FURIA",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 240
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 2,
+    "edpi": 800,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-ssxCh-Y9LFi-B9amu-NWkZo-ObaAB",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 2",
+     "cl_crosshairgap -6",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 60",
+     "viewmodel_offset_x 1",
+     "viewmodel_offset_y 1",
+     "viewmodel_offset_z -1"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "400",
+    "Anti-aliasing": "CMAA2",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Trilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Fallen Gear Lobo Wireless",
+    "mousepad": "Fallen Gear Invoker",
+    "keyboard": "Fallen Gear Pink Keyboard (Unreleased)",
+    "monitor": "ZOWIE XL2546K",
+    "headset": "Fallen Gear Morcego Pro Wireless Black"
+   },
+   "launch_options": "-refresh 360 -w 1280 -h 960",
+   "sources": [
+    "https://csdb.gg/player/fallen/"
+   ],
+   "checked": "2026-10-08",
+   "notes": "Removemos -allow_third_party_software das opções de inicialização: ela desliga o Trusted Mode do CS2."
+  },
+  {
+   "id": "kscerato",
+   "nick": "KSCERATO",
+   "name": "Kaike Cerato",
+   "country": "BR",
+   "country_name": "Brasil",
+   "team": "FURIA",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 1.45,
+    "edpi": 1160,
+    "zoom_sens": 1,
+    "polling_hz": 4000
+   },
+   "crosshair": {
+    "code": "CSGO-4GcWT-LneR7-JO42z-8DjaL-PiKPJ",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 0.3",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 0.9",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "97%",
+    "Realçar contraste dos jogadores": "Desativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "Sem limite (0)",
+    "Anti-aliasing": "8x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Trilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Desativado",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X2 SUPERSTRIKE",
+    "mousepad": "Logitech G740",
+    "keyboard": "Logitech G Pro X TKL RAPID Black",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "Logitech G522 Black"
+   },
+   "launch_options": "-console +clientport 27022 -noaafonts -nojoy",
+   "sources": [
+    "https://csdb.gg/player/kscerato/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "yuurih",
+   "nick": "yuurih",
+   "name": "Yuri Santos",
+   "country": "BR",
+   "country_name": "Brasil",
+   "team": "FURIA",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 1.25,
+    "edpi": 1000,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-WEmz9-sFyRD-hGZOu-CqvJF-nDFFN",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 0.8",
+     "cl_crosshairgap -4.1",
+     "cl_crosshairthickness 1.2",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "Sem limite (0)",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Anisotropic 4x",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Desativado",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Razer Viper V4 Pro Black",
+    "mousepad": "SteelSeries QcK Heavy",
+    "keyboard": "Logitech G Pro X TKL RAPID Black",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "Logitech G PRO X 2 Headset Magenta"
+   },
+   "launch_options": "-console -freq 360 -high +rate 786432 +fps_max 0",
+   "sources": [
+    "https://csdb.gg/player/yuurih/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "coldzera",
+   "nick": "coldzera",
+   "name": "Marcelo David",
+   "country": "BR",
+   "country_name": "Brasil",
+   "team": null,
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 1.1,
+    "edpi": 880,
+    "zoom_sens": 1,
+    "polling_hz": 2000
+   },
+   "crosshair": {
+    "code": "CSGO-XPLSk-MtFDE-zRMQ9-4BRQd-97DRE",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 2",
+     "cl_crosshairgap -3",
+     "cl_crosshairthickness 0",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 1"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 60",
+     "viewmodel_offset_x 1",
+     "viewmodel_offset_y 1",
+     "viewmodel_offset_z -1"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "Sem limite (0)",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Alta",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X2 SUPERSTRIKE",
+    "mousepad": "Logitech G740",
+    "keyboard": "Logitech G Pro X TKL Keyboard Black",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "Logitech G PRO X 2 Headset White"
+   },
+   "launch_options": "-usenoforcedmparms -w 1280 -h 1024 -refresh 240 -high",
+   "sources": [
+    "https://csdb.gg/player/coldzera/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "biguzera",
+   "nick": "biguzera",
+   "name": "Rodrigo Bittencourt",
+   "country": "BR",
+   "country_name": "Brasil",
+   "team": "paiN Gaming",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 1.75,
+    "edpi": 700,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-uxEuB-NXkZf-otW7M-e7c2n-7JXoN",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1.5",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 0",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 60",
+     "viewmodel_offset_x -1.5",
+     "viewmodel_offset_y 1",
+     "viewmodel_offset_z -1"
+    ]
+   },
+   "video": {
+    "Brilho": "130%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "Anti-aliasing": "Nenhum",
+    "Qualidade das sombras": "Baixa",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa"
+   },
+   "gear": {
+    "mouse": "ZOWIE EC1-DW Grey (Unreleased)",
+    "mousepad": "Zowie Mousepad (Unreleased)",
+    "keyboard": "Wooting 80HE Ghost",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "JBL Quantum 400"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/biguzera/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "snow",
+   "nick": "snow",
+   "name": "João Vinicius",
+   "country": "BR",
+   "country_name": "Brasil",
+   "team": "paiN Gaming",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 0.8,
+    "edpi": 640,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-wAD3c-ykt5L-zvZ98-vBisR-6sWPA",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshaircolor 4",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado + Boost",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Desativado",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X2 SUPERSTRIKE",
+    "mousepad": "BanKs Collection Heavy Claw by ESPTIGER",
+    "keyboard": "Wooting 60HE v2 Silver",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "JBL Quantum 400"
+   },
+   "launch_options": "-freq 240 -language english -nojoy",
+   "sources": [
+    "https://csdb.gg/player/snow/",
+    "https://draft5.gg/noticia/config-dos-pro-joao-snow-vinicius"
+   ],
+   "checked": "2026-10-08",
+   "notes": "Código da mira e comandos do Draft5; o csdb.gg lista outro código (CSGO-2vwJ8-pBEPJ-RfnkZ-qEDVv-JTDND). Removemos -allow_third_party_software das opções de inicialização: ela desliga o Trusted Mode do CS2."
+  },
+  {
+   "id": "skullz",
+   "nick": "skullz",
+   "name": "Felipe Medeiros",
+   "country": "BR",
+   "country_name": "Brasil",
+   "team": "Imperial Esports",
+   "monitor": {
+    "resolution": "1440x1080",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 2,
+    "edpi": 800,
+    "zoom_sens": 1,
+    "polling_hz": 4000
+   },
+   "crosshair": {
+    "code": "CSGO-ySLmr-MRRob-xAdOd-Ekkkf-JkA6Q",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 2",
+     "cl_crosshairgap -3",
+     "cl_crosshairthickness 0",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Ativado",
+    "FPS máximo": "999",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Alta",
+    "Filtragem de texturas": "Anisotropic 4x",
+    "Detalhe de shaders": "Alta",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "ZOWIE U2-DW Black",
+    "mousepad": "VAXEE PD151",
+    "keyboard": "Wooting 60HE v2 Black (Split)",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "Fallen Gear Morcego Pro Wireless White"
+   },
+   "launch_options": "+cl_interp_ratio 1 -console +fps_max 999",
+   "sources": [
+    "https://csdb.gg/player/skullz/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "yekindar",
+   "nick": "YEKINDAR",
+   "name": "Mareks Gaļinskis",
+   "country": "LV",
+   "country_name": "Letônia",
+   "team": "FURIA",
+   "monitor": {
+    "resolution": "1680x1050",
+    "aspect": "16:10",
+    "scaling": "Nativo",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 1.2,
+    "edpi": 960,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-Kphz4-bsToN-r23OC-htXdD-94GSQ",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 65",
+     "viewmodel_offset_x -0.5",
+     "viewmodel_offset_y 1",
+     "viewmodel_offset_z -2"
+    ]
+   },
+   "video": {
+    "Brilho": "73%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "999",
+    "Anti-aliasing": "Nenhum",
+    "Qualidade das sombras": "Baixa",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa",
+    "Detalhe de partículas": "Baixa",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "ZOWIE EC2-DW Black",
+    "mousepad": "ZOWIE G-SR III",
+    "keyboard": "Wooting 80HE Ghost",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "HyperX Cloud II"
+   },
+   "launch_options": "-console -noreflex +autoexec",
+   "sources": [
+    "https://csdb.gg/player/yekindar/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "molodoy",
+   "nick": "molodoy",
+   "name": "Danil Golubenko",
+   "country": "KZ",
+   "country_name": "Cazaquistão",
+   "team": "FURIA",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 600
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 1.9,
+    "edpi": 760,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-xmLOE-wBmUZ-tbyb8-ppBwu-ctZQM",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -3",
+     "cl_crosshairthickness 0.5",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "70%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "NVIDIA Reflex": "Desativado",
+    "FPS máximo": "999",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Alta",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Alta",
+    "Filtragem de texturas": "Anisotropic 2x",
+    "Detalhe de shaders": "Alta",
+    "Detalhe de partículas": "Alta",
+    "Oclusão de ambiente": "Média",
+    "FidelityFX Super Resolution": "Desativado (qualidade máxima)"
+   },
+   "gear": {
+    "mouse": "ZOWIE EC2-DW Black",
+    "mousepad": "ZOWIE G-SR-SE Orange",
+    "keyboard": "Logitech G Pro X TKL RAPID White",
+    "monitor": "ZOWIE XL2586X+",
+    "headset": "Logitech G PRO X 2 Headset Magenta"
+   },
+   "launch_options": null,
+   "sources": [
+    "https://csdb.gg/player/molodoy/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "electronic",
+   "nick": "electroNic",
+   "name": "Denis Sharipov",
+   "country": "RU",
+   "country_name": "Rússia",
+   "team": "BC.Game",
+   "monitor": {
+    "resolution": "1280x1024",
+    "aspect": "5:4",
+    "scaling": "Barras pretas",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 400,
+    "sens": 2.2,
+    "edpi": 880,
+    "zoom_sens": 1.05,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-qmrUU-9spfO-NYYvJ-K3BGE-KCR7B",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 3",
+     "cl_crosshairgap -3",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "Anti-aliasing": "Nenhum",
+    "Qualidade das sombras": "Alta",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Bilinear",
+    "Detalhe de shaders": "Baixa"
+   },
+   "gear": {
+    "mouse": "Pulsar Xlite V4 Es Medium",
+    "mousepad": "SteelSeries QcK Performance Speed",
+    "keyboard": "Logitech G Pro X TKL Keyboard Black",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "HyperX Cloud II Pink"
+   },
+   "launch_options": "-console -refresh 360 +rate 786432 -language en",
+   "sources": [
+    "https://csdb.gg/player/electronic/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  },
+  {
+   "id": "magisk",
+   "nick": "Magisk",
+   "name": "Emil Reif",
+   "country": "DK",
+   "country_name": "Dinamarca",
+   "team": "BC.Game",
+   "monitor": {
+    "resolution": "1280x960",
+    "aspect": "4:3",
+    "scaling": "Esticado",
+    "hz": 360
+   },
+   "mouse": {
+    "dpi": 800,
+    "sens": 1,
+    "edpi": 800,
+    "zoom_sens": 1,
+    "polling_hz": 1000
+   },
+   "crosshair": {
+    "code": "CSGO-XLKqR-tTwqy-sOSyf-mnf6j-PU9vO",
+    "commands": [
+     "cl_crosshairstyle 4",
+     "cl_crosshairsize 1",
+     "cl_crosshairgap -4",
+     "cl_crosshairthickness 1",
+     "cl_crosshairdot 0",
+     "cl_crosshair_drawoutline 0"
+    ]
+   },
+   "viewmodel": {
+    "commands": [
+     "viewmodel_fov 68",
+     "viewmodel_offset_x 2.5",
+     "viewmodel_offset_y 0",
+     "viewmodel_offset_z -1.5"
+    ]
+   },
+   "video": {
+    "Brilho": "93%",
+    "Realçar contraste dos jogadores": "Ativado",
+    "V-Sync": "Desativado",
+    "FPS máximo": "Sem limite (0)",
+    "Anti-aliasing": "4x MSAA",
+    "Qualidade das sombras": "Média",
+    "Sombras dinâmicas": "Todas",
+    "Detalhe de texturas": "Baixa",
+    "Filtragem de texturas": "Trilinear",
+    "Detalhe de shaders": "Baixa"
+   },
+   "gear": {
+    "mouse": "Logitech G Pro X Superlight 2 Magenta",
+    "mousepad": "Artisan Type-99 XSoft Black",
+    "keyboard": "Logitech G Pro X TKL RAPID White",
+    "monitor": "ZOWIE XL2566K",
+    "headset": "HyperX Cloud II"
+   },
+   "launch_options": "-console -high -freq 360",
+   "sources": [
+    "https://csdb.gg/player/magisk/"
+   ],
+   "checked": "2026-10-08",
+   "notes": null
+  }
+ ]
+}

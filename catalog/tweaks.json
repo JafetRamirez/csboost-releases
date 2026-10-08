@@ -1,0 +1,385 @@
+{
+  "version": 1,
+  "tweaks": [
+    {
+      "id": "power.high_performance",
+      "category": "energia",
+      "title": "Plano de energia de alto desempenho",
+      "description": "Troca o plano Equilibrado/Economia pelo Alto desempenho, que mantém o processador em clock alto e evita quedas de FPS por economia de energia. Em notebook, use só na tomada.",
+      "risk": "safe",
+      "evidence": "proven",
+      "requires_reboot": false,
+      "laptop_warning": true,
+      "how_to_check": "Painel de Controle › Hardware e Sons › Opções de Energia — o plano marcado é o ativo.",
+      "presets": [
+        "seguro",
+        "competitivo",
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "power_plan",
+          "plan": "high_performance"
+        }
+      ]
+    },
+    {
+      "id": "cs2.gpu_high_performance",
+      "category": "graficos",
+      "title": "CS2 sempre na placa de vídeo dedicada",
+      "description": "Diz ao Windows para rodar o cs2.exe na GPU de alto desempenho. Essencial em notebooks com vídeo integrado + dedicado, onde o jogo às vezes abre na GPU fraca.",
+      "risk": "safe",
+      "evidence": "proven",
+      "requires_reboot": false,
+      "how_to_check": "Configurações › Sistema › Tela › Elementos gráficos — o cs2.exe aparece com 'Alto desempenho'.",
+      "presets": [
+        "seguro",
+        "competitivo",
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "cs2_gpu_preference"
+        }
+      ]
+    },
+    {
+      "id": "gamedvr.disable",
+      "category": "graficos",
+      "title": "Desativar gravação em segundo plano",
+      "description": "O Xbox Game Bar pode ficar gravando os últimos minutos de jogo o tempo todo, gastando GPU e disco. Desliga a captura automática (você ainda pode gravar manualmente).",
+      "risk": "safe",
+      "evidence": "proven",
+      "requires_reboot": false,
+      "how_to_check": "Configurações › Jogos › Capturas — 'Gravar o que aconteceu' fica desligado.",
+      "presets": [
+        "seguro",
+        "competitivo",
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "System\\GameConfigStore",
+          "name": "GameDVR_Enabled",
+          "value": 0
+        },
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+          "name": "AppCaptureEnabled",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "gamemode.enable",
+      "category": "graficos",
+      "title": "Ativar o Modo de Jogo do Windows",
+      "description": "Faz o Windows priorizar o jogo aberto e segurar atualizações e tarefas de manutenção durante a partida.",
+      "risk": "safe",
+      "evidence": "situational",
+      "requires_reboot": false,
+      "how_to_check": "Configurações › Jogos › Modo de Jogo — fica ligado.",
+      "presets": [
+        "seguro",
+        "competitivo",
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Software\\Microsoft\\GameBar",
+          "name": "AutoGameModeEnabled",
+          "value": 1
+        },
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Software\\Microsoft\\GameBar",
+          "name": "AllowAutoGameMode",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "mouse.disable_acceleration",
+      "category": "entrada",
+      "title": "Desligar aceleração do mouse",
+      "description": "Desativa o 'Aumentar precisão do ponteiro'. O CS2 usa entrada direta, mas a aceleração atrapalha a memória muscular no desktop e nos menus. Vale ao sair e entrar de novo na conta.",
+      "risk": "safe",
+      "evidence": "proven",
+      "requires_reboot": true,
+      "how_to_check": "Painel de Controle › Mouse › Opções do ponteiro — 'Aumentar precisão do ponteiro' fica desmarcado (depois de sair e entrar na conta).",
+      "presets": [
+        "seguro",
+        "competitivo",
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Control Panel\\Mouse",
+          "name": "MouseSpeed",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Control Panel\\Mouse",
+          "name": "MouseThreshold1",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Control Panel\\Mouse",
+          "name": "MouseThreshold2",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "delivery_optimization.no_p2p",
+      "category": "rede",
+      "title": "Parar de enviar atualizações para outros PCs",
+      "description": "Por padrão o Windows pode usar sua internet para mandar pedaços de atualizações para outros computadores. Desliga esse envio P2P (as atualizações continuam chegando normalmente).",
+      "risk": "safe",
+      "evidence": "situational",
+      "requires_reboot": false,
+      "how_to_check": "Configurações › Windows Update › Opções avançadas › Otimização de Entrega — aparece como gerenciado pela organização.",
+      "presets": [
+        "seguro",
+        "competitivo",
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKLM",
+          "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization",
+          "name": "DODownloadMode",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "suggestions.disable",
+      "category": "segundo_plano",
+      "title": "Desligar sugestões e apps instalados sozinhos",
+      "description": "Remove dicas, anúncios do Iniciar e a instalação silenciosa de apps sugeridos pela Microsoft.",
+      "risk": "safe",
+      "evidence": "weak",
+      "requires_reboot": false,
+      "how_to_check": "Menu Iniciar sem apps sugeridos/anúncios.",
+      "presets": [
+        "seguro",
+        "competitivo",
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "name": "SilentInstalledAppsEnabled",
+          "value": 0
+        },
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "name": "SystemPaneSuggestionsEnabled",
+          "value": 0
+        },
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "name": "SubscribedContent-338388Enabled",
+          "value": 0
+        },
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "name": "SubscribedContent-338389Enabled",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "telemetry.minimal",
+      "category": "segundo_plano",
+      "title": "Telemetria no mínimo",
+      "description": "Reduz o envio de dados de diagnóstico para a Microsoft ao nível mínimo que sua edição do Windows permite.",
+      "risk": "safe",
+      "evidence": "weak",
+      "requires_reboot": false,
+      "how_to_check": "Configurações › Privacidade › Diagnóstico e comentários — aparece como gerenciado pela organização.",
+      "presets": [
+        "competitivo",
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKLM",
+          "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+          "name": "AllowTelemetry",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "widgets.disable",
+      "category": "segundo_plano",
+      "title": "Desativar Widgets e Notícias",
+      "description": "Desliga o painel de Widgets/Notícias, que fica carregando conteúdo da internet em segundo plano.",
+      "risk": "safe",
+      "evidence": "weak",
+      "requires_reboot": false,
+      "how_to_check": "O botão de Widgets some da barra de tarefas (pode precisar sair e entrar na conta).",
+      "presets": [
+        "competitivo",
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKLM",
+          "path": "SOFTWARE\\Policies\\Microsoft\\Dsh",
+          "name": "AllowNewsAndInterests",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "visual.transparency_off",
+      "category": "segundo_plano",
+      "title": "Desligar transparência do Windows",
+      "description": "Remove o efeito de vidro da barra de tarefas e do Iniciar. Ganho pequeno, mas ajuda em PCs mais fracos.",
+      "risk": "safe",
+      "evidence": "weak",
+      "requires_reboot": false,
+      "how_to_check": "Configurações › Personalização › Cores — 'Efeitos de transparência' desligado.",
+      "presets": [
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+          "name": "EnableTransparency",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "background_apps.disable",
+      "category": "segundo_plano",
+      "title": "Bloquear apps da Store em segundo plano",
+      "description": "Impede que apps da Microsoft Store fiquem rodando escondidos quando não estão abertos.",
+      "risk": "safe",
+      "evidence": "weak",
+      "requires_reboot": false,
+      "how_to_check": "Efeito interno do Windows; confira pelo registro mostrado aqui.",
+      "presets": [
+        "pc_fraco",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKCU",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
+          "name": "GlobalUserDisabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "hags.enable",
+      "category": "graficos",
+      "title": "Agendamento de GPU acelerado por hardware",
+      "description": "Deixa a placa de vídeo gerenciar a própria memória. Em algumas máquinas melhora o 1% low, em outras piora — teste com o benchmark antes e depois. Requer reiniciar.",
+      "risk": "moderate",
+      "evidence": "situational",
+      "requires_reboot": true,
+      "how_to_check": "Configurações › Sistema › Tela › Elementos gráficos › Configurações padrão — 'Agendamento de GPU acelerado por hardware' ligado (após reiniciar).",
+      "presets": [
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKLM",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+          "name": "HwSchMode",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "timer.global_requests",
+      "category": "latencia",
+      "title": "Resolução de timer global (Windows 11)",
+      "description": "Desde o Windows 10 2004 a precisão do timer passou a valer só para o processo que pede. No Windows 11 este ajuste devolve o comportamento global, o que pode estabilizar o frametime. Requer reiniciar.",
+      "risk": "moderate",
+      "evidence": "situational",
+      "requires_reboot": true,
+      "min_build": 22000,
+      "how_to_check": "Efeito interno do kernel; só vale depois de reiniciar o PC.",
+      "presets": [
+        "competitivo",
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKLM",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\kernel",
+          "name": "GlobalTimerResolutionRequests",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "mmcss.responsiveness",
+      "category": "latencia",
+      "title": "Menos CPU reservada para multimídia",
+      "description": "O Windows reserva 20% da CPU para tarefas de áudio/vídeo em segundo plano. Reduz para 10%. Efeito debatido — só para quem quer testar tudo.",
+      "risk": "moderate",
+      "evidence": "weak",
+      "requires_reboot": true,
+      "how_to_check": "Efeito interno do Windows; só vale depois de reiniciar o PC.",
+      "presets": [
+        "avancado"
+      ],
+      "actions": [
+        {
+          "type": "registry",
+          "hive": "HKLM",
+          "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+          "name": "SystemResponsiveness",
+          "value": 10
+        }
+      ]
+    }
+  ]
+}

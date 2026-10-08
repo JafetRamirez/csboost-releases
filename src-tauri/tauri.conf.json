@@ -1,0 +1,84 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "CSBoost",
+  "version": "0.3.0",
+  "identifier": "br.com.csboost.app",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "CSBoost",
+        "width": 1240,
+        "height": 780,
+        "minWidth": 1040,
+        "minHeight": 680,
+        "center": true,
+        "decorations": false,
+        "resizable": true,
+        "backgroundColor": "#101012"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' asset: data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src ipc: http://ipc.localhost",
+      "devCsp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+    "publisher": "Jafet Ramirez",
+    "copyright": "© 2026 CSBoost",
+    "category": "Utility",
+    "shortDescription": "Otimizador de Windows para CS2",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper",
+        "silent": true
+      },
+      "nsis": {
+        "installMode": "perMachine",
+        "languages": [
+          "PortugueseBR"
+        ],
+        "displayLanguageSelector": false,
+        "installerIcon": "icons/icon.ico",
+        "headerImage": "installer/header.bmp",
+        "sidebarImage": "installer/sidebar.bmp",
+        "startMenuFolder": "CSBoost",
+        "compression": "lzma",
+        "installerHooks": "installer/hooks.nsh"
+      }
+    },
+    "licenseFile": "installer/termos.txt",
+    "createUpdaterArtifacts": true,
+    "resources": {
+      "resources/presentmon/PresentMon.exe": "presentmon/PresentMon.exe",
+      "resources/presentmon/LICENSE.txt": "presentmon/LICENSE.txt"
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDBDQkQzMDk4MTU4RTdEMjIKUldRaWZZNFZtREM5RE03eDdyOUdNZCtNdExnVGViaTAzMnVJVms0TVdnb0piRnpOd2E2ZXpkSXQK",
+      "endpoints": [
+        "https://github.com/JafetRamirez/csboost-releases/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
+  }
+}

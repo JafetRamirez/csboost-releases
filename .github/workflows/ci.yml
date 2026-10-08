@@ -1,0 +1,31 @@
+name: Verificação
+
+# Compila o app num Windows de verdade a cada push: interface + núcleo Rust
+# (inclui o VAC guard do build.rs, que bloqueia o build se algo arriscado entrar).
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - run: npm ci
+      - run: npm run build
+      - name: Rust (clippy + testes)
+        working-directory: src-tauri
+        run: |
+          cargo clippy --locked -- -D warnings
+          cargo test --locked

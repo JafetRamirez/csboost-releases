@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "@fontsource/barlow/400.css";
+@import "@fontsource/barlow/500.css";
+@import "@fontsource/barlow/600.css";
+@import "@fontsource/barlow-semi-condensed/600.css";
+@import "@fontsource/barlow-semi-condensed/700.css";
+
+@font-face {
+  font-family: "CS Display";
+  src: url("./assets/fonts/cs_regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* Paleta derivada do logo: âmbar (raio), azul-marinho (metade direita), tinta (#1C1C1C). */
+@theme {
+  --color-amber: #f9ab19;
+  --color-amber-hi: #ffc24d;
+  --color-amber-lo: #c7860a;
+  --color-navy: #28397f;
+  --color-navy-hi: #5a73d8;
+  --color-ink: #1c1c1c;
+
+  --color-base: #11142a;
+  --color-panel: #181c36;
+  --color-raised: #212647;
+  --color-line: #2c3258;
+
+  --color-fg: #eef0f8;
+  --color-dim: #a3a9c9;
+  --color-faint: #6d7398;
+
+  --color-good: #47c98c;
+  --color-warn: #ff8f45;
+  --color-bad: #ff5d6c;
+
+  --font-sans: "Barlow", system-ui, sans-serif;
+  --font-cond: "Barlow Semi Condensed", "Barlow", sans-serif;
+  --font-display: "CS Display", "Barlow Semi Condensed", sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-base);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  overflow: hidden;
+}
+
+input,
+textarea {
+  user-select: text;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-amber) 40%, transparent);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* scrollbar discreta */
+.scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 10px;
+  border: 3px solid var(--color-base);
+}
+
+/* recorte diagonal inspirado no raio do logo */
+.bolt-cut {
+  clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
+}
+
+@keyframes fill-in {
+  from {
+    stroke-dashoffset: var(--len);
+  }
+}
+.gauge-arc {
+  animation: fill-in 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gauge-arc,
+  .spin {
+    animation: none;
+  }
+}
