@@ -11,6 +11,10 @@
 - ⏳ #5 Certificado de assinatura: depende da compra pelo CNPJ
 - Próximos: #7 Modo Sessão, #8 presets de vídeo, #10 perfil NVIDIA, #12 rotina de manutenção, #13 rede, #14 inglês/espanhol
 
+### Correções para o próximo update
+- **Configs de pros → conversor de sensibilidade** (`src/pages/Pros.tsx`, card "Mesma sensibilidade do … no seu mouse"): em janela estreita o card quebra. "Seu DPI" vira duas linhas, o resultado `sensitivity 1` quebra e o botão "Copiar" vaza para fora do card. Corrigir a responsividade: empilhar input e resultado quando faltar espaço, `whitespace-nowrap` no comando e botão dentro do card. (Visto em 08/10/2026, janela de ~1270 px.)
+- **Workflows do GitHub:** trocar `actions/checkout@v4` e `actions/setup-node@v4` por `@v5` no `release.yml` e no `ci.yml` (aviso de Node.js 20 descontinuado).
+
 
 > Montado em 08/10/2026 a partir de: comentários do post de lançamento no grupo de CS2 (v0.2.0), pesquisa do **Hone** (o "H0nda" citado nos comentários — hone.gg) e de outros otimizadores (Razer Cortex, Wise Game Booster, EXMTweaks, Talon).
 > **Regra nº 1 continua valendo para tudo aqui: nada pode arriscar VAC ban** (ver `CLAUDE.md`). Itens que esbarram nisso estão marcados com ⚠️ e a forma segura de fazer.
