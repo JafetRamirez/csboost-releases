@@ -109,6 +109,40 @@ Ideias boas que hoje geram custo para o usuário ou custo alto para manter. Fica
 | **Otimização de rota** (tipo ExitLag / NoPing): desviar o tráfego do jogo por uma rede própria de servidores | Exige rede de servidores no mundo todo (custo mensal alto) e driver de rede (certificado mais caro, mais alerta de antivírus). No CS2 o ganho é menor porque o jogo já usa a rede de relays da Valve (SDR); testar antes de prometer. Se um dia entrar, revisar contra a Regra nº 1 |
 | **Indicação paga de serviços de rota** (link de afiliado no diagnóstico de rede) | Leva o usuário a pagar por algo; conflita com o produto 100% gratuito |
 
+
+#### Custo real de um "redutor de ping" próprio (estimativa de 09/10/2026)
+
+**Como esses apps funcionam:** um programa no PC desvia os pacotes do jogo por um túnel até um servidor da empresa perto do servidor do jogo. O ping só cai quando a rota da empresa é melhor que a da operadora do jogador. Para isso eles pagam por rotas e operadoras de trânsito melhores, não só por servidores baratos.
+
+**1. Servidores (custo mensal fixo)**
+- O mínimo para a América do Sul são uns 4 a 6 pontos: São Paulo, Rio ou Fortaleza, Buenos Aires, Santiago, Lima e Miami.
+- Uma VPS de entrada custa US$ 12 a 30 por mês em cada ponto (1 a 2 TB de tráfego incluído). No começo isso dá **US$ 60 a 180 por mês**.
+- Isso é VPS comum, com a rota da própria hospedagem. Para ter rota realmente melhor que a da operadora, precisaria de servidor dedicado com trânsito bom ou parceria com operadoras, e aí passa de **US$ 100 a 300 por ponto por mês**.
+
+**2. Tráfego (cresce com o uso)**
+- Uma partida de CS2 usa algo como 50 a 150 MB por hora nos dois sentidos. Ainda precisamos medir isso com o PresentMon ou o Gerenciador de Tarefas.
+- O servidor de túnel paga a saída duas vezes: para a Valve e de volta para o jogador. Dá uns **0,2 GB por hora jogada**.
+- Exemplo com 1.000 jogadores ativos, 2 horas por dia: cerca de 60 mil horas por mês, ou seja, cerca de **12 TB por mês**. A US$ 0,01 por GB (Vultr), são uns **US$ 120 por mês só de banda**.
+- Com 10 mil jogadores ativos, isso vai para cerca de **US$ 1.200 por mês**, mais os servidores extras.
+- Na prática, cada jogador ativo custa algo como **US$ 0,10 a 0,30 por mês**, sem contar a equipe.
+
+**3. Custos únicos e de risco**
+- **Driver de rede no Windows** para capturar o tráfego do jogo (WinDivert ou driver WFP próprio). Um driver próprio precisa de certificado EV e assinatura da Microsoft: **uns US$ 300 a 600 por ano**. Driver também gera mais alerta de antivírus.
+- **Proteção contra DDoS e abuso:** servidor de túnel público vira alvo e pode ser usado como VPN grátis. O custo cresce junto com o uso.
+- **Suporte e monitoramento:** "meu ping piorou" vira o chamado mais comum. Uma rota ruim deixa o jogo pior que sem o app.
+
+**4. Regra nº 1:** capturar o tráfego do jogo não mexe na memória do cs2.exe. Mesmo assim, é um driver no caminho dos pacotes do jogo, então precisaria de justificativa no `CLAUDE.md` e de confirmação de que a Valve tolera o recurso (ExitLag e NoPing são usados no CS2 há anos sem ban conhecido, mas isso tem que ser conferido antes).
+
+**5. Ganho no CS2:** o CS2 já passa pela rede de relays da Valve (SDR), que tem ponto em São Paulo. Para quem joga no Brasil, em servidor do Brasil, o ganho tende a ser pequeno. Ajuda mais em jogo com servidor fora do país ou em operadora com rota ruim (comum para quem joga contra Chile e Argentina).
+
+**Resumo:**
+- Para começar, com rota de VPS comum, uns **US$ 200 a 400 por mês (R$ 1.100 a 2.200)** para cerca de 1.000 jogadores, mais uns US$ 300 a 600 por ano de certificado.
+- Para competir de verdade com ExitLag e NoPing, com rotas melhores, uns **US$ 1.000 a 3.000 por mês ou mais**.
+- Como comparação, ExitLag e NoPing cobram uns R$ 20 por mês de cada usuário justamente para pagar isso.
+- Só faz sentido com patrocínio que cubra pelo menos 12 meses desse custo, e depois de um teste A/B que prove ganho real no CS2.
+
+Fontes: preços de banda da Vultr (2 TB grátis, depois US$ 0,01/GB) em egresscost.com/vultr; faixas de VPS em São Paulo em valebyte.com; preços de ExitLag, NoPing e WTFast em tecnoblog.net/responde/exitlag-semlag-wtfast-noping-como-funcionam-os-redutores-de-ping.
+
 ---
 
 ## 4. Cuidados para não quebrar a Regra nº 1
