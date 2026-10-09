@@ -19,13 +19,17 @@ pub const PLAN_BALANCED: &str = "381b4222-f694-41f0-9685-ff5bb260df2e";
 pub const PLAN_HIGH: &str = "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c";
 pub const PLAN_ULTIMATE: &str = "e9a42b02-d5df-448d-aa00-03f14749eb61";
 
-pub fn plan_name(guid: &str) -> &'static str {
+pub fn is_known_plan(guid: &str) -> bool {
+    matches!(guid.to_ascii_lowercase().as_str(), PLAN_POWER_SAVER | PLAN_BALANCED | PLAN_HIGH | PLAN_ULTIMATE)
+}
+
+pub fn plan_name(guid: &str) -> String {
     match guid.to_ascii_lowercase().as_str() {
-        PLAN_POWER_SAVER => "Economia de energia",
-        PLAN_BALANCED => "Equilibrado",
-        PLAN_HIGH => "Alto desempenho",
-        PLAN_ULTIMATE => "Desempenho máximo",
-        _ => "Personalizado",
+        PLAN_POWER_SAVER => tr!("Economia de energia", "Economizador de energía", "Power saver"),
+        PLAN_BALANCED => tr!("Equilibrado", "Equilibrado", "Balanced"),
+        PLAN_HIGH => tr!("Alto desempenho", "Alto rendimiento", "High performance"),
+        PLAN_ULTIMATE => tr!("Desempenho máximo", "Máximo rendimiento", "Ultimate performance"),
+        _ => tr!("Personalizado", "Personalizado", "Custom"),
     }
 }
 

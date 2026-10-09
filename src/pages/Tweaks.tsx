@@ -5,13 +5,14 @@ import { api, errorText } from "../lib/api";
 import { categoryLabel, categoryOrder, evidenceLabel, presets, riskLabel } from "../lib/labels";
 import { useApp } from "../lib/store";
 import type { Preset, TweakView } from "../lib/types";
+import { t as tr } from "../i18n";
 
-const stateText = {
-  applied: { tone: "good" as const, text: "Ativo" },
-  partial: { tone: "warn" as const, text: "Parcial" },
-  not_applied: { tone: "faint" as const, text: "Desligado" },
-  unknown: { tone: "faint" as const, text: "Indisponível" },
-};
+const stateText = () => ({
+  applied: { tone: "good" as const, text: tr("tw.state.applied") },
+  partial: { tone: "warn" as const, text: tr("tw.state.partial") },
+  not_applied: { tone: "faint" as const, text: tr("tw.state.off") },
+  unknown: { tone: "faint" as const, text: tr("tw.state.unknown") },
+});
 
 export function Tweaks() {
   const { tweaks, reloadTweaks, rescan, notify, summarize } = useApp();
@@ -25,7 +26,7 @@ export function Tweaks() {
     return [...g.entries()].filter(([, list]) => list.length);
   }, [tweaks]);
 
-  if (!tweaks) return <Loading label="Lendo o estado das otimizações…" />;
+  if (!tweaks) return <Loading label={tr("tw.loading")} />;
 
   const selectable = (t: TweakView) => t.supported && t.state !== "applied";
   const toggle = (id: string) =>
@@ -55,8 +56,8 @@ export function Tweaks() {
   return (
     <>
       <PageHeader
-        title="Otimizações"
-        lead="Cada ajuste mostra o que faz, o risco e se o ganho é comprovado. O CSBoost lê o estado real do Windows — se outro programa já ligou algo, aparece aqui como ativo."
+        title={tr("nav.otimizacoes")}
+        lead={tr("tw.lead")}
         actions={
           managedCount > 0 && (
             <Button
@@ -65,15 +66,15 @@ export function Tweaks() {
               icon={<Undo2 size={16} />}
               onClick={() => run("all", async () => summarize(await api.revertAll(), "revertid"))}
             >
-              Reverter tudo
+              {tr("tw.revertAll")}
             </Button>
           )
         }
       />
 
       <div className="flex items-center gap-2 mb-5">
-        <span className="text-[14px] text-dim mr-1">Selecionar modo:</span>
-        {[...presets, { id: "avancado" as Preset, name: "Tudo" }].map((p) => (
+        <span className="text-[14px] text-dim mr-1">{tr("tw.pickMode")}</span>
+        {[...presets(), { id: "avancado" as Preset, name: tr("tw.all") }].map((p) => (
           <button
             key={p.id}
             onClick={() => pickPreset(p.id)}
@@ -84,7 +85,7 @@ export function Tweaks() {
         ))}
         {selected.size > 0 && (
           <button onClick={() => setSelected(new Set())} className="ml-1 text-[14px] text-faint hover:text-fg cursor-pointer">
-            Limpar seleção
+            {tr("tw.clear")}
           </button>
         )}
       </div>
@@ -92,10 +93,10 @@ export function Tweaks() {
       <div className="space-y-6 pb-24">
         {groups.map(([cat, list]) => (
           <Panel key={cat} className="overflow-hidden">
-            <h2 className="font-cond font-bold text-[18px] px-6 pt-5 pb-2">{categoryLabel[cat] ?? cat}</h2>
+            <h2 className="font-cond font-bold text-[18px] px-6 pt-5 pb-2">{categoryLabel(cat)}</h2>
             <ul>
               {list.map((t) => {
-                const st = stateText[t.state];
+                const st = stateText()[t.state];
                 const canPick = selectable(t);
                 const checked = selected.has(t.id);
                 return (
@@ -103,7 +104,7 @@ export function Tweaks() {
                     <button
                       role="checkbox"
                       aria-checked={checked || t.state === "applied"}
-                      aria-label={`Selecionar ${t.title}`}
+                      aria-label={tr("tw.selectAria", { name: t.title })}
                       disabled={!canPick}
                       onClick={() => toggle(t.id)}
                       className={`mt-0.5 size-[22px] shrink-0 rounded-md border-2 grid place-items-center transition-colors cursor-pointer disabled:cursor-default ${
@@ -120,9 +121,9 @@ export function Tweaks() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h3 className="font-cond font-bold text-[16.5px]">{t.title}</h3>
-                        <Tag tone={t.risk === "safe" ? "faint" : "warn"}>{riskLabel[t.risk]}</Tag>
-                        <Tag tone={t.evidence === "proven" ? "amber" : "faint"}>{evidenceLabel[t.evidence]}</Tag>
-                        {t.requires_reboot && <Tag>Pede reinício</Tag>}
+                        <Tag tone={t.risk === "safe" ? "faint" : "warn"}>{riskLabel(t.risk)}</Tag>
+                        <Tag tone={t.evidence === "proven" ? "amber" : "faint"}>{evidenceLabel(t.evidence)}</Tag>
+                        {t.requires_reboot && <Tag>{tr("tw.reboot")}</Tag>}
                       </div>
                       <p className="text-dim text-[14.5px] mt-1 max-w-[72ch]">{t.description}</p>
                       {t.unsupported_reason && <p className="text-[13.5px] text-warn mt-1">{t.unsupported_reason}</p>}
@@ -132,7 +133,7 @@ export function Tweaks() {
                       <span className="flex items-center gap-2 text-[14px]">
                         <Dot tone={st.tone} /> {st.text}
                       </span>
-                      {t.state === "applied" && !t.managed && <span className="text-[12.5px] text-faint text-right">já estava no sistema</span>}
+                      {t.state === "applied" && !t.managed && <span className="text-[12.5px] text-faint text-right">{tr("tw.already")}</span>}
                       {t.managed && (
                         <Button
                           variant="quiet"
@@ -141,7 +142,7 @@ export function Tweaks() {
                           icon={<RotateCcw size={14} />}
                           onClick={() => run(t.id, async () => summarize(await api.revertTweaks([t.id]), "revertid"))}
                         >
-                          Reverter
+                          {tr("tw.revert")}
                         </Button>
                       )}
                     </div>
@@ -158,7 +159,7 @@ export function Tweaks() {
           <div className="flex items-center justify-between gap-4 rounded-2xl bg-raised border border-line px-5 py-3 shadow-2xl shadow-black/50">
             <span className="text-[15px]">
               <strong className="font-cond text-amber text-[17px] num">{selected.size}</strong>{" "}
-              {selected.size === 1 ? "ajuste selecionado" : "ajustes selecionados"}
+              {selected.size === 1 ? tr("tw.selOne") : tr("tw.selMany")}
             </span>
             <Button
               variant="primary"
@@ -170,7 +171,7 @@ export function Tweaks() {
                 })
               }
             >
-              Aplicar selecionados
+              {tr("tw.applySel")}
             </Button>
           </div>
         </div>

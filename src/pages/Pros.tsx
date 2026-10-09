@@ -4,12 +4,61 @@ import data from "../../catalog/pros.json";
 import { CopyButton } from "../components/CopyButton";
 import { PageHeader, Panel } from "../components/ui";
 import { openUrl } from "../lib/api";
-import { fmtNum } from "../lib/format";
+import { fmtDate, fmtNum } from "../lib/format";
 import type { ProPlayer } from "../lib/types";
+import { locale, t, type Key } from "../i18n";
 
-const players = (data.players as unknown as ProPlayer[]).slice().sort((a, b) => a.nick.localeCompare(b.nick, "pt-BR", { sensitivity: "base" }));
+const players = (data.players as unknown as ProPlayer[]).slice().sort((a, b) => a.nick.localeCompare(b.nick, "en", { sensitivity: "base" }));
 const DEFAULT_VIEWMODEL = ["viewmodel_fov 68", "viewmodel_offset_x 2.5", "viewmodel_offset_y 0", "viewmodel_offset_z -1.5"];
-const fmtDate = (iso: string) => new Date(iso + "T12:00:00").toLocaleDateString("pt-BR");
+
+// O pros.json guarda os rótulos de vídeo em português; aqui viram chaves.
+const videoKeys: Record<string, Key> = {
+  Brilho: "pros.video.brightness",
+  "Realçar contraste dos jogadores": "pros.video.boostContrast",
+  "V-Sync": "pros.video.vsync",
+  "Anti-aliasing": "pros.video.aa",
+  "Qualidade das sombras": "pros.video.shadowQuality",
+  "Detalhe de texturas": "pros.video.textureDetail",
+  "Filtragem de texturas": "pros.video.textureFilter",
+  "Detalhe de shaders": "pros.video.shaderDetail",
+  "Sombras dinâmicas": "pros.video.dynShadows",
+  "NVIDIA Reflex": "pros.video.reflex",
+  "FPS máximo": "pros.video.fpsMax",
+  "Detalhe de partículas": "pros.video.particles",
+  "Oclusão de ambiente": "pros.video.ao",
+  "FidelityFX Super Resolution": "pros.video.fsr",
+};
+const valueKeys: Record<string, Key> = {
+  Baixa: "pros.val.low",
+  Média: "pros.val.medium",
+  Alta: "pros.val.high",
+  "Muito alta": "pros.val.veryHigh",
+  Ativado: "pros.val.on",
+  Desativado: "pros.val.off",
+  "Ativado + Boost": "pros.val.onBoost",
+  Todas: "pros.val.all",
+  Nenhum: "pros.val.none",
+  "Desativado (qualidade máxima)": "pros.val.fsrOff",
+  "Sem limite (0)": "pros.val.unlimited",
+  Esticado: "pros.val.stretched",
+  Nativo: "pros.val.native",
+  "Barras pretas": "pros.val.blackBars",
+};
+const tv = (v: string | null) => (v && valueKeys[v] ? t(valueKeys[v]) : v);
+const country = (code: string, fallback: string) => {
+  try {
+    return new Intl.DisplayNames([locale()], { type: "region" }).of(code) ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+function noteText(p: ProPlayer): string | null {
+  if (!p.notes) return null;
+  const parts: string[] = [];
+  if (p.id === "snow") parts.push(t("pros.noteSnow"));
+  if (p.notes.includes("allow_third_party_software")) parts.push(t("pros.noteTrusted"));
+  return parts.length ? parts.join(" ") : p.notes;
+}
 
 function Row({ k, v }: { k: string; v: React.ReactNode }) {
   if (v === null || v === undefined || v === "") return null;
@@ -49,10 +98,10 @@ function SensConverter({ p }: { p: ProPlayer }) {
   const sensStr = sens.toFixed(3).replace(/\.?0+$/, "");
   return (
     <div className="mt-3 rounded-lg bg-base border border-line p-3">
-      <p className="text-[14px] text-dim">Mesma sensibilidade do {p.nick} no seu mouse</p>
-      <div className="flex items-center gap-3 mt-2">
-        <label className="flex items-center gap-2 text-[14px]">
-          Seu DPI
+      <p className="text-[14px] text-dim">{t("pros.sameSens", { nick: p.nick })}</p>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-2">
+        <label className="flex items-center gap-2 text-[14px] whitespace-nowrap">
+          {t("pros.yourDpi")}
           <input
             type="number"
             min={100}
@@ -64,8 +113,8 @@ function SensConverter({ p }: { p: ProPlayer }) {
           />
         </label>
         <span className="text-[14px] text-dim">→</span>
-        <code className="text-amber text-[15px] font-semibold num select-text">sensitivity {sensStr}</code>
-        <CopyButton text={`sensitivity ${sensStr}`} className="ml-auto" />
+        <code className="text-amber text-[15px] font-semibold num select-text whitespace-nowrap">sensitivity {sensStr}</code>
+        <CopyButton text={`sensitivity ${sensStr}`} className="ml-auto shrink-0" />
       </div>
     </div>
   );
@@ -79,11 +128,11 @@ function Detail({ p }: { p: ProPlayer }) {
         <div>
           <p className="font-display text-[30px] leading-none">{p.nick}</p>
           <p className="text-dim text-[15px] mt-2">
-            {[p.name, p.team ?? "Sem time", p.country_name].filter(Boolean).join(", ")}
+            {[p.name, p.team ?? t("pros.noTeam"), country(p.country, p.country_name)].filter(Boolean).join(", ")}
           </p>
         </div>
         <p className="text-[13px] text-faint text-right">
-          Conferido em {fmtDate(p.checked)}
+          {t("pros.checked", { d: fmtDate(p.checked) })}
           <br />
           {p.sources.map((s) => (
             <button key={s} onClick={() => openUrl(s)} className="inline-flex items-center gap-1 hover:text-fg cursor-pointer">
@@ -93,18 +142,18 @@ function Detail({ p }: { p: ProPlayer }) {
         </p>
       </div>
 
-      <Block title="Mira" action={p.crosshair.code && <CopyButton text={p.crosshair.code} label="Copiar código" />}>
+      <Block title={t("pros.crosshair")} action={p.crosshair.code && <CopyButton text={p.crosshair.code} label={t("pros.copyCode")} />}>
         {p.crosshair.code && (
           <code className="block text-[18px] font-semibold text-amber tracking-wide select-text">{p.crosshair.code}</code>
         )}
         <p className="text-[13.5px] text-dim mt-1.5">
-          No CS2: Configurações › Jogo › Mira › Compartilhar ou importar › cole o código. O código traz a mira completa, com cor e opacidade.
+          {t("pros.crosshairHow")}
         </p>
         {p.crosshair.commands.length > 0 && (
           <div className="mt-3">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[13.5px] text-faint">Ou pelo console (formato básico, sem a cor)</span>
-              <CopyButton text={p.crosshair.commands.join("; ")} label="Copiar comandos" />
+              <span className="text-[13.5px] text-faint">{t("pros.console")}</span>
+              <CopyButton text={p.crosshair.commands.join("; ")} label={t("pros.copyCmds")} />
             </div>
             <Commands lines={p.crosshair.commands} />
           </div>
@@ -112,61 +161,61 @@ function Detail({ p }: { p: ProPlayer }) {
       </Block>
 
       <div className="grid grid-cols-2 gap-4">
-        <Block title="Mouse e sensibilidade">
+        <Block title={t("pros.mouse")}>
           <dl>
             <Row k="DPI" v={p.mouse.dpi} />
-            <Row k="Sensibilidade" v={p.mouse.sens != null ? fmtNum(p.mouse.sens, String(p.mouse.sens).split(".")[1]?.length ?? 0) : null} />
+            <Row k={t("pros.sens")} v={p.mouse.sens != null ? fmtNum(p.mouse.sens, String(p.mouse.sens).split(".")[1]?.length ?? 0) : null} />
             <Row k="eDPI" v={p.mouse.edpi} />
-            <Row k="Sensibilidade com zoom" v={p.mouse.zoom_sens != null ? fmtNum(p.mouse.zoom_sens, 2) : null} />
-            <Row k="Taxa de polling" v={p.mouse.polling_hz ? `${p.mouse.polling_hz} Hz` : null} />
+            <Row k={t("pros.zoomSens")} v={p.mouse.zoom_sens != null ? fmtNum(p.mouse.zoom_sens, 2) : null} />
+            <Row k={t("pros.polling")} v={p.mouse.polling_hz ? `${p.mouse.polling_hz} Hz` : null} />
           </dl>
           <SensConverter p={p} />
         </Block>
 
-        <Block title="Monitor e resolução">
+        <Block title={t("pros.monitor")}>
           <dl>
-            <Row k="Resolução" v={p.monitor.resolution} />
-            <Row k="Proporção" v={p.monitor.aspect} />
-            <Row k="Escala" v={p.monitor.scaling} />
-            <Row k="Taxa de atualização" v={p.monitor.hz ? `${p.monitor.hz} Hz` : null} />
+            <Row k={t("pros.resolution")} v={p.monitor.resolution} />
+            <Row k={t("pros.aspect")} v={p.monitor.aspect} />
+            <Row k={t("pros.scaling")} v={tv(p.monitor.scaling)} />
+            <Row k={t("pros.refresh")} v={p.monitor.hz ? `${p.monitor.hz} Hz` : null} />
           </dl>
         </Block>
       </div>
 
-      <Block title="Viewmodel" action={<CopyButton text={p.viewmodel.commands.join("; ")} label="Copiar comandos" />}>
+      <Block title="Viewmodel" action={<CopyButton text={p.viewmodel.commands.join("; ")} label={t("pros.copyCmds")} />}>
         <Commands lines={p.viewmodel.commands} />
-        {isDefaultVm && <p className="text-[13.5px] text-dim mt-1.5">É o viewmodel padrão do CS2.</p>}
+        {isDefaultVm && <p className="text-[13.5px] text-dim mt-1.5">{t("pros.defaultVm")}</p>}
       </Block>
 
       {p.video && (
-        <Block title="Vídeo no jogo">
+        <Block title={t("pros.video")}>
           <dl className="grid grid-cols-2 gap-x-8">
             {Object.entries(p.video).map(([k, v]) => (
-              <Row key={k} k={k} v={v} />
+              <Row key={k} k={videoKeys[k] ? t(videoKeys[k]) : k} v={tv(v)} />
             ))}
           </dl>
         </Block>
       )}
 
       {p.launch_options && (
-        <Block title="Opções de inicialização" action={<CopyButton text={p.launch_options} />}>
+        <Block title={t("cs2.launchTitle")} action={<CopyButton text={p.launch_options} />}>
           <Commands lines={[p.launch_options]} />
         </Block>
       )}
 
       {p.gear && (
-        <Block title="Periféricos">
+        <Block title={t("pros.gear")}>
           <dl>
             <Row k="Mouse" v={p.gear.mouse} />
             <Row k="Mousepad" v={p.gear.mousepad} />
-            <Row k="Teclado" v={p.gear.keyboard} />
+            <Row k={t("pros.keyboard")} v={p.gear.keyboard} />
             <Row k="Monitor" v={p.gear.monitor} />
             <Row k="Headset" v={p.gear.headset} />
           </dl>
         </Block>
       )}
 
-      {p.notes && <p className="text-[13.5px] text-faint">{p.notes}</p>}
+      {p.notes && <p className="text-[13.5px] text-faint">{noteText(p)}</p>}
     </div>
   );
 }
@@ -177,11 +226,11 @@ export function ProsPage() {
   const [sel, setSel] = useState(players.find((p) => p.id === "fallen")?.id ?? players[0].id);
 
   const list = useMemo(() => {
-    const t = q.trim().toLowerCase();
+    const term = q.trim().toLowerCase();
     return players.filter(
       (p) =>
         (!onlyBr || p.country === "BR") &&
-        (!t || [p.nick, p.name ?? "", p.team ?? ""].some((s) => s.toLowerCase().includes(t))),
+        (!term || [p.nick, p.name ?? "", p.team ?? ""].some((s) => s.toLowerCase().includes(term))),
     );
   }, [q, onlyBr]);
   const current = players.find((p) => p.id === sel)!;
@@ -189,8 +238,8 @@ export function ProsPage() {
   return (
     <>
       <PageHeader
-        title="Configs de pros"
-        lead="Mira, sensibilidade, viewmodel e vídeo dos jogadores mais conhecidos. Nada é aplicado sozinho: você vê e copia o que quiser."
+        title={t("nav.pros")}
+        lead={t("pros.lead")}
       />
       <div className="grid grid-cols-[260px_1fr] gap-6 items-start">
         <Panel className="p-3 sticky top-0">
@@ -199,14 +248,14 @@ export function ProsPage() {
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Buscar jogador ou time"
+              placeholder={t("pros.search")}
               className="flex-1 bg-transparent outline-none text-[14.5px] placeholder:text-faint"
             />
           </label>
-          <div className="flex gap-1.5 mt-2" role="radiogroup" aria-label="Filtro">
+          <div className="flex gap-1.5 mt-2" role="radiogroup" aria-label={t("pros.filter")}>
             {[
-              [false, "Todos"],
-              [true, "Brasileiros"],
+              [false, t("pros.all")],
+              [true, t("pros.br")],
             ].map(([v, l]) => (
               <button
                 key={String(v)}
@@ -234,12 +283,12 @@ export function ProsPage() {
                   <span className="w-7 text-[11.5px] font-semibold text-faint text-center rounded bg-base py-0.5">{p.country}</span>
                   <span className="flex-1 min-w-0">
                     <span className={`block font-cond font-bold text-[15.5px] ${p.id === sel ? "text-amber" : ""}`}>{p.nick}</span>
-                    <span className="block text-[12.5px] text-faint truncate">{p.team ?? "Sem time"}</span>
+                    <span className="block text-[12.5px] text-faint truncate">{p.team ?? t("pros.noTeam")}</span>
                   </span>
                 </button>
               </li>
             ))}
-            {list.length === 0 && <li className="text-[14px] text-faint px-2 py-4">Nenhum jogador encontrado.</li>}
+            {list.length === 0 && <li className="text-[14px] text-faint px-2 py-4">{t("pros.none")}</li>}
           </ul>
         </Panel>
 
@@ -248,7 +297,7 @@ export function ProsPage() {
         </Panel>
       </div>
       <p className="text-[13px] text-faint mt-4 max-w-[80ch]">
-        Dados públicos compilados do csdb.gg (e do Draft5 no caso do snow), conferidos em {fmtDate(data.updated)}. Pros mudam de config com frequência; as próximas atualizações do CSBoost trazem a lista revisada.
+        {t("pros.footer", { d: fmtDate(data.updated) })}
       </p>
     </>
   );

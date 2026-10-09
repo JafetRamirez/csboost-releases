@@ -1,5 +1,6 @@
 import { Minus, Square, X } from "lucide-react";
 import { isTauri } from "../lib/api";
+import { t } from "../i18n";
 
 async function win() {
   const { getCurrentWindow } = await import("@tauri-apps/api/window");
@@ -13,15 +14,15 @@ export function TitleBar() {
     <div data-tauri-drag-region className="h-10 shrink-0 flex items-stretch justify-end">
       {isTauri && (
         <>
-          <button className={btn} aria-label="Minimizar" onClick={async () => (await win()).minimize()}>
+          <button className={btn} aria-label={t("win.min")} onClick={async () => (await win()).minimize()}>
             <Minus size={16} />
           </button>
-          <button className={btn} aria-label="Maximizar" onClick={async () => (await win()).toggleMaximize()}>
+          <button className={btn} aria-label={t("win.max")} onClick={async () => (await win()).toggleMaximize()}>
             <Square size={13} />
           </button>
           <button
             className={`${btn} hover:!bg-bad hover:!text-white`}
-            aria-label="Fechar"
+            aria-label={t("win.close")}
             onClick={async () => (await win()).close()}
           >
             <X size={17} />

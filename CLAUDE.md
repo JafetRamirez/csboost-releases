@@ -45,4 +45,5 @@ O CSBoost é e continua 100% gratuito, sem anúncio e sem versão paga. Isso def
 ## Outras regras
 - Todo ajuste precisa de `detect` + `apply` + `revert` e grava o valor anterior no journal.
 - Nada de PowerShell/CMD executado pelo app.
-- Interface em português (pt-BR), cores do logo (ver README).
+- Interface em três idiomas: português (pt-BR, a fonte), espanhol e inglês. Texto novo na interface vai em `src/i18n/pt.ts`, `es.ts` e `en.ts` (o TypeScript não compila se faltar chave); texto gerado no núcleo usa `tr!("pt", "es", "en")`; tweak novo no catálogo leva o bloco `i18n` com `es` e `en`. O espanhol é revisado pelo Jafet.
+- Cores do logo (ver README).

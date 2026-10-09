@@ -13,6 +13,8 @@ import { ProsPage } from "./pages/Pros";
 import { ToolsPage } from "./pages/Tools";
 import { HistoryPage } from "./pages/History";
 import { SettingsPage } from "./pages/Settings";
+import { t } from "./i18n";
+import { LangProvider } from "./i18n/react";
 
 function Shell() {
   const [page, setPage] = useState<Page>("painel");
@@ -39,7 +41,7 @@ function Shell() {
         {report && !report.elevated && (
           <div className="mx-10 mb-2 flex items-center gap-3 rounded-xl bg-warn/10 text-warn px-4 py-2.5 text-[14.5px]">
             <ShieldAlert size={18} className="shrink-0" />
-            O CSBoost está sem permissão de administrador. Ajustes do sistema (HKLM, ponto de restauração) vão falhar — feche e abra como administrador.
+            {t("app.noAdmin")}
           </div>
         )}
         <UpdateBanner />
@@ -49,15 +51,15 @@ function Shell() {
       </div>
 
       <div className="fixed bottom-6 right-6 flex flex-col gap-2 z-50 max-w-[420px]" role="status" aria-live="polite">
-        {toasts.map((t) => (
+        {toasts.map((toast) => (
           <div
-            key={t.id}
+            key={toast.id}
             className="flex items-start gap-3 rounded-xl bg-raised border border-line px-4 py-3 shadow-2xl shadow-black/40 text-[14.5px]"
           >
-            {t.tone === "good" && <CircleCheck size={18} className="text-good mt-0.5 shrink-0" />}
-            {t.tone === "bad" && <CircleAlert size={18} className="text-bad mt-0.5 shrink-0" />}
-            {t.tone === "info" && <Info size={18} className="text-navy-hi mt-0.5 shrink-0" />}
-            <span>{t.text}</span>
+            {toast.tone === "good" && <CircleCheck size={18} className="text-good mt-0.5 shrink-0" />}
+            {toast.tone === "bad" && <CircleAlert size={18} className="text-bad mt-0.5 shrink-0" />}
+            {toast.tone === "info" && <Info size={18} className="text-navy-hi mt-0.5 shrink-0" />}
+            <span>{toast.text}</span>
           </div>
         ))}
       </div>
@@ -67,8 +69,10 @@ function Shell() {
 
 export default function App() {
   return (
-    <AppProvider>
-      <Shell />
-    </AppProvider>
+    <LangProvider>
+      <AppProvider>
+        <Shell />
+      </AppProvider>
+    </LangProvider>
   );
 }

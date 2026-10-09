@@ -117,10 +117,10 @@ pub fn parse_csv(text: &str) -> Result<Vec<f64>> {
 
 pub fn run(presentmon: &Path, seconds: u32, label: &str) -> Result<BenchRun> {
     if !presentmon.exists() {
-        bail!("PresentMon não encontrado na instalação do CSBoost");
+        bail!(tr!("PresentMon não encontrado na instalação do CSBoost", "No se encontró PresentMon en la instalación de CSBoost", "PresentMon was not found in the CSBoost installation"));
     }
     if !platform::processes_running(&["cs2.exe"])[0] {
-        bail!("Abra o CS2 e entre numa partida ou mapa antes de medir");
+        bail!(tr!("Abra o CS2 e entre numa partida ou mapa antes de medir", "Abre CS2 y entra a una partida o mapa antes de medir", "Open CS2 and join a match or map before measuring"));
     }
     let seconds = seconds.clamp(15, 180);
     std::fs::create_dir_all(data_dir())?;
@@ -147,7 +147,7 @@ pub fn run(presentmon: &Path, seconds: u32, label: &str) -> Result<BenchRun> {
         use std::os::windows::process::CommandExt;
         cmd.creation_flags(0x0800_0000); // CREATE_NO_WINDOW
     }
-    let mut child = cmd.spawn().context("não foi possível iniciar o PresentMon")?;
+    let mut child = cmd.spawn().context(tr!("não foi possível iniciar o PresentMon", "no se pudo iniciar PresentMon", "could not start PresentMon"))?;
     let deadline = Instant::now() + Duration::from_secs(seconds as u64 + 30);
     loop {
         if child.try_wait()?.is_some() {
@@ -155,18 +155,18 @@ pub fn run(presentmon: &Path, seconds: u32, label: &str) -> Result<BenchRun> {
         }
         if Instant::now() > deadline {
             let _ = child.kill(); // processo filho do próprio CSBoost
-            bail!("a medição passou do tempo e foi cancelada");
+            bail!(tr!("a medição passou do tempo e foi cancelada", "la medición tardó demasiado y se canceló", "the measurement took too long and was cancelled"));
         }
         std::thread::sleep(Duration::from_millis(250));
     }
 
-    let text = std::fs::read_to_string(&csv).context("o PresentMon não gerou resultado")?;
+    let text = std::fs::read_to_string(&csv).context(tr!("o PresentMon não gerou resultado", "PresentMon no generó resultados", "PresentMon did not produce results"))?;
     let _ = std::fs::remove_file(&csv);
     let frames = parse_csv(&text)?;
     if frames.len() < 100 {
-        bail!("Poucos quadros capturados. Deixe o CS2 em foco, jogando, durante toda a medição");
+        bail!(tr!("Poucos quadros capturados. Deixe o CS2 em foco, jogando, durante toda a medição", "Se capturaron pocos cuadros. Deja CS2 en primer plano, jugando, durante toda la medición", "Too few frames captured. Keep CS2 focused and keep playing for the whole measurement"));
     }
-    let (avg_fps, low1, low01, p50, p99, stutter) = stats(&frames).ok_or_else(|| anyhow!("dados insuficientes"))?;
+    let (avg_fps, low1, low01, p50, p99, stutter) = stats(&frames).ok_or_else(|| anyhow!(tr!("dados insuficientes", "datos insuficientes", "not enough data")))?;
     let run = BenchRun {
         id: now_ms(),
         label: label.trim().chars().take(40).collect(),

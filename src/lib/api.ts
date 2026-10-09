@@ -5,6 +5,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import type { BatchResult, BenchRun, CleanResult, CleanTarget, Cs2Info, EntryCheck, JournalEntry, Report, TweakView } from "./types";
 import * as mock from "./mock";
+import { t } from "../i18n";
 
 export const isTauri = typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;
 
@@ -31,6 +32,7 @@ export const api = {
   cs2Running: () => call<boolean>("cs2_running", undefined, () => true),
   cleanupScan: () => call<CleanTarget[]>("cleanup_scan", undefined, mock.cleanupScan),
   cleanupRun: (ids: string[]) => call<CleanResult>("cleanup_run", { ids }, () => mock.cleanupRun(ids)),
+  setLanguage: (lang: string) => call<void>("set_language", { lang }, () => undefined),
   writeAutoexec: (content: string) => call<string>("write_autoexec", { content }, () => mock.saveAutoexec(content)),
 };
 
@@ -46,5 +48,5 @@ export async function openUrl(url: string) {
 export function errorText(e: unknown): string {
   if (typeof e === "string") return e;
   if (e instanceof Error) return e.message;
-  return "Algo deu errado. Tente de novo.";
+  return t("err.generic");
 }

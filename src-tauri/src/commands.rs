@@ -40,8 +40,16 @@ pub async fn revert_all() -> CmdResult<engine::BatchResult> {
 }
 
 #[tauri::command]
+pub fn set_language(lang: String) {
+    crate::i18n::set(&lang);
+}
+
+#[tauri::command]
 pub fn history() -> Vec<Entry> {
     let mut e = Journal::load().entries;
+    for x in e.iter_mut() {
+        x.title = verify::title_for(x);
+    }
     e.reverse();
     e
 }
@@ -57,11 +65,11 @@ pub async fn set_display_refresh(device: String, hz: u32) -> CmdResult<()> {
         let current = platform::displays()?
             .into_iter()
             .find(|d| d.device == device)
-            .ok_or_else(|| anyhow::anyhow!("monitor não encontrado"))?;
+            .ok_or_else(|| anyhow::anyhow!(tr!("monitor não encontrado", "monitor no encontrado", "monitor not found")))?;
         platform::set_display_refresh(&device, hz)?;
         engine::record_external(
             "display.refresh",
-            &format!("Monitor em {hz} Hz"),
+            &tr!("Monitor em {hz} Hz", "Monitor a {hz} Hz", "Monitor at {hz} Hz"),
             Change::DisplayRefresh { device, previous_hz: current.current_hz, applied_hz: hz },
         )
     })
@@ -76,13 +84,13 @@ pub async fn cs2_info() -> CmdResult<cs2::Cs2Info> {
 #[tauri::command]
 pub async fn write_autoexec(content: String) -> CmdResult<String> {
     blocking(move || {
-        let dir = cs2::cfg_dir().ok_or_else(|| anyhow::anyhow!("CS2 não encontrado"))?;
+        let dir = cs2::cfg_dir().ok_or_else(|| anyhow::anyhow!(tr!("CS2 não encontrado", "CS2 no encontrado", "CS2 not found")))?;
         std::fs::create_dir_all(&dir)?;
         let path = dir.join("autoexec.cfg");
         let previous = std::fs::read_to_string(&path).ok();
         std::fs::write(&path, content)?;
         let p = path.display().to_string();
-        engine::record_external("cs2.autoexec", "Autoexec do CS2", Change::File { path: p.clone(), previous })?;
+        engine::record_external("cs2.autoexec", &tr!("Autoexec do CS2", "Autoexec de CS2", "CS2 autoexec"), Change::File { path: p.clone(), previous })?;
         Ok(p)
     })
     .await

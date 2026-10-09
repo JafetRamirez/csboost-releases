@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
+import { t } from "../i18n";
 
 async function copyText(text: string) {
   try {
@@ -14,7 +15,7 @@ async function copyText(text: string) {
   }
 }
 
-export function CopyButton({ text, label = "Copiar", className = "" }: { text: string; label?: string; className?: string }) {
+export function CopyButton({ text, label, className = "" }: { text: string; label?: string; className?: string }) {
   const [done, setDone] = useState(false);
   return (
     <button
@@ -28,7 +29,7 @@ export function CopyButton({ text, label = "Copiar", className = "" }: { text: s
       } ${className}`}
     >
       {done ? <Check size={15} /> : <Copy size={14} />}
-      {done ? "Copiado" : label}
+      {done ? t("copy.done") : label ?? t("copy.copy")}
     </button>
   );
 }

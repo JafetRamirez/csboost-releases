@@ -42,11 +42,11 @@ pub struct EntryCheck {
 
 fn fmt_reg(v: &Option<RegData>) -> String {
     match v {
-        None => "não existia".into(),
+        None => tr!("não existia", "no existía", "did not exist"),
         Some(RegData::Dword(n)) => n.to_string(),
-        Some(RegData::Sz(s)) if s.is_empty() => "(vazio)".into(),
+        Some(RegData::Sz(s)) if s.is_empty() => tr!("(vazio)", "(vacío)", "(empty)"),
         Some(RegData::Sz(s)) => s.clone(),
-        Some(RegData::Raw { .. }) => "(valor binário)".into(),
+        Some(RegData::Raw { .. }) => tr!("(valor binário)", "(valor binario)", "(binary value)"),
     }
 }
 
@@ -58,11 +58,10 @@ fn hive_name(h: Hive) -> &'static str {
 }
 
 fn plan_label(guid: &str) -> String {
-    let name = platform::plan_name(guid);
-    if name == "Personalizado" {
-        format!("Personalizado ({})", &guid[..8.min(guid.len())])
+    if platform::is_known_plan(guid) {
+        platform::plan_name(guid)
     } else {
-        name.to_string()
+        format!("{} ({})", platform::plan_name(guid), &guid[..8.min(guid.len())])
     }
 }
 
@@ -105,7 +104,7 @@ fn check_change(tweak_id: &str, c: &Change, pending: bool) -> ChangeCheck {
                     label,
                     before: fmt_reg(previous),
                     expected: fmt_reg(&expected),
-                    now: format!("erro ao ler: {e}"),
+                    now: tr!("erro ao ler: {e}", "error al leer: {e}", "read error: {e}"),
                     status: CheckStatus::Unknown,
                 },
             }
@@ -113,10 +112,10 @@ fn check_change(tweak_id: &str, c: &Change, pending: bool) -> ChangeCheck {
         Change::PowerPlan { previous, applied } => {
             let now = platform::power_active().ok();
             ChangeCheck {
-                label: "Plano de energia ativo".into(),
+                label: tr!("Plano de energia ativo", "Plan de energía activo", "Active power plan"),
                 before: plan_label(previous),
                 expected: plan_label(applied),
-                now: now.as_deref().map(plan_label).unwrap_or_else(|| "não foi possível ler".into()),
+                now: now.as_deref().map(plan_label).unwrap_or_else(|| tr!("não foi possível ler", "no se pudo leer", "could not read")),
                 status: match now {
                     Some(g) => settle(g == *applied),
                     None => CheckStatus::Unknown,
@@ -127,9 +126,9 @@ fn check_change(tweak_id: &str, c: &Change, pending: bool) -> ChangeCheck {
             let exists = std::path::Path::new(path).exists();
             ChangeCheck {
                 label: path.clone(),
-                before: if previous.is_some() { "arquivo existia".into() } else { "não existia".into() },
-                expected: "arquivo do CSBoost".into(),
-                now: if exists { "arquivo presente".into() } else { "arquivo apagado".into() },
+                before: if previous.is_some() { tr!("arquivo existia", "el archivo existía", "file existed") } else { tr!("não existia", "no existía", "did not exist") },
+                expected: tr!("arquivo do CSBoost", "archivo de CSBoost", "CSBoost file"),
+                now: if exists { tr!("arquivo presente", "archivo presente", "file present") } else { tr!("arquivo apagado", "archivo borrado", "file deleted") },
                 status: settle(exists),
             }
         }
@@ -139,16 +138,31 @@ fn check_change(tweak_id: &str, c: &Change, pending: bool) -> ChangeCheck {
                 .and_then(|ds| ds.into_iter().find(|d| d.device == *device))
                 .map(|d| d.current_hz);
             ChangeCheck {
-                label: format!("Taxa de atualização ({device})"),
+                label: tr!("Taxa de atualização ({device})", "Frecuencia de actualización ({device})", "Refresh rate ({device})"),
                 before: format!("{previous_hz} Hz"),
                 expected: format!("{applied_hz} Hz"),
-                now: now.map(|h| format!("{h} Hz")).unwrap_or_else(|| "monitor não encontrado".into()),
+                now: now.map(|h| format!("{h} Hz")).unwrap_or_else(|| tr!("monitor não encontrado", "monitor no encontrado", "monitor not found")),
                 status: match now {
                     Some(h) => settle(h == *applied_hz),
                     None => CheckStatus::Unknown,
                 },
             }
         }
+    }
+}
+
+/// Título no idioma atual: do catálogo, ou montado para ajustes de fora dele.
+pub fn title_for(e: &crate::journal::Entry) -> String {
+    if let Some(t) = catalog::find(&e.tweak_id) {
+        return t.title;
+    }
+    match (e.tweak_id.as_str(), e.changes.first()) {
+        ("display.refresh", Some(Change::DisplayRefresh { applied_hz, .. })) => {
+            let hz = *applied_hz;
+            tr!("Monitor em {hz} Hz", "Monitor a {hz} Hz", "Monitor at {hz} Hz")
+        }
+        ("cs2.autoexec", _) => tr!("Autoexec do CS2", "Autoexec de CS2", "CS2 autoexec"),
+        _ => e.title.clone(),
     }
 }
 
@@ -177,7 +191,7 @@ pub fn run() -> Vec<EntryCheck> {
             EntryCheck {
                 entry_id: e.id,
                 tweak_id: e.tweak_id.clone(),
-                title: e.title.clone(),
+                title: title_for(e),
                 applied_at: e.applied_at,
                 status,
                 how_to_check: tweak.and_then(|t| t.how_to_check),

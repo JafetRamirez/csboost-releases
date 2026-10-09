@@ -1,18 +1,19 @@
 import { Activity, Crosshair, Gauge as GaugeIcon, History, ScanSearch, Settings, SlidersHorizontal, Users, Wrench } from "lucide-react";
 import logo from "../assets/brand/logo-light.png";
 import { Donate } from "./Donate";
+import { t } from "../i18n";
 
 export type Page = "painel" | "raiox" | "otimizacoes" | "cs2" | "pros" | "benchmark" | "ferramentas" | "historico" | "config";
 
-const items: { id: Page; label: string; icon: typeof Activity }[] = [
-  { id: "painel", label: "Painel", icon: GaugeIcon },
-  { id: "raiox", label: "Raio-X do PC", icon: ScanSearch },
-  { id: "otimizacoes", label: "Otimizações", icon: SlidersHorizontal },
+const items = (): { id: Page; label: string; icon: typeof Activity }[] => [
+  { id: "painel", label: t("nav.painel"), icon: GaugeIcon },
+  { id: "raiox", label: t("nav.raiox"), icon: ScanSearch },
+  { id: "otimizacoes", label: t("nav.otimizacoes"), icon: SlidersHorizontal },
   { id: "cs2", label: "Counter-Strike 2", icon: Crosshair },
-  { id: "pros", label: "Configs de pros", icon: Users },
-  { id: "benchmark", label: "Benchmark", icon: Activity },
-  { id: "ferramentas", label: "Ferramentas", icon: Wrench },
-  { id: "historico", label: "Histórico", icon: History },
+  { id: "pros", label: t("nav.pros"), icon: Users },
+  { id: "benchmark", label: t("nav.benchmark"), icon: Activity },
+  { id: "ferramentas", label: t("nav.ferramentas"), icon: Wrench },
+  { id: "historico", label: t("nav.historico"), icon: History },
 ];
 
 export function Sidebar({ page, onNavigate, issueCount }: { page: Page; onNavigate: (p: Page) => void; issueCount: number }) {
@@ -45,11 +46,11 @@ export function Sidebar({ page, onNavigate, issueCount }: { page: Page; onNaviga
         <img src={logo} alt="CSBoost" className="h-[26px] w-auto pointer-events-none" draggable={false} />
       </div>
       <nav className="flex flex-col gap-1">
-        {items.map((i) => row(i.id, i.label, i.icon, i.id === "raiox" ? issueCount : undefined))}
+        {items().map((i) => row(i.id, i.label, i.icon, i.id === "raiox" ? issueCount : undefined))}
       </nav>
       <div className="mt-auto space-y-2">
         <Donate />
-        <div className="border-t border-line/60 pt-2">{row("config", "Configurações", Settings)}</div>
+        <div className="border-t border-line/60 pt-2">{row("config", t("nav.config"), Settings)}</div>
       </div>
     </aside>
   );

@@ -1,37 +1,41 @@
 import type { Evidence, Preset, Risk } from "./types";
+import { t, type Key } from "../i18n";
 
-export const categoryLabel: Record<string, string> = {
-  energia: "Energia e processador",
-  graficos: "Gráficos e GPU",
-  latencia: "Latência",
-  entrada: "Mouse e teclado",
-  rede: "Rede",
-  segundo_plano: "Segundo plano",
+const categoryKeys: Record<string, Key> = {
+  energia: "cat.energia",
+  graficos: "cat.graficos",
+  latencia: "cat.latencia",
+  entrada: "cat.entrada",
+  rede: "cat.rede",
+  segundo_plano: "cat.segundo_plano",
 };
+
+export function categoryLabel(id: string): string {
+  const k = categoryKeys[id];
+  return k ? t(k) : id;
+}
 
 export const categoryOrder = ["energia", "graficos", "latencia", "entrada", "rede", "segundo_plano"];
 
-export const riskLabel: Record<Risk, string> = {
-  safe: "Seguro",
-  moderate: "Moderado",
-  advanced: "Avançado",
-};
+export function riskLabel(r: Risk): string {
+  return t(`risk.${r}` as Key);
+}
 
-export const evidenceLabel: Record<Evidence, string> = {
-  proven: "Ganho comprovado",
-  situational: "Depende do PC",
-  weak: "Efeito pequeno",
-};
+export function evidenceLabel(e: Evidence): string {
+  return t(`evidence.${e}` as Key);
+}
 
-export const presets: { id: Preset; name: string; blurb: string }[] = [
-  { id: "seguro", name: "Seguro", blurb: "Só ajustes sem risco e com efeito claro. Ideal para a primeira vez." },
-  { id: "competitivo", name: "Competitivo", blurb: "Seguro + ajustes de latência e menos coisa rodando em segundo plano." },
-  { id: "pc_fraco", name: "PC fraco", blurb: "Corta efeitos visuais e apps escondidos para sobrar CPU para o jogo." },
-];
+export function presets(): { id: Preset; name: string; blurb: string }[] {
+  return (["seguro", "competitivo", "pc_fraco"] as Preset[]).map((id) => ({
+    id,
+    name: t(`preset.${id}.name` as Key),
+    blurb: t(`preset.${id}.blurb` as Key),
+  }));
+}
 
 export function scoreVerdict(score: number) {
-  if (score >= 90) return "Seu PC está pronto para jogar.";
-  if (score >= 70) return "Bom, mas tem desempenho sobrando na mesa.";
-  if (score >= 45) return "Tem coisa segurando o seu FPS.";
-  return "Seu PC está bem abaixo do que pode entregar.";
+  if (score >= 90) return t("verdict.great");
+  if (score >= 70) return t("verdict.good");
+  if (score >= 45) return t("verdict.mid");
+  return t("verdict.low");
 }

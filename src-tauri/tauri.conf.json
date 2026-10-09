@@ -37,7 +37,7 @@
     "publisher": "Jafet Ramirez",
     "copyright": "© 2026 Jafet Ramirez · GPL-3.0-or-later",
     "category": "Utility",
-    "shortDescription": "Otimizador de Windows para CS2",
+    "shortDescription": "CS2 Windows optimizer / Otimizador de Windows para CS2",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -52,7 +52,9 @@
       "nsis": {
         "installMode": "perMachine",
         "languages": [
-          "PortugueseBR"
+          "PortugueseBR",
+          "Spanish",
+          "English"
         ],
         "displayLanguageSelector": false,
         "installerIcon": "icons/icon.ico",

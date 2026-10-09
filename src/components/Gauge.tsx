@@ -1,3 +1,4 @@
+import { t } from "../i18n";
 // Medidor da nota do PC. O arco usa as duas cores do logo: âmbar para a
 // parte conquistada, marinho para o que falta.
 export function Gauge({ score, size = 220 }: { score: number; size?: number }) {
@@ -34,10 +35,10 @@ export function Gauge({ score, size = 220 }: { score: number; size?: number }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-display text-[68px] leading-none num" aria-label={`Nota ${score} de 100`}>
+        <span className="font-display text-[68px] leading-none num" aria-label={t("gauge.aria", { score })}>
           {score}
         </span>
-        <span className="text-fg/60 text-sm mt-1">de 100</span>
+        <span className="text-fg/60 text-sm mt-1">{t("gauge.of100")}</span>
       </div>
     </div>
   );

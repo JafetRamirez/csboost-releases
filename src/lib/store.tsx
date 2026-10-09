@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 import { api, errorText } from "./api";
 import type { BatchResult, Report, TweakView } from "./types";
 import { checkForUpdate, type AvailableUpdate } from "./updater";
+import { getLang, t } from "../i18n";
 
 export interface Toast {
   id: number;
@@ -52,7 +53,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setReport(r);
       setTweaks(t);
     } catch (e) {
-      notify("bad", `Não foi possível analisar o PC: ${errorText(e)}`);
+      notify("bad", t("store.scanFail", { err: errorText(e) }));
     } finally {
       setScanning(false);
     }
@@ -63,15 +64,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const done = r.results.filter((x) => x.ok && !x.skipped).length;
       const failed = r.results.filter((x) => !x.ok);
       if (failed.length) {
-        notify("bad", `${failed.length} não ${failed.length > 1 ? "puderam" : "pôde"} ser ${verb}${failed.length > 1 ? "as" : "a"}: ${failed[0].message ?? "erro desconhecido"}`);
+        const msg = failed[0].message ?? t("store.unknownError");
+        const k = verb === "aplicad" ? (failed.length > 1 ? "store.applyFailMany" : "store.applyFailOne") : failed.length > 1 ? "store.revertFailMany" : "store.revertFailOne";
+        notify("bad", t(k, { n: failed.length, msg }));
       }
       if (done) {
-        notify(
-          "good",
-          `${done} ${done > 1 ? "otimizações" : "otimização"} ${verb}${done > 1 ? "as" : "a"}.${r.needs_reboot ? " Reinicie o PC para concluir." : ""}`,
-        );
+        const k = verb === "aplicad" ? (done > 1 ? "store.appliedMany" : "store.appliedOne") : done > 1 ? "store.revertedMany" : "store.revertedOne";
+        notify("good", t(k, { n: done }) + (r.needs_reboot ? " " + t("store.reboot") : ""));
       } else if (!failed.length) {
-        notify("info", "Nada mudou: tudo já estava como pedido.");
+        notify("info", t("store.nothing"));
       }
     },
     [notify],
@@ -82,19 +83,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
       try {
         const u = await checkForUpdate();
         setUpdate(u);
-        if (manual && !u) notify("good", "Você já está na versão mais recente.");
+        if (manual && !u) notify("good", t("store.upToDate"));
       } catch (e) {
         // sem internet / repositório ainda não publicado: só avisa se foi pedido
-        if (manual) notify("bad", `Não foi possível procurar atualizações: ${errorText(e)}`);
+        if (manual) notify("bad", t("store.updateCheckFail", { err: errorText(e) }));
       }
     },
     [notify],
   );
 
   useEffect(() => {
-    rescan();
-    const t = setTimeout(() => checkUpdate(false), 4000);
-    return () => clearTimeout(t);
+    // o núcleo Rust gera os textos do Raio-X no idioma escolhido
+    api.setLanguage(getLang()).catch(() => {}).finally(() => rescan());
+    const timer = setTimeout(() => checkUpdate(false), 4000);
+    return () => clearTimeout(timer);
   }, [rescan, checkUpdate]);
 
   return (

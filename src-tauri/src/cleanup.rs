@@ -26,20 +26,63 @@ pub struct CleanResult {
 
 struct Def {
     id: &'static str,
-    label: &'static str,
-    description: &'static str,
+    label: fn() -> String,
+    description: fn() -> String,
     default: bool,
-    warning: Option<&'static str>,
+    warning: Option<fn() -> String>,
     /// só apaga arquivos com mais de X horas (evita mexer em coisas em uso)
     min_age_h: u64,
 }
 
+fn shader_warning() -> String {
+    tr!(
+        "Use só se o jogo estiver engasgando depois de atualizar o driver: as primeiras partidas depois da limpeza ficam mais pesadas enquanto o cache é refeito.",
+        "Úsalo solo si el juego tiene tirones después de actualizar el driver: las primeras partidas después de la limpieza van más pesadas mientras se rehace la caché.",
+        "Use only if the game stutters after a driver update: the first matches after cleaning run heavier while the cache is rebuilt."
+    )
+}
+
 const DEFS: &[Def] = &[
-    Def { id: "user_temp", label: "Arquivos temporários do usuário", description: "Sobras de instaladores e programas na pasta %TEMP%.", default: true, warning: None, min_age_h: 24 },
-    Def { id: "windows_temp", label: "Arquivos temporários do Windows", description: "Pasta C:\\Windows\\Temp.", default: true, warning: None, min_age_h: 24 },
-    Def { id: "crash_dumps", label: "Relatórios de travamento", description: "Despejos de memória e relatórios de erro antigos do Windows.", default: true, warning: None, min_age_h: 24 },
-    Def { id: "dx_shader_cache", label: "Cache de shaders do DirectX", description: "O Windows recria sozinho.", default: false, warning: Some("Use só se o jogo estiver engasgando depois de atualizar o driver: as primeiras partidas depois da limpeza ficam mais pesadas enquanto o cache é refeito."), min_age_h: 0 },
-    Def { id: "gpu_shader_cache", label: "Cache de shaders da placa de vídeo", description: "Caches da NVIDIA e da AMD. O driver recria sozinho.", default: false, warning: Some("Use só se o jogo estiver engasgando depois de atualizar o driver: as primeiras partidas depois da limpeza ficam mais pesadas enquanto o cache é refeito."), min_age_h: 0 },
+    Def {
+        id: "user_temp",
+        label: || tr!("Arquivos temporários do usuário", "Archivos temporales del usuario", "User temporary files"),
+        description: || tr!("Sobras de instaladores e programas na pasta %TEMP%.", "Restos de instaladores y programas en la carpeta %TEMP%.", "Leftovers from installers and programs in the %TEMP% folder."),
+        default: true,
+        warning: None,
+        min_age_h: 24,
+    },
+    Def {
+        id: "windows_temp",
+        label: || tr!("Arquivos temporários do Windows", "Archivos temporales de Windows", "Windows temporary files"),
+        description: || tr!("Pasta C:\\Windows\\Temp.", "Carpeta C:\\Windows\\Temp.", "The C:\\Windows\\Temp folder."),
+        default: true,
+        warning: None,
+        min_age_h: 24,
+    },
+    Def {
+        id: "crash_dumps",
+        label: || tr!("Relatórios de travamento", "Informes de fallos", "Crash reports"),
+        description: || tr!("Despejos de memória e relatórios de erro antigos do Windows.", "Volcados de memoria e informes de error antiguos de Windows.", "Old Windows memory dumps and error reports."),
+        default: true,
+        warning: None,
+        min_age_h: 24,
+    },
+    Def {
+        id: "dx_shader_cache",
+        label: || tr!("Cache de shaders do DirectX", "Caché de shaders de DirectX", "DirectX shader cache"),
+        description: || tr!("O Windows recria sozinho.", "Windows la vuelve a crear solo.", "Windows rebuilds it on its own."),
+        default: false,
+        warning: Some(shader_warning),
+        min_age_h: 0,
+    },
+    Def {
+        id: "gpu_shader_cache",
+        label: || tr!("Cache de shaders da placa de vídeo", "Caché de shaders de la placa de video", "Graphics card shader cache"),
+        description: || tr!("Caches da NVIDIA e da AMD. O driver recria sozinho.", "Cachés de NVIDIA y AMD. El driver las vuelve a crear solo.", "NVIDIA and AMD caches. The driver rebuilds them on its own."),
+        default: false,
+        warning: Some(shader_warning),
+        min_age_h: 0,
+    },
 ];
 
 fn env_path(var: &str) -> Option<PathBuf> {
@@ -130,12 +173,12 @@ pub fn scan() -> Vec<CleanTarget> {
             }
             CleanTarget {
                 id: d.id.into(),
-                label: d.label.into(),
-                description: d.description.into(),
+                label: (d.label)(),
+                description: (d.description)(),
                 files,
                 bytes,
                 selected_by_default: d.default,
-                warning: d.warning.map(String::from),
+                warning: d.warning.map(|w| w()),
             }
         })
         .collect()

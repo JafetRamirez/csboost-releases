@@ -2,21 +2,21 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Activity, ClipboardCopy, Play, Trash2 } from "lucide-react";
 import { Button, Loading, PageHeader, Panel } from "../components/ui";
 import { api, errorText } from "../lib/api";
-import { fmtNum, pctChange } from "../lib/format";
+import { fmtDateTime, fmtNum, pctChange } from "../lib/format";
 import { useApp } from "../lib/store";
 import type { BenchRun } from "../lib/types";
 import markUrl from "../assets/brand/mark.png";
+import { t } from "../i18n";
 
 // Paleta de 2 séries validada (dataviz) contra o fundo #181c36.
 const C_A = "#6f84e0"; // medição mais antiga
 const C_B = "#c9840c"; // medição mais nova
 
-const fmtDate = new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" });
 
 function Delta({ a, b, invert = false }: { a: number; b: number; invert?: boolean }) {
   const d = pctChange(a, b);
   const good = invert ? d < 0 : d > 0;
-  if (Math.abs(d) < 0.5) return <span className="text-faint">igual</span>;
+  if (Math.abs(d) < 0.5) return <span className="text-faint">{t("bench.same")}</span>;
   return (
     <span className={good ? "text-good" : "text-bad"}>
       {d > 0 ? "+" : ""}
@@ -42,7 +42,7 @@ function FrametimeChart({ runs }: { runs: { run: BenchRun; color: string }[] }) 
         viewBox={`0 0 ${W} ${H}`}
         className="w-full h-auto"
         role="img"
-        aria-label="Gráfico de frametime das medições comparadas"
+        aria-label={t("bench.chartAria")}
         onMouseMove={(e) => {
           const r = (e.currentTarget as SVGSVGElement).getBoundingClientRect();
           const px = ((e.clientX - r.left) / r.width) * W;
@@ -51,16 +51,16 @@ function FrametimeChart({ runs }: { runs: { run: BenchRun; color: string }[] }) 
         }}
         onMouseLeave={() => setHover(null)}
       >
-        {ticks.map((t) => (
-          <g key={t}>
-            <line x1={PL} x2={W - 8} y1={y(t)} y2={y(t)} stroke="var(--color-line)" strokeWidth={1} />
-            <text x={PL - 8} y={y(t) + 4} textAnchor="end" fontSize="12" fill="var(--color-faint)">
-              {fmtNum(t)} ms
+        {ticks.map((tick) => (
+          <g key={tick}>
+            <line x1={PL} x2={W - 8} y1={y(tick)} y2={y(tick)} stroke="var(--color-line)" strokeWidth={1} />
+            <text x={PL - 8} y={y(tick) + 4} textAnchor="end" fontSize="12" fill="var(--color-faint)">
+              {fmtNum(tick)} ms
             </text>
           </g>
         ))}
-        <text x={PL} y={H - 4} fontSize="12" fill="var(--color-faint)">início</text>
-        <text x={W - 8} y={H - 4} fontSize="12" fill="var(--color-faint)" textAnchor="end">fim</text>
+        <text x={PL} y={H - 4} fontSize="12" fill="var(--color-faint)">{t("bench.start")}</text>
+        <text x={W - 8} y={H - 4} fontSize="12" fill="var(--color-faint)" textAnchor="end">{t("bench.end")}</text>
         {runs.map(({ run, color }) => (
           <polyline
             key={run.id}
@@ -114,12 +114,12 @@ async function copyShareCard(a: BenchRun, b: BenchRun) {
   g.fillText("CSBoost", 60, 240);
   g.font = "26px Barlow, sans-serif";
   g.fillStyle = "#c8cde6";
-  g.fillText("Benchmark no CS2", 60, 280);
+  g.fillText(t("bench.cardTitle"), 60, 280);
 
   const rows: [string, number, number][] = [
-    ["FPS médio", a.avg_fps, b.avg_fps],
+    [t("bench.avg"), a.avg_fps, b.avg_fps],
     ["1% low", a.low1_fps, b.low1_fps],
-    ["0,1% low", a.low01_fps, b.low01_fps],
+    [t("bench.low01"), a.low01_fps, b.low01_fps],
   ];
   g.font = "24px Barlow, sans-serif";
   g.fillStyle = "#a3a9c9";
@@ -142,7 +142,7 @@ async function copyShareCard(a: BenchRun, b: BenchRun) {
   });
   g.fillStyle = "#6d7398";
   g.font = "20px Barlow, sans-serif";
-  g.fillText(`${a.seconds} s de jogo em cada medição, medido com o PresentMon`, 410, 590);
+  g.fillText(t("bench.cardFoot", { s: a.seconds }), 410, 590);
   const blob: Blob = await new Promise((r) => c.toBlob((bl) => r(bl!), "image/png"));
   await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
 }
@@ -152,7 +152,7 @@ export function Benchmark() {
   const [runs, setRuns] = useState<BenchRun[] | null>(null);
   const [cs2, setCs2] = useState(false);
   const [seconds, setSeconds] = useState(60);
-  const [label, setLabel] = useState("Antes");
+  const [label, setLabel] = useState(t("bench.before"));
   const [measuring, setMeasuring] = useState<number | null>(null); // segundos restantes
   const [compare, setCompare] = useState<number[]>([]);
   const timer = useRef<number | null>(null);
@@ -167,13 +167,13 @@ export function Benchmark() {
     load()
       .then((r) => {
         if (r.length >= 2) setCompare([r[r.length - 2].id, r[r.length - 1].id]);
-        if (r.length >= 1) setLabel("Depois");
+        if (r.length >= 1) setLabel(t("bench.after"));
       })
       .catch((e) => notify("bad", errorText(e)));
     const check = () => api.cs2Running().then(setCs2).catch(() => {});
     check();
-    const t = setInterval(check, 3000);
-    return () => clearInterval(t);
+    const iv = setInterval(check, 3000);
+    return () => clearInterval(iv);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -184,11 +184,11 @@ export function Benchmark() {
       setMeasuring(Math.max(0, seconds - Math.round((Date.now() - startedAt) / 1000)));
     }, 500);
     try {
-      const r = await api.benchRun(seconds, label || "Medição");
-      notify("good", `Medição "${r.label}" salva: ${fmtNum(r.avg_fps)} FPS médio, ${fmtNum(r.low1_fps)} no 1% low.`);
+      const r = await api.benchRun(seconds, label || t("bench.run"));
+      notify("good", t("bench.saved", { label: r.label, avg: fmtNum(r.avg_fps), low: fmtNum(r.low1_fps) }));
       const all = await load();
       if (all.length >= 2) setCompare([all[all.length - 2].id, all[all.length - 1].id]);
-      setLabel("Depois");
+      setLabel(t("bench.after"));
     } catch (e) {
       notify("bad", errorText(e));
     } finally {
@@ -203,29 +203,29 @@ export function Benchmark() {
     return sel.length === 2 ? sel.sort((a, b) => a.created_at - b.created_at) : null;
   }, [runs, compare]);
 
-  if (!runs) return <Loading label="Carregando medições…" />;
+  if (!runs) return <Loading label={t("bench.loading")} />;
 
   const toggle = (id: number) => setCompare((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c.slice(-1), id]));
 
   const metrics = [
-    ["FPS médio", "avg_fps", false],
+    [t("bench.avg"), "avg_fps", false],
     ["1% low", "low1_fps", false],
-    ["0,1% low", "low01_fps", false],
-    ["Engasgos", "stutter_pct", true],
+    [t("bench.low01"), "low01_fps", false],
+    [t("bench.stutter"), "stutter_pct", true],
   ] as const;
 
   return (
     <>
       <PageHeader
-        title="Benchmark"
-        lead="Meça o FPS antes e depois de otimizar, jogando no mesmo mapa. É o jeito honesto de saber o ganho real no seu PC."
+        title={t("nav.benchmark")}
+        lead={t("bench.lead")}
       />
 
       <Panel className="p-6">
         {measuring !== null ? (
           <div aria-live="polite">
-            <p className="font-cond font-bold text-[20px]">Medindo "{label}"… continue jogando normalmente.</p>
-            <p className="text-dim mt-1">Faltam {measuring} s. Deixe o CS2 em foco até o fim.</p>
+            <p className="font-cond font-bold text-[20px]">{t("bench.measuring", { label })}</p>
+            <p className="text-dim mt-1">{t("bench.left", { s: measuring })}</p>
             <div className="h-2 rounded-full bg-base mt-4 overflow-hidden">
               <div className="h-full bg-amber transition-[width] duration-500" style={{ width: `${((seconds - measuring) / seconds) * 100}%` }} />
             </div>
@@ -233,7 +233,7 @@ export function Benchmark() {
         ) : (
           <div className="flex items-end gap-4 flex-wrap">
             <label className="flex flex-col gap-1.5 text-[14px] text-dim">
-              Nome da medição
+              {t("bench.name")}
               <input
                 value={label}
                 maxLength={40}
@@ -242,8 +242,8 @@ export function Benchmark() {
               />
             </label>
             <div className="flex flex-col gap-1.5 text-[14px] text-dim">
-              Duração
-              <div className="flex gap-1.5" role="radiogroup" aria-label="Duração">
+              {t("bench.duration")}
+              <div className="flex gap-1.5" role="radiogroup" aria-label={t("bench.duration")}>
                 {[30, 60, 90].map((s) => (
                   <button
                     key={s}
@@ -260,12 +260,12 @@ export function Benchmark() {
               </div>
             </div>
             <Button variant="primary" className="h-10" icon={<Play size={16} fill="currentColor" />} disabled={!cs2} onClick={start}>
-              Medir agora
+              {t("bench.measure")}
             </Button>
             <p className="text-[14px] text-dim basis-full mt-1">
               {cs2
-                ? "CS2 aberto. Clique em Medir, volte para o jogo e jogue normalmente, de preferência no mesmo mapa e modo em todas as medições."
-                : "Abra o CS2 e entre num mapa para liberar a medição. Um mapa de treino ou deathmatch dá resultados mais fáceis de comparar."}
+                ? t("bench.cs2Open")
+                : t("bench.cs2Closed")}
             </p>
           </div>
         )}
@@ -278,20 +278,20 @@ export function Benchmark() {
               <h2 className="font-cond font-bold text-[20px]">
                 {pair[0].label} × {pair[1].label}
               </h2>
-              <p className="text-[14px] text-dim mt-0.5">Frametime ao longo da medição: linha mais baixa e mais reta significa jogo mais liso.</p>
+              <p className="text-[14px] text-dim mt-0.5">{t("bench.chartLead")}</p>
             </div>
             <Button
               icon={<ClipboardCopy size={16} />}
               onClick={async () => {
                 try {
                   await copyShareCard(pair[0], pair[1]);
-                  notify("good", "Imagem copiada. Cole no Discord, WhatsApp ou Facebook com Ctrl+V.");
+                  notify("good", t("bench.copied"));
                 } catch (e) {
-                  notify("bad", `Não deu para copiar a imagem: ${errorText(e)}`);
+                  notify("bad", t("bench.copyFail", { err: errorText(e) }));
                 }
               }}
             >
-              Copiar imagem
+              {t("bench.copyImg")}
             </Button>
           </div>
 
@@ -320,7 +320,7 @@ export function Benchmark() {
               <span key={r.id} className="flex items-center gap-2">
                 <span className="w-4 h-[3px] rounded-full" style={{ background: c }} />
                 {r.label}
-                <span className="text-faint">{fmtDate.format(r.created_at)}</span>
+                <span className="text-faint">{fmtDateTime(r.created_at)}</span>
               </span>
             ))}
           </div>
@@ -330,25 +330,25 @@ export function Benchmark() {
 
       <Panel className="mt-6 overflow-hidden">
         <div className="px-6 pt-5 pb-2 flex items-baseline justify-between">
-          <h2 className="font-cond font-bold text-[18px]">Medições</h2>
-          {runs.length >= 2 && <span className="text-[13.5px] text-faint">Marque duas para comparar</span>}
+          <h2 className="font-cond font-bold text-[18px]">{t("bench.runs")}</h2>
+          {runs.length >= 2 && <span className="text-[13.5px] text-faint">{t("bench.pickTwo")}</span>}
         </div>
         {runs.length === 0 ? (
           <div className="px-6 pb-6 flex items-start gap-3 text-dim">
             <Activity size={18} className="text-amber mt-0.5 shrink-0" />
-            Nenhuma medição ainda. Faça a primeira antes de otimizar, chamada "Antes", e depois outra chamada "Depois".
+            {t("bench.empty")}
           </div>
         ) : (
           <table className="w-full text-[14.5px]">
             <thead>
               <tr className="text-faint text-left text-[13px]">
-                <th className="font-normal pl-6 py-2 w-10"><span className="sr-only">Comparar</span></th>
-                <th className="font-normal py-2">Medição</th>
-                <th className="font-normal py-2 text-right">FPS médio</th>
+                <th className="font-normal pl-6 py-2 w-10"><span className="sr-only">{t("bench.compare")}</span></th>
+                <th className="font-normal py-2">{t("bench.run")}</th>
+                <th className="font-normal py-2 text-right">{t("bench.avg")}</th>
                 <th className="font-normal py-2 text-right">1% low</th>
-                <th className="font-normal py-2 text-right">0,1% low</th>
-                <th className="font-normal py-2 text-right">Engasgos</th>
-                <th className="font-normal py-2 pr-6 w-12"><span className="sr-only">Apagar</span></th>
+                <th className="font-normal py-2 text-right">{t("bench.low01")}</th>
+                <th className="font-normal py-2 text-right">{t("bench.stutter")}</th>
+                <th className="font-normal py-2 pr-6 w-12"><span className="sr-only">{t("bench.delete")}</span></th>
               </tr>
             </thead>
             <tbody>
@@ -362,14 +362,14 @@ export function Benchmark() {
                         type="checkbox"
                         checked={compare.includes(r.id)}
                         onChange={() => toggle(r.id)}
-                        aria-label={`Comparar ${r.label}`}
+                        aria-label={t("bench.compareAria", { label: r.label })}
                         className="size-4 accent-[#f9ab19] cursor-pointer"
                       />
                     </td>
                     <td className="py-3">
                       <span className="font-cond font-semibold text-[15.5px]">{r.label}</span>
                       <span className="block text-[12.5px] text-faint">
-                        {fmtDate.format(r.created_at)}, {r.seconds} s, {fmtNum(r.frames)} quadros
+                        {fmtDateTime(r.created_at)}, {r.seconds} s, {t("bench.frames", { n: fmtNum(r.frames) })}
                       </span>
                     </td>
                     <td className="py-3 text-right num">{fmtNum(r.avg_fps)}</td>
@@ -378,7 +378,7 @@ export function Benchmark() {
                     <td className="py-3 text-right num">{fmtNum(r.stutter_pct, 1)}%</td>
                     <td className="pr-6 py-3 text-right">
                       <button
-                        aria-label={`Apagar ${r.label}`}
+                        aria-label={t("bench.deleteAria", { label: r.label })}
                         className="text-faint hover:text-bad cursor-pointer"
                         onClick={async () => {
                           await api.benchDelete(r.id);
@@ -396,7 +396,7 @@ export function Benchmark() {
         )}
       </Panel>
       <p className="text-[13px] text-faint mt-4 max-w-[80ch]">
-        Medido com o PresentMon, ferramenta aberta da Intel que lê os eventos de vídeo do Windows sem encostar no processo do jogo. O 1% low é a média dos 1% de quadros mais lentos: quanto mais perto do FPS médio, mais estável o jogo.
+        {t("bench.foot")}
       </p>
     </>
   );

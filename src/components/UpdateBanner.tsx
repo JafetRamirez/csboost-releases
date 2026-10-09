@@ -3,6 +3,7 @@ import { Download } from "lucide-react";
 import { errorText } from "../lib/api";
 import { useApp } from "../lib/store";
 import { Button } from "./ui";
+import { t } from "../i18n";
 
 export function UpdateBanner() {
   const { update, notify } = useApp();
@@ -16,7 +17,7 @@ export function UpdateBanner() {
       await update!.install(setPct);
     } catch (e) {
       setPct(undefined);
-      notify("bad", `A atualização falhou: ${errorText(e)}`);
+      notify("bad", t("update.failed", { err: errorText(e) }));
     }
   }
 
@@ -25,12 +26,12 @@ export function UpdateBanner() {
       <Download size={18} className="text-navy-hi shrink-0" />
       <span className="flex-1">
         {installing
-          ? `Baixando a versão ${update.version}${pct != null ? ` (${pct}%)` : ""}… o CSBoost vai reabrir sozinho.`
-          : `Versão ${update.version} disponível. Suas otimizações e o histórico são mantidos.`}
+          ? t("update.downloading", { v: update.version, pct: pct != null ? ` (${pct}%)` : "" })
+          : t("update.available", { v: update.version })}
       </span>
       {!installing && (
         <Button variant="primary" className="h-8 px-3 text-[14px]" onClick={install}>
-          Atualizar agora
+          {t("update.now")}
         </Button>
       )}
     </div>

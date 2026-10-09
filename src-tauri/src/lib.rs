@@ -1,3 +1,5 @@
+#[macro_use]
+mod i18n;
 mod bench;
 mod catalog;
 mod cleanup;
@@ -44,6 +46,7 @@ pub fn run() {
             commands::cs2_running,
             commands::cleanup_scan,
             commands::cleanup_run,
+            commands::set_language,
         ])
         .run(tauri::generate_context!())
         .expect("erro ao iniciar o CSBoost");

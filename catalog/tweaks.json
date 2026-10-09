@@ -22,7 +22,19 @@
           "type": "power_plan",
           "plan": "high_performance"
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Plan de energía de alto rendimiento",
+          "description": "Cambia el plan Equilibrado/Economizador por Alto rendimiento, que mantiene el procesador a alta frecuencia y evita caídas de FPS por ahorro de energía. En notebook, úsalo solo enchufado.",
+          "how_to_check": "Panel de control › Hardware y sonido › Opciones de energía — el plan marcado es el activo."
+        },
+        "en": {
+          "title": "High performance power plan",
+          "description": "Switches the Balanced/Power saver plan to High performance, which keeps the processor at high clocks and avoids FPS drops from power saving. On a laptop, use it only when plugged in.",
+          "how_to_check": "Control Panel › Hardware and Sound › Power Options — the selected plan is the active one."
+        }
+      }
     },
     {
       "id": "cs2.gpu_high_performance",
@@ -43,7 +55,19 @@
         {
           "type": "cs2_gpu_preference"
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "CS2 siempre en la placa de video dedicada",
+          "description": "Le indica a Windows que ejecute cs2.exe en la GPU de alto rendimiento. Clave en notebooks con video integrado y dedicado, donde el juego a veces abre en la GPU débil.",
+          "how_to_check": "Configuración › Sistema › Pantalla › Gráficos — cs2.exe aparece con 'Alto rendimiento'."
+        },
+        "en": {
+          "title": "CS2 always on the dedicated graphics card",
+          "description": "Tells Windows to run cs2.exe on the high-performance GPU. Essential on laptops with integrated and dedicated graphics, where the game sometimes opens on the weaker GPU.",
+          "how_to_check": "Settings › System › Display › Graphics — cs2.exe shows 'High performance'."
+        }
+      }
     },
     {
       "id": "gamedvr.disable",
@@ -75,7 +99,19 @@
           "name": "AppCaptureEnabled",
           "value": 0
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Desactivar la grabación en segundo plano",
+          "description": "La Xbox Game Bar puede quedarse grabando los últimos minutos de juego todo el tiempo, gastando GPU y disco. Apaga la captura automática (igual puedes grabar a mano).",
+          "how_to_check": "Configuración › Juegos › Capturas — 'Grabar lo que sucedió' queda desactivado."
+        },
+        "en": {
+          "title": "Turn off background recording",
+          "description": "Xbox Game Bar can keep recording the last minutes of gameplay all the time, using GPU and disk. This turns off automatic capture (you can still record manually).",
+          "how_to_check": "Settings › Gaming › Captures — 'Record what happened' is off."
+        }
+      }
     },
     {
       "id": "gamemode.enable",
@@ -107,7 +143,19 @@
           "name": "AllowAutoGameMode",
           "value": 1
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Activar el Modo de juego de Windows",
+          "description": "Hace que Windows priorice el juego abierto y frene actualizaciones y tareas de mantenimiento durante la partida.",
+          "how_to_check": "Configuración › Juegos › Modo de juego — queda activado."
+        },
+        "en": {
+          "title": "Turn on Windows Game Mode",
+          "description": "Makes Windows prioritize the game you are playing and hold back updates and maintenance tasks during the match.",
+          "how_to_check": "Settings › Gaming › Game Mode — stays on."
+        }
+      }
     },
     {
       "id": "mouse.disable_acceleration",
@@ -146,7 +194,19 @@
           "name": "MouseThreshold2",
           "value": "0"
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Desactivar la aceleración del mouse",
+          "description": "Desactiva 'Mejorar la precisión del puntero'. CS2 usa entrada directa, pero la aceleración confunde la memoria muscular en el escritorio y en los menús. Se aplica al cerrar sesión y volver a entrar.",
+          "how_to_check": "Panel de control › Mouse › Opciones de puntero — 'Mejorar la precisión del puntero' queda desmarcado (después de cerrar sesión y volver a entrar)."
+        },
+        "en": {
+          "title": "Turn off mouse acceleration",
+          "description": "Disables 'Enhance pointer precision'. CS2 uses raw input, but acceleration throws off muscle memory on the desktop and in menus. Takes effect after you sign out and back in.",
+          "how_to_check": "Control Panel › Mouse › Pointer Options — 'Enhance pointer precision' is unchecked (after signing out and back in)."
+        }
+      }
     },
     {
       "id": "delivery_optimization.no_p2p",
@@ -171,7 +231,19 @@
           "name": "DODownloadMode",
           "value": 0
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Dejar de enviar actualizaciones a otras PC",
+          "description": "Por defecto, Windows puede usar tu internet para enviar partes de actualizaciones a otras computadoras. Apaga ese envío P2P (las actualizaciones siguen llegando normalmente).",
+          "how_to_check": "Configuración › Windows Update › Opciones avanzadas › Optimización de distribución — aparece como administrado por la organización."
+        },
+        "en": {
+          "title": "Stop sending updates to other PCs",
+          "description": "By default, Windows can use your internet connection to send pieces of updates to other computers. This turns off that P2P upload (updates still arrive normally).",
+          "how_to_check": "Settings › Windows Update › Advanced options › Delivery Optimization — shows as managed by your organization."
+        }
+      }
     },
     {
       "id": "suggestions.disable",
@@ -217,7 +289,19 @@
           "name": "SubscribedContent-338389Enabled",
           "value": 0
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Desactivar sugerencias y apps que se instalan solas",
+          "description": "Quita consejos, anuncios del menú Inicio y la instalación silenciosa de apps sugeridas por Microsoft.",
+          "how_to_check": "Menú Inicio sin apps sugeridas ni anuncios."
+        },
+        "en": {
+          "title": "Turn off suggestions and auto-installed apps",
+          "description": "Removes tips, Start menu ads and the silent install of apps suggested by Microsoft.",
+          "how_to_check": "Start menu with no suggested apps or ads."
+        }
+      }
     },
     {
       "id": "telemetry.minimal",
@@ -241,7 +325,19 @@
           "name": "AllowTelemetry",
           "value": 0
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Telemetría al mínimo",
+          "description": "Reduce el envío de datos de diagnóstico a Microsoft al nivel mínimo que permite tu edición de Windows.",
+          "how_to_check": "Configuración › Privacidad y seguridad › Diagnóstico y comentarios — aparece como administrado por la organización."
+        },
+        "en": {
+          "title": "Minimum telemetry",
+          "description": "Reduces the diagnostic data sent to Microsoft to the lowest level your Windows edition allows.",
+          "how_to_check": "Settings › Privacy & security › Diagnostics & feedback — shows as managed by your organization."
+        }
+      }
     },
     {
       "id": "widgets.disable",
@@ -265,7 +361,19 @@
           "name": "AllowNewsAndInterests",
           "value": 0
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Desactivar Widgets y Noticias",
+          "description": "Apaga el panel de Widgets/Noticias, que carga contenido de internet en segundo plano.",
+          "how_to_check": "El botón de Widgets desaparece de la barra de tareas (puede hacer falta cerrar sesión y volver a entrar)."
+        },
+        "en": {
+          "title": "Turn off Widgets and News",
+          "description": "Turns off the Widgets/News panel, which keeps loading internet content in the background.",
+          "how_to_check": "The Widgets button disappears from the taskbar (you may need to sign out and back in)."
+        }
+      }
     },
     {
       "id": "visual.transparency_off",
@@ -288,7 +396,19 @@
           "name": "EnableTransparency",
           "value": 0
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Desactivar la transparencia de Windows",
+          "description": "Quita el efecto de vidrio de la barra de tareas y del menú Inicio. La mejora es pequeña, pero ayuda en PC más modestas.",
+          "how_to_check": "Configuración › Personalización › Colores — 'Efectos de transparencia' desactivado."
+        },
+        "en": {
+          "title": "Turn off Windows transparency",
+          "description": "Removes the glass effect from the taskbar and Start menu. A small gain, but it helps on weaker PCs.",
+          "how_to_check": "Settings › Personalization › Colors — 'Transparency effects' off."
+        }
+      }
     },
     {
       "id": "background_apps.disable",
@@ -311,7 +431,19 @@
           "name": "GlobalUserDisabled",
           "value": 1
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Bloquear apps de la Store en segundo plano",
+          "description": "Evita que las apps de Microsoft Store sigan funcionando ocultas cuando no están abiertas.",
+          "how_to_check": "Efecto interno de Windows; compruébalo con el registro que se muestra aquí."
+        },
+        "en": {
+          "title": "Block Store apps in the background",
+          "description": "Stops Microsoft Store apps from running hidden when they are not open.",
+          "how_to_check": "Internal Windows setting; check it with the registry value shown here."
+        }
+      }
     },
     {
       "id": "hags.enable",
@@ -333,7 +465,19 @@
           "name": "HwSchMode",
           "value": 2
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Programación de GPU acelerada por hardware",
+          "description": "Deja que la placa de video administre su propia memoria. En algunas PC mejora el 1% low y en otras lo empeora: prueba con el benchmark antes y después. Requiere reiniciar.",
+          "how_to_check": "Configuración › Sistema › Pantalla › Gráficos › Cambiar la configuración de gráficos predeterminada — 'Programación de GPU acelerada por hardware' activada (después de reiniciar)."
+        },
+        "en": {
+          "title": "Hardware-accelerated GPU scheduling",
+          "description": "Lets the graphics card manage its own memory. On some PCs it improves 1% lows, on others it makes them worse — test with the benchmark before and after. Requires a restart.",
+          "how_to_check": "Settings › System › Display › Graphics › Change default graphics settings — 'Hardware-accelerated GPU scheduling' on (after restarting)."
+        }
+      }
     },
     {
       "id": "timer.global_requests",
@@ -357,7 +501,19 @@
           "name": "GlobalTimerResolutionRequests",
           "value": 1
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Resolución de timer global (Windows 11)",
+          "description": "Desde Windows 10 2004, la precisión del timer vale solo para el proceso que la pide. En Windows 11 este ajuste devuelve el comportamiento global, que puede estabilizar el frametime. Requiere reiniciar.",
+          "how_to_check": "Efecto interno del kernel; solo vale después de reiniciar la PC."
+        },
+        "en": {
+          "title": "Global timer resolution (Windows 11)",
+          "description": "Since Windows 10 2004, timer precision only applies to the process that requests it. On Windows 11 this setting restores the global behavior, which can stabilize frametimes. Requires a restart.",
+          "how_to_check": "Internal kernel setting; only takes effect after restarting the PC."
+        }
+      }
     },
     {
       "id": "mmcss.responsiveness",
@@ -379,7 +535,19 @@
           "name": "SystemResponsiveness",
           "value": 10
         }
-      ]
+      ],
+      "i18n": {
+        "es": {
+          "title": "Menos CPU reservada para multimedia",
+          "description": "Windows reserva el 20% de la CPU para tareas de audio y video en segundo plano. Lo baja al 10%. Efecto discutido: solo para quien quiere probar todo.",
+          "how_to_check": "Efecto interno de Windows; solo vale después de reiniciar la PC."
+        },
+        "en": {
+          "title": "Less CPU reserved for multimedia",
+          "description": "Windows reserves 20% of the CPU for background audio/video tasks. This lowers it to 10%. The effect is debated — only for those who want to try everything.",
+          "how_to_check": "Internal Windows setting; only takes effect after restarting the PC."
+        }
+      }
     }
   ]
 }

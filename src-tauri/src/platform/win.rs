@@ -68,7 +68,7 @@ pub fn reg_read(hive: Hive, path: &str, name: &str) -> Result<Option<RegData>> {
 pub fn reg_write(hive: Hive, path: &str, name: &str, value: &RegData) -> Result<()> {
     let (key, _) = root(hive)
         .create_subkey(path)
-        .with_context(|| format!("sem permissão para escrever em {path} (rode como administrador)"))?;
+        .with_context(|| tr!("sem permissão para escrever em {path} (rode como administrador)", "sin permiso para escribir en {path} (ejecuta como administrador)", "no permission to write to {path} (run as administrator)"))?;
     match value {
         RegData::Dword(v) => key.set_value(name, v)?,
         RegData::Sz(s) => key.set_value(name, s)?,
@@ -117,7 +117,7 @@ pub fn power_active() -> Result<String> {
         let mut p: *mut GUID = std::ptr::null_mut();
         let r = PowerGetActiveScheme(None, &mut p);
         if r != WIN32_ERROR(0) || p.is_null() {
-            bail!("não foi possível ler o plano de energia ({})", r.0);
+            bail!(tr!("não foi possível ler o plano de energia ({})", "no se pudo leer el plan de energía ({})", "could not read the power plan ({})", r.0));
         }
         let s = guid_str(&*p);
         let _ = LocalFree(Some(HLOCAL(p as _)));
@@ -129,7 +129,7 @@ pub fn power_set(guid: &str) -> Result<()> {
     let g = guid_from(guid)?;
     let r = unsafe { PowerSetActiveScheme(None, Some(&g)) };
     if r != WIN32_ERROR(0) {
-        bail!("não foi possível ativar o plano {guid} ({})", r.0);
+        bail!(tr!("não foi possível ativar o plano {guid} ({})", "no se pudo activar el plan {guid} ({})", "could not activate power plan {guid} ({})", r.0));
     }
     Ok(())
 }
@@ -140,7 +140,7 @@ fn power_duplicate(source: &str) -> Result<String> {
         let mut p: *mut GUID = std::ptr::null_mut();
         let r = PowerDuplicateScheme(None, &src, &mut p);
         if r != WIN32_ERROR(0) || p.is_null() {
-            bail!("não foi possível criar o plano ({})", r.0);
+            bail!(tr!("não foi possível criar o plano ({})", "no se pudo crear el plan ({})", "could not create the power plan ({})", r.0));
         }
         let s = guid_str(&*p);
         let _ = LocalFree(Some(HLOCAL(p as _)));
@@ -262,17 +262,17 @@ pub fn set_display_refresh(device: &str, hz: u32) -> Result<()> {
     let dev_w = to_wide(device);
     let mut dm = new_devmode();
     if !unsafe { EnumDisplaySettingsW(PCWSTR(dev_w.as_ptr()), ENUM_CURRENT_SETTINGS, &mut dm) }.as_bool() {
-        bail!("monitor {device} não encontrado");
+        bail!(tr!("monitor {device} não encontrado", "monitor {device} no encontrado", "monitor {device} not found"));
     }
     dm.dmDisplayFrequency = hz;
     dm.dmFields = DM_DISPLAYFREQUENCY;
     let test = unsafe { ChangeDisplaySettingsExW(PCWSTR(dev_w.as_ptr()), Some(&dm), None, CDS_TEST, None) };
     if test != DISP_CHANGE_SUCCESSFUL {
-        bail!("o monitor recusou {hz} Hz (código {})", test.0);
+        bail!(tr!("o monitor recusou {hz} Hz (código {})", "el monitor rechazó {hz} Hz (código {})", "the monitor rejected {hz} Hz (code {})", test.0));
     }
     let r = unsafe { ChangeDisplaySettingsExW(PCWSTR(dev_w.as_ptr()), Some(&dm), None, CDS_UPDATEREGISTRY, None) };
     if r != DISP_CHANGE_SUCCESSFUL {
-        bail!("falha ao aplicar {hz} Hz (código {})", r.0);
+        bail!(tr!("falha ao aplicar {hz} Hz (código {})", "error al aplicar {hz} Hz (código {})", "failed to apply {hz} Hz (code {})", r.0));
     }
     Ok(())
 }
@@ -466,9 +466,9 @@ pub fn create_restore_point(description: &str) -> Result<()> {
     let code = status.nStatus;
     if !ok {
         if code.0 == 1058 {
-            bail!("a Proteção do Sistema está desligada neste PC");
+            bail!(tr!("a Proteção do Sistema está desligada neste PC", "la Protección del sistema está desactivada en esta PC", "System Protection is turned off on this PC"));
         }
-        bail!("o Windows não criou o ponto de restauração (código {})", code.0);
+        bail!(tr!("o Windows não criou o ponto de restauração (código {})", "Windows no creó el punto de restauración (código {})", "Windows did not create the restore point (code {})", code.0));
     }
     let seq = status.llSequenceNumber;
     let end = RESTOREPOINTINFOW {

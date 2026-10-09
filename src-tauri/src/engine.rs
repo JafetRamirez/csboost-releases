@@ -76,19 +76,19 @@ impl Ctx {
 
 fn unsupported_reason(t: &Tweak, ctx: &Ctx) -> Option<String> {
     if !cfg!(windows) {
-        return Some("Disponível apenas no Windows".into());
+        return Some(tr!("Disponível apenas no Windows", "Disponible solo en Windows", "Only available on Windows"));
     }
     if let Some(min) = t.min_build {
         if ctx.os_build != 0 && ctx.os_build < min {
             return Some(if min >= 22000 {
-                "Só funciona no Windows 11".into()
+                tr!("Só funciona no Windows 11", "Solo funciona en Windows 11", "Only works on Windows 11")
             } else {
-                format!("Requer Windows build {min} ou superior")
+                tr!("Requer Windows build {min} ou superior", "Requiere Windows build {min} o superior", "Requires Windows build {min} or later")
             });
         }
     }
     if t.actions.iter().any(|a| matches!(a, Action::Cs2GpuPreference)) && ctx.cs2_exe.is_none() {
-        return Some("CS2 não encontrado neste PC".into());
+        return Some(tr!("CS2 não encontrado neste PC", "CS2 no encontrado en esta PC", "CS2 not found on this PC"));
     }
     None
 }
@@ -159,7 +159,7 @@ fn apply_action(a: &Action, ctx: &Ctx) -> Result<Change> {
             let previous = platform::reg_read(*hive, path, name)?;
             platform::reg_write(*hive, path, name, value)?;
             if platform::reg_read(*hive, path, name)?.as_ref() != Some(value) {
-                return Err(anyhow!("o valor não foi gravado em {path}\\{name}"));
+                return Err(anyhow!(tr!("o valor não foi gravado em {path}\\{name}", "el valor no se guardó en {path}\\{name}", "the value was not written to {path}\\{name}")));
             }
             Ok(Change::Registry { hive: *hive, path: path.clone(), name: name.clone(), previous, applied: Some(value.clone()) })
         }
@@ -169,7 +169,7 @@ fn apply_action(a: &Action, ctx: &Ctx) -> Result<Change> {
             Ok(Change::PowerPlan { previous, applied })
         }
         Action::Cs2GpuPreference => {
-            let exe = ctx.cs2_exe.clone().ok_or_else(|| anyhow!("CS2 não encontrado"))?;
+            let exe = ctx.cs2_exe.clone().ok_or_else(|| anyhow!(tr!("CS2 não encontrado", "CS2 no encontrado", "CS2 not found")))?;
             let previous = platform::reg_read(Hive::Hkcu, GPU_PREF_PATH, &exe)?;
             let value = RegData::Sz(GPU_PREF_HIGH.into());
             platform::reg_write(Hive::Hkcu, GPU_PREF_PATH, &exe, &value)?;
@@ -201,15 +201,15 @@ pub fn undo_change(c: &Change) -> Result<()> {
 }
 
 fn apply_one(t: &Tweak, ctx: &Ctx, journal: &mut Journal) -> OpResult {
-    let skip = |msg: &str| OpResult { tweak_id: t.id.clone(), ok: true, skipped: true, message: Some(msg.into()) };
+    let skip = |msg: String| OpResult { tweak_id: t.id.clone(), ok: true, skipped: true, message: Some(msg) };
     if let Some(r) = unsupported_reason(t, ctx) {
         return OpResult { tweak_id: t.id.clone(), ok: false, skipped: true, message: Some(r) };
     }
     if journal.active(&t.id).is_some() {
-        return skip("Já aplicado pelo CSBoost");
+        return skip(tr!("Já aplicado pelo CSBoost", "Ya aplicado por CSBoost", "Already applied by CSBoost"));
     }
     if detect(t, ctx, journal) == TweakState::Applied {
-        return skip("Já estava ativo no sistema");
+        return skip(tr!("Já estava ativo no sistema", "Ya estaba activo en el sistema", "Already active on the system"));
     }
 
     let mut done: Vec<Change> = Vec::new();
@@ -236,7 +236,7 @@ pub fn apply(ids: &[String]) -> Result<BatchResult> {
     let mut needs_reboot = false;
     for id in ids {
         let Some(t) = catalog::find(id) else {
-            results.push(OpResult { tweak_id: id.clone(), ok: false, skipped: true, message: Some("Tweak desconhecido".into()) });
+            results.push(OpResult { tweak_id: id.clone(), ok: false, skipped: true, message: Some(tr!("Ajuste desconhecido", "Ajuste desconocido", "Unknown tweak")) });
             continue;
         };
         let r = apply_one(&t, &ctx, &mut journal);
@@ -256,7 +256,7 @@ pub fn revert(ids: &[String]) -> Result<BatchResult> {
     let mut needs_reboot = false;
     for id in ids {
         let Some(entry) = journal.active_mut(id) else {
-            results.push(OpResult { tweak_id: id.clone(), ok: true, skipped: true, message: Some("Nada para reverter".into()) });
+            results.push(OpResult { tweak_id: id.clone(), ok: true, skipped: true, message: Some(tr!("Nada para reverter", "Nada para revertir", "Nothing to revert")) });
             continue;
         };
         let mut err = None;

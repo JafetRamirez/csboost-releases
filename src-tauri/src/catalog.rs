@@ -79,6 +79,35 @@ pub struct Tweak {
     pub how_to_check: Option<String>,
     pub presets: Vec<String>,
     pub actions: Vec<Action>,
+    /// Textos em outros idiomas (es, en). O português fica nos campos acima.
+    #[serde(default, skip_serializing)]
+    pub i18n: std::collections::HashMap<String, TweakText>,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct TweakText {
+    pub title: Option<String>,
+    pub description: Option<String>,
+    pub how_to_check: Option<String>,
+}
+
+impl Tweak {
+    /// Troca título, descrição e "onde conferir" pelo idioma atual.
+    fn localize(mut self) -> Tweak {
+        let code = crate::i18n::code();
+        if let Some(tx) = self.i18n.get(code).cloned() {
+            if let Some(v) = tx.title {
+                self.title = v;
+            }
+            if let Some(v) = tx.description {
+                self.description = v;
+            }
+            if tx.how_to_check.is_some() {
+                self.how_to_check = tx.how_to_check;
+            }
+        }
+        self
+    }
 }
 
 #[derive(Debug, Deserialize)]
@@ -91,7 +120,7 @@ struct CatalogFile {
 pub fn load() -> Vec<Tweak> {
     let file: CatalogFile = serde_json::from_str(include_str!("../../catalog/tweaks.json"))
         .expect("catalog/tweaks.json inválido");
-    file.tweaks
+    file.tweaks.into_iter().map(Tweak::localize).collect()
 }
 
 pub fn find(id: &str) -> Option<Tweak> {
@@ -108,5 +137,15 @@ mod tests {
         ids.sort();
         ids.dedup();
         assert_eq!(ids.len(), tweaks.len());
+    }
+
+    #[test]
+    fn every_tweak_has_es_and_en() {
+        for t in super::load() {
+            for lang in ["es", "en"] {
+                let tx = t.i18n.get(lang).unwrap_or_else(|| panic!("{} sem {lang}", t.id));
+                assert!(tx.title.is_some() && tx.description.is_some(), "{} incompleto em {lang}", t.id);
+            }
+        }
     }
 }

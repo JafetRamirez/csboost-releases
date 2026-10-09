@@ -8,6 +8,7 @@ import { api, errorText } from "../lib/api";
 import { presets, scoreVerdict } from "../lib/labels";
 import { useApp } from "../lib/store";
 import type { Preset } from "../lib/types";
+import { t, tn } from "../i18n";
 
 type Step = { label: string; status: "wait" | "run" | "done" | "skip" };
 
@@ -25,16 +26,16 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
       .catch(() => {});
   }, [report]);
 
-  if (!report || !tweaks) return <Loading label="Analisando o seu PC…" />;
+  if (!report || !tweaks) return <Loading label={t("dash.analyzing")} />;
 
   const pending = tweaks.filter((t) => t.supported && t.presets.includes(preset) && t.state !== "applied");
   const running = steps?.some((s) => s.status === "run") ?? false;
 
   async function optimize() {
     const plan: Step[] = [
-      { label: "Criar ponto de restauração do Windows", status: "wait" },
-      { label: `Aplicar ${pending.length} ${pending.length === 1 ? "ajuste" : "ajustes"} do modo ${presets.find((p) => p.id === preset)!.name}`, status: "wait" },
-      { label: "Analisar o PC de novo", status: "wait" },
+      { label: t("dash.step.restore"), status: "wait" },
+      { label: tn(pending.length, "dash.step.applyOne", "dash.step.applyMany", { mode: presets().find((p) => p.id === preset)!.name }), status: "wait" },
+      { label: t("dash.step.rescan"), status: "wait" },
     ];
     const set = (i: number, status: Step["status"]) => {
       plan[i] = { ...plan[i], status };
@@ -48,7 +49,7 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
       set(0, "done");
     } catch (e) {
       set(0, "skip");
-      notify("info", `Ponto de restauração não criado (${errorText(e)}). Seguimos — o CSBoost guarda o próprio backup de cada ajuste.`);
+      notify("info", t("dash.restoreSkipped", { err: errorText(e) }));
     }
 
     set(1, "run");
@@ -72,12 +73,12 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
   const topIssues = report.issues.filter((i) => i.severity !== "info").slice(0, 3);
 
   const specs: [string, string][] = [
-    ["Processador", hw.cpu ? `${hw.cpu}` : "—"],
-    ["Placa de vídeo", hw.gpus.map((g) => g.name).join(" + ") || "—"],
-    ["Memória", ramGb ? `${ramGb.toFixed(0)} GB em ${hw.ram_modules.length} ${hw.ram_modules.length === 1 ? "pente" : "pentes"}${isFinite(ramMts) ? `, ${ramMts} MT/s` : ""}` : "—"],
-    ["Monitor", display ? `${display.width}×${display.height} a ${display.current_hz} Hz` : "—"],
-    ["Energia", report.power_plan.name],
-    ["Sistema", hw.os_name ? `${hw.os_name.replace("Microsoft ", "")} (build ${hw.os_build})` : "—"],
+    [t("dash.spec.cpu"), hw.cpu ? `${hw.cpu}` : "—"],
+    [t("dash.spec.gpu"), hw.gpus.map((g) => g.name).join(" + ") || "—"],
+    [t("dash.spec.ram"), ramGb ? tn(hw.ram_modules.length, "dash.ramOne", "dash.ramMany", { gb: ramGb.toFixed(0) }) + (isFinite(ramMts) ? `, ${ramMts} MT/s` : "") : "—"],
+    [t("dash.spec.monitor"), display ? t("dash.monitorVal", { w: display.width, h: display.height, hz: display.current_hz }) : "—"],
+    [t("dash.spec.power"), report.power_plan.name],
+    [t("dash.spec.os"), hw.os_name ? `${hw.os_name.replace("Microsoft ", "")} (build ${hw.os_build})` : "—"],
   ];
 
   return (
@@ -94,18 +95,18 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
               disabled={scanning || running}
               className="mt-3 inline-flex items-center gap-1.5 text-[14px] text-fg/70 hover:text-fg cursor-pointer disabled:opacity-50"
             >
-              <RotateCcw size={14} className={scanning ? "spin" : ""} /> Analisar de novo
+              <RotateCcw size={14} className={scanning ? "spin" : ""} /> {t("dash.rescan")}
             </button>
           </div>
 
           <div className="py-9 pr-9 pl-4">
-            <h2 className="font-display text-[21px] leading-tight uppercase">Otimizar para o CS2</h2>
+            <h2 className="font-display text-[21px] leading-tight uppercase">{t("dash.optimizeTitle")}</h2>
             <p className="text-dim mt-2 text-[15px] max-w-[52ch]">
-              Escolha o modo. Antes de mudar qualquer coisa o CSBoost cria um ponto de restauração e guarda o valor antigo de cada ajuste — dá para desfazer tudo em Histórico.
+              {t("dash.optimizeLead")}
             </p>
 
-            <div role="radiogroup" aria-label="Modo de otimização" className="grid grid-cols-3 gap-2 mt-5">
-              {presets.map((p) => {
+            <div role="radiogroup" aria-label={t("dash.modeAria")} className="grid grid-cols-3 gap-2 mt-5">
+              {presets().map((p) => {
                 const on = p.id === preset;
                 return (
                   <button
@@ -139,8 +140,8 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
                 ))}
                 {!running && (
                   <li className="pt-2 flex gap-2">
-                    <Button variant="ghost" onClick={() => setSteps(null)}>Concluir</Button>
-                    <Button variant="quiet" onClick={() => go("historico")}>Ver o que mudou</Button>
+                    <Button variant="ghost" onClick={() => setSteps(null)}>{t("dash.done")}</Button>
+                    <Button variant="quiet" onClick={() => go("historico")}>{t("dash.seeChanges")}</Button>
                   </li>
                 )}
               </ul>
@@ -153,12 +154,10 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
                   disabled={pending.length === 0}
                   onClick={optimize}
                 >
-                  Otimizar agora
+                  {t("dash.optimizeNow")}
                 </Button>
                 <span className="text-[14px] text-dim">
-                  {pending.length === 0
-                    ? "Tudo deste modo já está aplicado."
-                    : `${pending.length} ${pending.length === 1 ? "ajuste pendente" : "ajustes pendentes"}`}
+                  {pending.length === 0 ? t("dash.allApplied") : tn(pending.length, "dash.pendingOne", "dash.pendingMany")}
                 </span>
               </div>
             )}
@@ -170,10 +169,10 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
         <div className="flex items-center gap-3 rounded-xl border border-amber/30 bg-amber/5 px-5 py-3 text-[15px]">
           <Clock size={18} className="text-amber shrink-0" />
           <span className="flex-1">
-            {pendingReboot} {pendingReboot === 1 ? "ajuste já foi gravado, mas só vale" : "ajustes já foram gravados, mas só valem"} depois de reiniciar o PC.
+            {tn(pendingReboot, "dash.rebootOne", "dash.rebootMany")}
           </span>
           <button className="text-[14px] text-amber hover:underline cursor-pointer" onClick={() => go("historico")}>
-            Ver o que mudou
+            {t("dash.seeChanges")}
           </button>
         </div>
       )}
@@ -181,9 +180,9 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
       <div className="grid grid-cols-[1.45fr_1fr] gap-6">
         <Panel className="p-6">
           <div className="flex items-baseline justify-between mb-4">
-            <h2 className="font-cond font-bold text-[20px]">O que mais pesa agora</h2>
+            <h2 className="font-cond font-bold text-[20px]">{t("dash.topIssues")}</h2>
             <button className="text-[14px] text-amber hover:underline cursor-pointer" onClick={() => go("raiox")}>
-              Ver Raio-X completo
+              {t("dash.fullXray")}
             </button>
           </div>
           {topIssues.length ? (
@@ -193,12 +192,12 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
               ))}
             </div>
           ) : (
-            <p className="text-dim py-6">Nenhum problema encontrado. Rode um benchmark para conferir o resultado no jogo.</p>
+            <p className="text-dim py-6">{t("dash.noIssues")}</p>
           )}
         </Panel>
 
         <Panel className="p-6">
-          <h2 className="font-cond font-bold text-[20px] mb-4">Seu PC</h2>
+          <h2 className="font-cond font-bold text-[20px] mb-4">{t("dash.yourPc")}</h2>
           <dl className="space-y-3.5">
             {specs.map(([k, v]) => (
               <div key={k}>

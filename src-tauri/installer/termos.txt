@@ -1,4 +1,6 @@
-﻿TERMOS DE USO DO CSBOOST
+﻿Português (Brasil) · Español · English
+
+TERMOS DE USO DO CSBOOST
 Versão 0.4 — outubro de 2026
 
 Leia com atenção antes de instalar.
@@ -32,3 +34,77 @@ O CSBoost não é afiliado, patrocinado ou endossado pela Valve Corporation. Cou
 
 10. Aceite
 Ao clicar em "Aceito", você declara que leu e concorda com estes termos.
+
+────────────────────────────────────────
+
+TÉRMINOS DE USO DE CSBOOST
+Versión 0.4 — octubre de 2026
+
+Lee con atención antes de instalar.
+
+1. Qué hace CSBoost
+CSBoost es un programa para Windows 10 y 11 que analiza la computadora y aplica ajustes de configuración del sistema (registro de Windows, plan de energía, frecuencia del monitor y archivos de configuración de Counter-Strike 2) para mejorar el rendimiento en juegos.
+
+2. Permiso de administrador
+Para cambiar configuraciones del sistema, CSBoost pide permiso de administrador cada vez que se abre.
+
+3. Cambios reversibles
+Antes de cualquier cambio, CSBoost guarda el valor anterior y, cuando Windows lo permite, crea un punto de restauración del sistema. Todos los cambios hechos por el programa se pueden deshacer desde la pantalla Historial. Al desinstalar, CSBoost pregunta si quieres deshacer todos los ajustes antes de salir.
+
+4. Juegos y sistemas anti-cheat
+CSBoost no inyecta código, no lee ni modifica la memoria de los juegos y no cambia archivos de los juegos — solo archivos de configuración del usuario. Aun así, cada desarrollador define sus propias reglas, y el usuario es responsable de respetarlas.
+
+5. Resultados
+La mejora de rendimiento varía según el hardware, los drivers y el estado del sistema. No garantizamos un aumento específico de FPS ni una reducción de latencia.
+
+6. Exención de garantía
+CSBoost se ofrece "tal cual". En la máxima medida permitida por la ley, no nos responsabilizamos por pérdidas de datos, fallas de hardware o de software derivadas del uso del programa. Mantén copias de seguridad de tus archivos importantes.
+
+7. Privacidad
+CSBoost no recopila ni envía datos personales ni información de tu computadora. La información de diagnóstico queda solo en tu computadora. La única conexión automática es la consulta de nuevas versiones en GitHub (github.com), que no envía datos tuyos.
+
+8. Licencia y código fuente
+CSBoost es software libre, distribuido bajo la Licencia Pública General de GNU, versión 3 o posterior (GPL-3.0-or-later). El código fuente está en https://github.com/JafetRamirez/csboost-releases. Los componentes de terceros mantienen sus propias licencias (ver THIRD_PARTY_NOTICES.md en el repositorio).
+
+9. Marcas
+CSBoost no está afiliado, patrocinado ni avalado por Valve Corporation. Counter-Strike, Counter-Strike 2 y Steam son marcas de Valve Corporation.
+
+10. Aceptación
+Al hacer clic en "Acepto", declaras que leíste y aceptas estos términos.
+
+────────────────────────────────────────
+
+CSBOOST TERMS OF USE
+Version 0.4 — October 2026
+
+Please read carefully before installing.
+
+1. What CSBoost does
+CSBoost is a program for Windows 10 and 11 that analyzes the computer and applies system configuration changes (Windows registry, power plan, monitor refresh rate and Counter-Strike 2 configuration files) to improve gaming performance.
+
+2. Administrator rights
+To change system settings, CSBoost asks for administrator rights every time it opens.
+
+3. Reversible changes
+Before any change, CSBoost saves the previous value and, when Windows allows it, creates a system restore point. Every change made by the program can be undone from the History screen. When uninstalling, CSBoost asks whether you want to undo all changes before leaving.
+
+4. Games and anti-cheat systems
+CSBoost does not inject code, does not read or modify game memory and does not change game files — only user configuration files. Even so, each game developer sets its own rules, and the user is responsible for following them.
+
+5. Results
+Performance gains vary with hardware, drivers and system state. We do not guarantee any specific FPS increase or latency reduction.
+
+6. Disclaimer of warranty
+CSBoost is provided "as is". To the maximum extent permitted by law, we are not liable for data loss or hardware or software failures resulting from the use of the program. Keep backups of your important files.
+
+7. Privacy
+CSBoost does not collect or send personal data or information about your computer. Diagnostic information stays only on your computer. The only automatic connection is checking GitHub (github.com) for new versions, which sends no data about you.
+
+8. License and source code
+CSBoost is free software, distributed under the GNU General Public License, version 3 or later (GPL-3.0-or-later). The source code is at https://github.com/JafetRamirez/csboost-releases. Third-party components keep their own licenses (see THIRD_PARTY_NOTICES.md in the repository).
+
+9. Trademarks
+CSBoost is not affiliated with, sponsored or endorsed by Valve Corporation. Counter-Strike, Counter-Strike 2 and Steam are trademarks of Valve Corporation.
+
+10. Acceptance
+By clicking "I Agree", you confirm that you have read and agree to these terms.

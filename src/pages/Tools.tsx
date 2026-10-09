@@ -5,6 +5,7 @@ import { api, errorText } from "../lib/api";
 import { fmtBytes, fmtNum } from "../lib/format";
 import { useApp } from "../lib/store";
 import type { CleanTarget } from "../lib/types";
+import { t as tr } from "../i18n";
 
 function Cleanup() {
   const { notify } = useApp();
@@ -15,9 +16,9 @@ function Cleanup() {
   const scan = async () => {
     setTargets(null);
     try {
-      const t = await api.cleanupScan();
-      setTargets(t);
-      setSel(new Set(t.filter((x) => x.selected_by_default && x.bytes > 0).map((x) => x.id)));
+      const list = await api.cleanupScan();
+      setTargets(list);
+      setSel(new Set(list.filter((x) => x.selected_by_default && x.bytes > 0).map((x) => x.id)));
     } catch (e) {
       notify("bad", errorText(e));
       setTargets([]);
@@ -36,7 +37,7 @@ function Cleanup() {
       const r = await api.cleanupRun([...sel]);
       notify(
         "good",
-        `${fmtBytes(r.freed_bytes)} liberados (${fmtNum(r.deleted_files)} arquivos).${r.skipped_files ? ` ${fmtNum(r.skipped_files)} estavam em uso e ficaram.` : ""}`,
+        tr("tools.freed", { size: fmtBytes(r.freed_bytes), n: fmtNum(r.deleted_files) }) + (r.skipped_files ? " " + tr("tools.skipped", { n: fmtNum(r.skipped_files) }) : ""),
       );
       await scan();
     } catch (e) {
@@ -50,17 +51,17 @@ function Cleanup() {
     <Panel className="overflow-hidden">
       <div className="flex items-start justify-between gap-4 px-6 pt-5 pb-3">
         <div>
-          <h2 className="font-cond font-bold text-[20px]">Limpeza</h2>
+          <h2 className="font-cond font-bold text-[20px]">{tr("tools.clean")}</h2>
           <p className="text-[14.5px] text-dim mt-0.5 max-w-[62ch]">
-            Apaga só arquivos temporários e caches que o Windows recria. Seus documentos e o jogo não são tocados. Limpeza não tem como desfazer.
+            {tr("tools.cleanLead")}
           </p>
         </div>
         <Button variant="primary" busy={busy} disabled={!targets || sel.size === 0 || total === 0} icon={<Sparkles size={16} />} onClick={run}>
-          Limpar {total > 0 ? fmtBytes(total) : ""}
+          {tr("tools.cleanBtn")} {total > 0 ? fmtBytes(total) : ""}
         </Button>
       </div>
       {!targets ? (
-        <Loading label="Calculando espaço…" />
+        <Loading label={tr("tools.calc")} />
       ) : (
         <ul>
           {targets.map((t) => {
@@ -92,8 +93,8 @@ function Cleanup() {
                   )}
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="font-cond font-bold text-[16px] num">{t.bytes ? fmtBytes(t.bytes) : "vazio"}</p>
-                  {t.files > 0 && <p className="text-[12.5px] text-faint num">{fmtNum(t.files)} arquivos</p>}
+                  <p className="font-cond font-bold text-[16px] num">{t.bytes ? fmtBytes(t.bytes) : tr("tools.empty")}</p>
+                  {t.files > 0 && <p className="text-[12.5px] text-faint num">{tr("tools.files", { n: fmtNum(t.files) })}</p>}
                 </div>
               </li>
             );
@@ -133,42 +134,42 @@ function MouseTest() {
 
   const verdict =
     peak === 0
-      ? "Mexa o mouse em círculos rápidos dentro da área."
+      ? tr("mouse.v0")
       : peak < 200
-        ? "Parece estar em 125 Hz. Se o seu mouse é gamer, aumente a taxa de polling no software do fabricante (1000 Hz é o padrão dos pros)."
+        ? tr("mouse.v125")
         : peak < 600
-          ? "Por volta de 500 Hz. Dá para subir para 1000 Hz no software do mouse."
-          : "1000 Hz ou mais. Está ótimo.";
+          ? tr("mouse.v500")
+          : tr("mouse.v1000");
 
   return (
     <Panel className="p-6">
-      <h2 className="font-cond font-bold text-[20px]">Teste do mouse</h2>
-      <p className="text-[14.5px] text-dim mt-0.5">Estima a taxa de polling: quantas vezes por segundo o mouse informa a posição.</p>
+      <h2 className="font-cond font-bold text-[20px]">{tr("mouse.title")}</h2>
+      <p className="text-[14.5px] text-dim mt-0.5">{tr("mouse.lead")}</p>
       <div className="grid grid-cols-[1fr_220px] gap-5 mt-4">
         <div
           ref={area}
           className="h-48 rounded-xl border-2 border-dashed border-line bg-base grid place-items-center text-dim select-none cursor-crosshair"
         >
           <span className="flex items-center gap-2">
-            <MousePointer2 size={18} /> Mexa o mouse rápido aqui dentro
+            <MousePointer2 size={18} /> {tr("mouse.area")}
           </span>
         </div>
         <div className="flex flex-col justify-center gap-3">
           <div>
-            <p className="text-[13.5px] text-dim">Agora</p>
+            <p className="text-[13.5px] text-dim">{tr("mouse.now")}</p>
             <p className="font-display text-[30px] leading-none num">{fmtNum(hz)} <span className="text-[16px] font-cond text-dim">Hz</span></p>
           </div>
           <div>
-            <p className="text-[13.5px] text-dim">Pico</p>
+            <p className="text-[13.5px] text-dim">{tr("mouse.peak")}</p>
             <p className="font-cond font-bold text-[22px] num">{fmtNum(peak)} Hz</p>
           </div>
           <button onClick={() => setPeak(0)} className="text-left text-[13.5px] text-faint hover:text-fg cursor-pointer">
-            Zerar
+            {tr("mouse.reset")}
           </button>
         </div>
       </div>
       <p className="text-[14px] mt-3">{verdict}</p>
-      <p className="text-[12.5px] text-faint mt-1">Estimativa pelo Windows: acima de 1000 Hz o valor pode aparecer menor do que o real.</p>
+      <p className="text-[12.5px] text-faint mt-1">{tr("mouse.note")}</p>
     </Panel>
   );
 }
@@ -176,7 +177,7 @@ function MouseTest() {
 export function ToolsPage() {
   return (
     <>
-      <PageHeader title="Ferramentas" lead="Limpeza de arquivos inúteis e teste do mouse." />
+      <PageHeader title={tr("nav.ferramentas")} lead={tr("tools.lead")} />
       <div className="space-y-6">
         <Cleanup />
         <MouseTest />
