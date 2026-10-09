@@ -35,13 +35,11 @@ export function Panel({ children, className = "" }: { children: ReactNode; class
   return <section className={`bg-panel border border-line rounded-2xl ${className}`}>{children}</section>;
 }
 
-// A fonte do CS troca o hífen pelo boneco do logo do jogo. Só deixamos isso
-// acontecer quando pedido (ex.: "Counter-Strike 2").
-export function PageHeader({ title, lead, actions, csGlyph = false }: { title: string; lead?: string; actions?: ReactNode; csGlyph?: boolean }) {
+export function PageHeader({ title, lead, actions }: { title: string; lead?: string; actions?: ReactNode }) {
   return (
     <header className="flex items-end justify-between gap-6 mb-7">
       <div className="max-w-[62ch]">
-        <h1 className="font-display text-[34px] leading-none text-fg">{csGlyph ? title : title.replace(/-/g, "\u2011")}</h1>
+        <h1 className="font-display text-[28px] leading-none uppercase text-fg">{title}</h1>
         {lead && <p className="text-dim mt-3 text-[15.5px]">{lead}</p>}
       </div>
       {actions && <div className="flex gap-2 shrink-0">{actions}</div>}

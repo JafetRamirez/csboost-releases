@@ -8,12 +8,12 @@
 - ✅ #9 Configs de pros (30 jogadores) + conversor de sensibilidade
 - ✅ #11 Teste do mouse (taxa de polling)
 - ⏳ #2 Detectar a GPU em uso pelo CS2: próxima versão
-- ⏳ #5 Certificado de assinatura: depende da compra pelo CNPJ
+- ⏳ #5 Assinatura de código: grátis pela SignPath Foundation (pedido em andamento; ver `docs/SIGNPATH.md`). Repositório já em GPL-3.0, fonte trocada para Orbitron (OFL) e logo refeito
 - Próximos: #7 Modo Sessão, #8 presets de vídeo, #10 perfil NVIDIA, #12 rotina de manutenção, #13 rede, #14 inglês/espanhol
 
 ### Correções para o próximo update
 - **Configs de pros → conversor de sensibilidade** (`src/pages/Pros.tsx`, card "Mesma sensibilidade do … no seu mouse"): em janela estreita o card quebra. "Seu DPI" vira duas linhas, o resultado `sensitivity 1` quebra e o botão "Copiar" vaza para fora do card. Corrigir a responsividade: empilhar input e resultado quando faltar espaço, `whitespace-nowrap` no comando e botão dentro do card. (Visto em 08/10/2026, janela de ~1270 px.)
-- **Workflows do GitHub:** trocar `actions/checkout@v4` e `actions/setup-node@v4` por `@v5` no `release.yml` e no `ci.yml` (aviso de Node.js 20 descontinuado).
+- ✅ **Workflows do GitHub:** `actions/checkout` e `actions/setup-node` já em `@v5`.
 
 
 > Montado em 08/10/2026 a partir de: comentários do post de lançamento no grupo de CS2 (v0.2.0), pesquisa do **Hone** (o "H0nda" citado nos comentários — hone.gg) e de outros otimizadores (Razer Cortex, Wise Game Booster, EXMTweaks, Talon).
@@ -68,7 +68,7 @@ Legenda — **Impacto**: o quanto melhora o resultado ou a confiança · **Esfor
 | 2 | **Detectar GPU em uso pelo CS2** (lendo os contadores de GPU do Windows, sem tocar no jogo) + guia de MUX switch por marca de notebook | Caso do Jones; notebook gamer é grande parte do público | Alto | P |
 | 3 | **Desinstalador que oferece "Reverter tudo"** antes de remover o app | É a maior reclamação do Hone. Vira argumento de venda: "sai limpo" | Alto | P |
 | 4 | **Transparência**: código-fonte público, link do VirusTotal e SHA256 em cada release, página "o que o CSBoost faz e não faz" | Responde direto ao medo de "roubar senha" | Alto | P |
-| 5 | **Certificado de assinatura (OV)** no CNPJ | Tira o aviso do SmartScreen e reduz alerta de antivírus | Alto | P (+ prazo da certificadora) |
+| 5 | **Assinatura de código** grátis pela SignPath Foundation (projeto open source). O OV pago foi descartado pela regra de produto 100% gratuito | Reduz o aviso do Chrome e os alertas de antivírus; o SmartScreen melhora com a reputação | Alto | P (+ prazo de aprovação) |
 | 6 | **Limpeza** (temporários, cache de shader do driver *só quando o usuário pede*, logs antigos) com tamanho liberado | Usuários do Hone elogiam; dá sensação de resultado imediato | Médio | P |
 
 ### Próximo (v0.5 – v0.7)
@@ -120,7 +120,7 @@ Ideias boas que hoje geram custo para o usuário ou custo alto para manter. Fica
 
 1. **v0.3.0** = Benchmark (#1) + GPU em uso (#2) + desinstalador com reversão (#3). Serve também para testar a atualização automática.
 2. Abrir o código (#4) e pedir ao Gustavo autorização para usar o depoimento dele.
-3. Orçar o certificado OV (#5).
+3. Pedir a assinatura gratuita na SignPath Foundation (#5).
 
 ## Fontes
 - Hone — Premium: https://hone.gg/premium · CS2: https://hone.gg/pt/jogo/counter-strike-2 · Overwolf: https://overwolf.com/app/auraside_inc-hone

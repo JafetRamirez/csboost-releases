@@ -176,20 +176,34 @@ Cores tiradas do logo (`src/styles.css`, bloco `@theme`):
 | `ink` | `#1C1C1C` | texto sobre botões âmbar (como no logo) |
 | `base` / `panel` / `raised` | `#11142A` / `#181C36` / `#212647` | fundos, puxados para o azul do logo |
 
-Tipografia: **Counter-Strike** (títulos e números grandes) + **Barlow / Barlow Semi Condensed** (texto e interface).
-Detalhe: a fonte do CS desenha o hífen como o boneco do logo do jogo — os títulos trocam o hífen por um hífen não-separável, exceto em "Counter-Strike 2".
+Tipografia: **Orbitron** (títulos em caixa alta, números grandes e o nome no logo) + **Barlow / Barlow Semi Condensed** (texto e interface). Todas com licença SIL Open Font License.
+Logo: PNG em `src/assets/brand/` (usado no app) e SVG + PNG em `docs/brand/` (`light` = nome claro para fundo escuro; `dark` = nome escuro para fundo claro).
 
 ---
 
 ## Pendências e avisos
 
-- **Licença da fonte** `cs_regular.ttf`: é uma fonte feita por fã; confirme a licença para uso comercial antes de vender. Avalie também a semelhança com a marca da Valve.
 - **Benchmark:** próxima etapa — integrar o PresentMon (Intel, MIT) e mostrar FPS médio / 1% low antes × depois.
-- **Assinatura de código:** sem certificado OV o Windows mostra o aviso do SmartScreen. Ver seção 8 do brainstorm.
+- **Assinatura de código:** pedido de assinatura gratuita na SignPath Foundation (projetos de código aberto). Passo a passo em `docs/SIGNPATH.md`; política em `docs/CODE_SIGNING_POLICY.md`.
 - **Conta elevada diferente:** se um usuário comum autorizar o UAC com a senha de outro admin, os ajustes de `HKCU` vão para o perfil do admin. Caso raro; o Modo Sessão (serviço) resolve depois.
 - **Ponto de restauração:** o Windows cria no máximo 1 a cada 24 h; se a Proteção do Sistema estiver desligada o app avisa e segue (o journal continua guardando tudo).
 - **Atualização automática:** a primeira instalação da 0.2 é manual (a 0.1 não tinha atualizador); daí em diante é automático.
 - Próximos itens do roadmap: Modo Sessão (serviço que liga/desliga ajustes quando o `cs2.exe` abre/fecha), perfil NVIDIA via NVAPI, licença + Mercado Pago, EN/ES.
+
+## Licença
+
+O CSBoost é software livre: você pode redistribuí-lo e modificá-lo sob os termos da
+**GNU General Public License, versão 3 ou posterior** (`GPL-3.0-or-later`). Veja `LICENSE`.
+Componentes de terceiros e suas licenças: `THIRD_PARTY_NOTICES.md`.
+
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+Papéis, o que é assinado e a declaração de privacidade: [`docs/CODE_SIGNING_POLICY.md`](docs/CODE_SIGNING_POLICY.md).
+
+## Privacidade
+
+O CSBoost não coleta nem envia dados pessoais ou do computador. A única conexão automática é a consulta de novas versões no GitHub.
 
 ## Verificações feitas nesta versão
 - `npm run build` (TypeScript + Vite) sem erros.

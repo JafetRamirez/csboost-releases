@@ -99,7 +99,7 @@ export function Dashboard({ go }: { go: (p: Page) => void }) {
           </div>
 
           <div className="py-9 pr-9 pl-4">
-            <h2 className="font-display text-[26px] leading-tight">Otimizar para o CS2</h2>
+            <h2 className="font-display text-[21px] leading-tight uppercase">Otimizar para o CS2</h2>
             <p className="text-dim mt-2 text-[15px] max-w-[52ch]">
               Escolha o modo. Antes de mudar qualquer coisa o CSBoost cria um ponto de restauração e guarda o valor antigo de cada ajuste — dá para desfazer tudo em Histórico.
             </p>

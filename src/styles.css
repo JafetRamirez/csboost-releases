@@ -4,12 +4,8 @@
 @import "@fontsource/barlow/600.css";
 @import "@fontsource/barlow-semi-condensed/600.css";
 @import "@fontsource/barlow-semi-condensed/700.css";
-
-@font-face {
-  font-family: "CS Display";
-  src: url("./assets/fonts/cs_regular.ttf") format("truetype");
-  font-display: swap;
-}
+@import "@fontsource/orbitron/700.css";
+@import "@fontsource/orbitron/800.css";
 
 /* Paleta derivada do logo: âmbar (raio), azul-marinho (metade direita), tinta (#1C1C1C). */
 @theme {
@@ -35,7 +31,7 @@
 
   --font-sans: "Barlow", system-ui, sans-serif;
   --font-cond: "Barlow Semi Condensed", "Barlow", sans-serif;
-  --font-display: "CS Display", "Barlow Semi Condensed", sans-serif;
+  --font-display: "Orbitron", "Barlow Semi Condensed", sans-serif;
 }
 
 :root {
@@ -116,4 +112,11 @@ textarea {
   .spin {
     animation: none;
   }
+}
+
+/* Orbitron (SIL Open Font License) nos títulos e números grandes.
+   Peso 800 por padrão; títulos de página em caixa alta, como no logo. */
+.font-display {
+  font-weight: 800;
+  letter-spacing: 0.01em;
 }

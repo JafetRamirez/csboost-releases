@@ -77,7 +77,7 @@ function Detail({ p }: { p: ProPlayer }) {
     <div className="space-y-4">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="font-display text-[34px] leading-none">{p.nick}</p>
+          <p className="font-display text-[30px] leading-none">{p.nick}</p>
           <p className="text-dim text-[15px] mt-2">
             {[p.name, p.team ?? "Sem time", p.country_name].filter(Boolean).join(", ")}
           </p>

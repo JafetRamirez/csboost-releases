@@ -1,5 +1,5 @@
 ﻿TERMOS DE USO DO CSBOOST
-Versão 0.1 (prévia) — outubro de 2026
+Versão 0.4 — outubro de 2026
 
 Leia com atenção antes de instalar.
 
@@ -10,7 +10,7 @@ O CSBoost é um programa para Windows 10 e 11 que analisa o computador e aplica 
 Para alterar configurações do sistema, o CSBoost pede permissão de administrador sempre que é aberto.
 
 3. Alterações reversíveis
-Antes de qualquer alteração, o CSBoost guarda o valor anterior e, quando o Windows permite, cria um ponto de restauração do sistema. Todas as alterações feitas pelo programa podem ser desfeitas pela tela Histórico. Desinstalar o CSBoost não desfaz automaticamente os ajustes: reverta-os pelo Histórico antes de desinstalar, se quiser voltar ao estado original.
+Antes de qualquer alteração, o CSBoost guarda o valor anterior e, quando o Windows permite, cria um ponto de restauração do sistema. Todas as alterações feitas pelo programa podem ser desfeitas pela tela Histórico. Ao desinstalar, o CSBoost pergunta se você quer desfazer todos os ajustes antes de sair.
 
 4. Jogos e sistemas anti-cheat
 O CSBoost não injeta código, não lê nem altera a memória de jogos e não modifica arquivos dos jogos — apenas arquivos de configuração do usuário. Ainda assim, cada desenvolvedor de jogo define as próprias regras, e o usuário é responsável por respeitá-las.
@@ -22,10 +22,13 @@ O ganho de desempenho varia conforme o hardware, os drivers e o estado do sistem
 O CSBoost é fornecido "como está". Na máxima extensão permitida pela lei, não nos responsabilizamos por perdas de dados, falhas de hardware ou de software decorrentes do uso do programa. Mantenha backups dos seus arquivos importantes.
 
 7. Privacidade
-Esta versão não envia dados pessoais nem informações do seu computador para servidores externos. As informações de diagnóstico ficam apenas no seu computador.
+O CSBoost não coleta nem envia dados pessoais ou informações do seu computador. As informações de diagnóstico ficam apenas no seu computador. A única conexão automática é a consulta de novas versões no GitHub (github.com), que não envia dados seus.
 
-8. Marcas
+8. Licença e código-fonte
+O CSBoost é software livre, distribuído sob a Licença Pública Geral GNU, versão 3 ou posterior (GPL-3.0-or-later). O código-fonte está em https://github.com/JafetRamirez/csboost-releases. Componentes de terceiros mantêm as próprias licenças (veja THIRD_PARTY_NOTICES.md no repositório).
+
+9. Marcas
 O CSBoost não é afiliado, patrocinado ou endossado pela Valve Corporation. Counter-Strike, Counter-Strike 2 e Steam são marcas da Valve Corporation.
 
-9. Aceite
+10. Aceite
 Ao clicar em "Aceito", você declara que leu e concorda com estes termos.

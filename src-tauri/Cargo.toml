@@ -3,6 +3,8 @@ name = "csboost"
 version = "0.3.0"
 description = "CSBoost — otimizador de Windows para Counter-Strike 2"
 authors = ["Jafet Ramirez"]
+license = "GPL-3.0-or-later"
+repository = "https://github.com/JafetRamirez/csboost-releases"
 edition = "2021"
 rust-version = "1.80"
 

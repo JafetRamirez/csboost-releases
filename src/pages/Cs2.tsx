@@ -69,7 +69,6 @@ export function Cs2() {
     <>
       <PageHeader
         title="Counter-Strike 2"
-        csGlyph
         lead="Configurações do jogo que não tocam no processo nem nos arquivos do CS2 — só arquivos de configuração do seu usuário. Compatível com o Trusted Mode da Valve."
       />
 

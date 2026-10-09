@@ -30,7 +30,7 @@ export function SettingsPage() {
           <div className="flex items-center gap-4">
             <img src={mark} alt="" className="size-14" />
             <div className="flex-1">
-              <p className="font-display text-[22px] leading-none">CSBoost</p>
+              <p className="font-display text-[20px] leading-none uppercase">CSBoost</p>
               <p className="text-dim text-[14.5px] mt-1.5">Versão {version}</p>
             </div>
             <Button

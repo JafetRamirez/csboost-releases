@@ -156,7 +156,7 @@ function MouseTest() {
         <div className="flex flex-col justify-center gap-3">
           <div>
             <p className="text-[13.5px] text-dim">Agora</p>
-            <p className="font-display text-[34px] leading-none num">{fmtNum(hz)} <span className="text-[16px] font-cond text-dim">Hz</span></p>
+            <p className="font-display text-[30px] leading-none num">{fmtNum(hz)} <span className="text-[16px] font-cond text-dim">Hz</span></p>
           </div>
           <div>
             <p className="text-[13.5px] text-dim">Pico</p>

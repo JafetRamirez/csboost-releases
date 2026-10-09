@@ -4,6 +4,12 @@ name: Publicar versão
 # Antes: aumente "version" em src-tauri/tauri.conf.json, package.json e src-tauri/Cargo.toml.
 # Precisa dos secrets TAURI_SIGNING_PRIVATE_KEY e TAURI_SIGNING_PRIVATE_KEY_PASSWORD
 # (conteúdo de keys/csboost-updater.key e keys/senha.txt).
+#
+# Assinatura de código (SignPath Foundation) — liga sozinha quando a variável
+# SIGNPATH_ORGANIZATION_ID existir em Settings → Secrets and variables → Actions → Variables.
+# Também precisa: secret SIGNPATH_API_TOKEN e variáveis SIGNPATH_PROJECT_SLUG e
+# SIGNPATH_POLICY_SLUG. Passo a passo em docs/SIGNPATH.md.
+# Sem essas variáveis, o fluxo continua igual ao de antes (instalador sem assinatura).
 on:
   workflow_dispatch:
     inputs:
@@ -13,13 +19,19 @@ on:
 
 permissions:
   contents: write
+  actions: read
+
+env:
+  ASSINAR: ${{ vars.SIGNPATH_ORGANIZATION_ID != '' }}
+  TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+  TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
 
 jobs:
   release:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -28,16 +40,80 @@ jobs:
         with:
           workspaces: src-tauri
       - run: npm ci
-      - name: Gerar instalador assinado
-        env:
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
-          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-        run: npm run tauri build -- --bundles nsis
+
+      # 1. Compila o app (sem empacotar ainda)
+      - name: Compilar o app
+        run: npm run tauri build -- --no-bundle
+
+      # 2. Assina o csboost.exe antes de ele entrar no instalador
+      - name: Enviar csboost.exe para assinatura
+        if: env.ASSINAR == 'true'
+        id: app-unsigned
+        uses: actions/upload-artifact@v4
+        with:
+          name: csboost-app-unsigned
+          path: src-tauri/target/release/csboost.exe
+          if-no-files-found: error
+      - name: Assinar csboost.exe (SignPath)
+        if: env.ASSINAR == 'true'
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_POLICY_SLUG }}
+          artifact-configuration-slug: app
+          github-artifact-id: ${{ steps.app-unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: assinado/app
+      - name: Colocar o csboost.exe assinado no lugar
+        if: env.ASSINAR == 'true'
+        shell: bash
+        run: cp assinado/app/csboost.exe src-tauri/target/release/csboost.exe
+
+      # 3. Gera o instalador NSIS com o app (assinado ou não)
+      - name: Gerar instalador
+        run: npm run tauri bundle -- --bundles nsis
+
+      # 4. Assina o instalador e refaz a assinatura do atualizador (o .sig
+      #    muda quando o arquivo muda)
+      - name: Enviar instalador para assinatura
+        if: env.ASSINAR == 'true'
+        id: setup-unsigned
+        uses: actions/upload-artifact@v4
+        with:
+          name: csboost-setup-unsigned
+          path: src-tauri/target/release/bundle/nsis/*_x64-setup.exe
+          if-no-files-found: error
+      - name: Assinar instalador (SignPath)
+        if: env.ASSINAR == 'true'
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_POLICY_SLUG }}
+          artifact-configuration-slug: installer
+          github-artifact-id: ${{ steps.setup-unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: assinado/setup
+      - name: Colocar o instalador assinado no lugar e refazer o .sig do atualizador
+        if: env.ASSINAR == 'true'
+        shell: bash
+        run: |
+          DIR=src-tauri/target/release/bundle/nsis
+          for f in assinado/setup/*_x64-setup.exe; do
+            cp "$f" "$DIR/$(basename "$f")"
+            rm -f "$DIR/$(basename "$f").sig"
+            npx tauri signer sign "$DIR/$(basename "$f")"
+          done
+
       - name: Gerar latest.json
         shell: bash
         env:
           NOTES: ${{ inputs.notes }}
         run: node scripts/make-latest-json.mjs src-tauri/target/release/bundle/nsis "$NOTES"
+
       - name: Publicar release
         shell: bash
         env:
@@ -54,6 +130,14 @@ jobs:
             echo
             echo "**SHA256 do instalador:** \`$SHA\`"
             echo
-            echo "Se o Windows mostrar \"O Windows protegeu o computador\", clique em *Mais informações → Executar assim mesmo* (o instalador ainda não tem certificado de assinatura)."
+            echo "**Análise no VirusTotal:** https://www.virustotal.com/gui/file/$SHA"
+            echo
+            if [ "$ASSINAR" = "true" ]; then
+              echo "Instalador assinado. Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by [SignPath Foundation](https://signpath.org) · [Code signing policy](https://github.com/JafetRamirez/csboost-releases/blob/main/docs/CODE_SIGNING_POLICY.md)."
+            else
+              echo "Se o Windows mostrar \"O Windows protegeu o computador\", clique em *Mais informações → Executar assim mesmo* (o instalador ainda não tem certificado de assinatura)."
+            fi
+            echo
+            echo "Código-fonte sob GPL-3.0-or-later · [Code signing policy](https://github.com/JafetRamirez/csboost-releases/blob/main/docs/CODE_SIGNING_POLICY.md)"
           } > notes.md
           gh release create "v$V" release/* --title "CSBoost $V" --notes-file notes.md
