@@ -3,6 +3,7 @@ import { CircleCheck, CircleAlert, Info, ShieldAlert } from "lucide-react";
 import { Sidebar, type Page } from "./components/Sidebar";
 import { TitleBar } from "./components/TitleBar";
 import { UpdateBanner } from "./components/UpdateBanner";
+import { MaintenanceBanner } from "./components/MaintenanceBanner";
 import { AppProvider, useApp } from "./lib/store";
 import { Dashboard } from "./pages/Dashboard";
 import { Diagnostics } from "./pages/Diagnostics";
@@ -45,6 +46,7 @@ function Shell() {
           </div>
         )}
         <UpdateBanner />
+        <MaintenanceBanner />
         <main className="scroll flex-1 overflow-y-auto px-10 pb-12 pt-4">
           <div className="max-w-[1080px]">{pages[page]}</div>
         </main>

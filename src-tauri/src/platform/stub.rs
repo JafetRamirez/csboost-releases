@@ -21,3 +21,9 @@ pub fn processes_running(names: &[&str]) -> Vec<bool> { vec![false; names.len()]
 pub fn is_elevated() -> bool { false }
 pub fn create_restore_point(_: &str) -> Result<()> { bail!(MSG) }
 pub fn boot_time_ms() -> Option<u64> { None }
+pub fn gpu_adapters() -> Result<Vec<GpuAdapter>> { bail!(MSG) }
+pub fn pids_named(_: &str) -> Vec<u32> { Vec::new() }
+pub fn gpu_engine_usage(_: u64) -> Result<Vec<GpuEngineSample>> { bail!(MSG) }
+pub fn icmp_ping(_: std::net::Ipv4Addr, _: u32) -> Option<u32> { None }
+pub fn route_interface(_: std::net::Ipv4Addr) -> Result<NetInterface> { bail!(MSG) }
+pub fn https_get(_: &str, _: &str) -> Result<Vec<u8>> { bail!(MSG) }

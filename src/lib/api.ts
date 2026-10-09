@@ -3,7 +3,7 @@
 // para trabalhar no visual sem compilar o Rust.
 
 import { invoke } from "@tauri-apps/api/core";
-import type { BatchResult, BenchRun, CleanResult, CleanTarget, Cs2Info, EntryCheck, JournalEntry, Report, TweakView } from "./types";
+import type { BatchResult, BenchRun, CleanResult, CleanTarget, Cs2Info, EntryCheck, JournalEntry, Report, TweakView, GpuInUse, NetReport } from "./types";
 import * as mock from "./mock";
 import { t } from "../i18n";
 
@@ -24,7 +24,10 @@ export const api = {
   createRestorePoint: () => call<void>("create_restore_point", undefined, () => undefined),
   setDisplayRefresh: (device: string, hz: number) =>
     call<void>("set_display_refresh", { device, hz }, () => mock.fixDisplay(device, hz)),
+  netTest: () => call<NetReport>("net_test", undefined, mock.netTest),
+  gpuInUse: () => call<GpuInUse>("gpu_in_use", undefined, mock.gpuInUse),
   cs2Info: () => call<Cs2Info>("cs2_info", undefined, mock.cs2),
+  reapplyTweaks: (ids: string[]) => call<BatchResult>("reapply_tweaks", { ids }, () => mock.reapply(ids)),
   verifyChanges: () => call<EntryCheck[]>("verify_changes", undefined, mock.verify),
   benchRun: (seconds: number, label: string) => call<BenchRun>("bench_run", { seconds, label }, () => mock.benchRun(seconds, label)),
   benchList: () => call<BenchRun[]>("bench_list", undefined, mock.benchList),

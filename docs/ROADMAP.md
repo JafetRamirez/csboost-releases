@@ -1,18 +1,21 @@
 # CSBoost — Roadmap de melhorias
 
-## Status (atualizado na v0.3.0)
+## Status (atualizado na v0.4.0)
 - ✅ #1 Benchmark integrado (PresentMon) com comparação e imagem para compartilhar
 - ✅ #3 Desinstalador oferece "Reverter tudo" (não dispara em atualização)
 - ✅ #4 Código-fonte público no GitHub + SHA256 de cada instalador nas notas da versão
 - ✅ #6 Limpeza de temporários e caches
 - ✅ #9 Configs de pros (30 jogadores) + conversor de sensibilidade
 - ✅ #11 Teste do mouse (taxa de polling)
-- ⏳ #2 Detectar a GPU em uso pelo CS2: próxima versão
+- ✅ #2 Placa de vídeo em uso pelo CS2 (contadores do Windows) + guia de MUX por marca de notebook (v0.4)
+- ✅ #12 Manutenção: ao abrir, avisa se o Windows desfez algum ajuste e reaplica com um clique (v0.4). Falta o lembrete mensal
+- ✅ #13 Teste de rede grátis: ping, variação e perda até os relays da Valve + aviso de Wi-Fi (v0.4). Falta bufferbloat e ajustes da placa de rede
+- ✅ #14 Português, espanhol e inglês no app, no instalador e na LP (v0.4)
 - ⏳ #5 Assinatura de código: grátis pela SignPath Foundation (pedido em andamento; ver `docs/SIGNPATH.md`). Repositório já em GPL-3.0, fonte trocada para Orbitron (OFL) e logo refeito
-- Próximos: #7 Modo Sessão, #8 presets de vídeo, #10 perfil NVIDIA, #12 rotina de manutenção, #13 rede, #14 inglês/espanhol
+- Próximos: #21 central de ajuda, #22 abrir chamado, #7 Modo Sessão, #8 presets de vídeo, #10 perfil NVIDIA
 
 ### Correções para o próximo update
-- **Configs de pros → conversor de sensibilidade** (`src/pages/Pros.tsx`, card "Mesma sensibilidade do … no seu mouse"): em janela estreita o card quebra. "Seu DPI" vira duas linhas, o resultado `sensitivity 1` quebra e o botão "Copiar" vaza para fora do card. Corrigir a responsividade: empilhar input e resultado quando faltar espaço, `whitespace-nowrap` no comando e botão dentro do card. (Visto em 08/10/2026, janela de ~1270 px.)
+- ✅ **Configs de pros → conversor de sensibilidade** (corrigido na v0.4) (`src/pages/Pros.tsx`, card "Mesma sensibilidade do … no seu mouse"): em janela estreita o card quebra. "Seu DPI" vira duas linhas, o resultado `sensitivity 1` quebra e o botão "Copiar" vaza para fora do card. Corrigir a responsividade: empilhar input e resultado quando faltar espaço, `whitespace-nowrap` no comando e botão dentro do card. (Visto em 08/10/2026, janela de ~1270 px.)
 - ✅ **Workflows do GitHub:** `actions/checkout` e `actions/setup-node` já em `@v5`.
 
 

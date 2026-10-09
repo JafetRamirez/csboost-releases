@@ -69,6 +69,8 @@ pub struct RamModule {
 
 #[derive(Debug, Clone, Serialize, Default)]
 pub struct HardwareInfo {
+    /// Fabricante do computador (para o guia de MUX switch em notebooks).
+    pub manufacturer: String,
     pub os_name: String,
     pub os_build: u32,
     pub cpu: String,
@@ -103,4 +105,54 @@ pub(crate) fn cim_date(s: &str) -> Option<String> {
         return None;
     }
     Some(format!("{}-{}-{}", &s[0..4], &s[4..6], &s[6..8]))
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct GpuAdapter {
+    pub name: String,
+    pub vendor_id: u32,
+    pub dedicated_mb: u64,
+    #[serde(skip)]
+    pub luid_low: u32,
+    #[serde(skip)]
+    pub luid_high: i32,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct NetInterface {
+    pub name: String,
+    pub description: String,
+    pub wifi: bool,
+    pub link_mbps: u64,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct GpuEngineSample {
+    pub pid: u32,
+    /// Os dois números do LUID como aparecem no nome da instância (ordem do Windows: alto, baixo).
+    pub luid_a: u32,
+    pub luid_b: u32,
+    pub utilization: f64,
+}
+
+/// "pid_1234_luid_0x00000000_0x0000C1A2_phys_0_eng_0_engtype_3D" -> amostra.
+#[allow(dead_code)]
+pub(crate) fn parse_gpu_instance(name: &str, value: f64) -> Option<GpuEngineSample> {
+    let parts: Vec<&str> = name.split('_').collect();
+    let pid = parts.get(parts.iter().position(|p| *p == "pid")? + 1)?.parse().ok()?;
+    let li = parts.iter().position(|p| *p == "luid")?;
+    let hex = |s: &str| u32::from_str_radix(s.trim_start_matches("0x").trim_start_matches("0X"), 16).ok();
+    Some(GpuEngineSample { pid, luid_a: hex(parts.get(li + 1)?)?, luid_b: hex(parts.get(li + 2)?)?, utilization: value })
+}
+
+#[cfg(test)]
+mod gpu_tests {
+    #[test]
+    fn parses_gpu_engine_instance() {
+        let s = super::parse_gpu_instance("pid_4321_luid_0x00000000_0x0000C1A2_phys_0_eng_0_engtype_3D", 37.5).unwrap();
+        assert_eq!(s.pid, 4321);
+        assert_eq!(s.luid_a, 0);
+        assert_eq!(s.luid_b, 0xC1A2);
+        assert!(super::parse_gpu_instance("_Total", 1.0).is_none());
+    }
 }

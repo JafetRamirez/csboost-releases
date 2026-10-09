@@ -28,6 +28,8 @@ de uma dessas APIs, o recurso está errado.
 - **Modo Sessão / prioridade do jogo:** nada de abrir o processo. Usar o próprio Windows (ex.: `PerfOptions` do cs2.exe no registro, plano de energia) — validar antes.
 - **Benchmark (implementado na 0.3):** o CSBoost só inicia o PresentMon oficial da Intel (embutido, sem modificação) como processo filho. O PresentMon lê eventos ETW do Windows; o CSBoost não abre o processo do jogo. É a mesma base do NVIDIA FrameView e do CapFrameX.
 - **Placa de vídeo em uso pelo CS2 (v0.4):** o CSBoost lê os contadores de desempenho do Windows (PDH, `\GPU Engine(*)\Utilization Percentage`, os mesmos do Gerenciador de Tarefas) e a lista de placas pelo DXGI (`CreateDXGIFactory1`, só enumera adaptadores). O PID do cs2.exe vem da lista de processos do Windows (`CreateToolhelp32Snapshot` com `TH32CS_SNAPPROCESS`), sem abrir o processo. Nenhuma API do VAC guard é usada.
+- **Teste de rede (v0.4):** só mede. Baixa a lista pública de relays da Valve (`GetSDRConfig`, appid 730) pelo WinHTTP do Windows e manda ping ICMP (`IcmpSendEcho`); a placa de rede vem de `GetBestInterface`/`GetIfEntry2`. Não mexe em rota, firewall nem no jogo, não usa servidor próprio e só roda quando o usuário clica.
+- **Manutenção (v0.4):** ao abrir, o app relê os ajustes aplicados; se o Windows desfez algum, oferece reaplicar. Reaplicar grava de novo o valor do CSBoost e mantém o "anterior" original no journal.
 - **Overlay de FPS:** se existir um dia, só como janela externa — nunca dentro do jogo.
 - Qualquer recurso novo que interaja com o jogo precisa de justificativa escrita aqui antes de ser implementado.
 

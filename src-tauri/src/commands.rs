@@ -40,6 +40,16 @@ pub async fn revert_all() -> CmdResult<engine::BatchResult> {
 }
 
 #[tauri::command]
+pub async fn net_test() -> CmdResult<crate::net::NetReport> {
+    blocking(crate::net::run).await
+}
+
+#[tauri::command]
+pub async fn gpu_in_use() -> CmdResult<crate::gpu::GpuInUse> {
+    blocking(|| Ok(crate::gpu::check(1500))).await
+}
+
+#[tauri::command]
 pub fn set_language(lang: String) {
     crate::i18n::set(&lang);
 }
@@ -99,6 +109,11 @@ pub async fn write_autoexec(content: String) -> CmdResult<String> {
 #[tauri::command]
 pub fn is_elevated() -> bool {
     platform::is_elevated()
+}
+
+#[tauri::command]
+pub async fn reapply_tweaks(ids: Vec<String>) -> CmdResult<engine::BatchResult> {
+    blocking(move || engine::reapply(&ids)).await
 }
 
 #[tauri::command]

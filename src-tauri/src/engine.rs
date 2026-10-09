@@ -299,6 +299,50 @@ pub fn revert(ids: &[String]) -> Result<BatchResult> {
     Ok(BatchResult { results, needs_reboot })
 }
 
+/// Manutenção: grava de novo o valor do CSBoost nos ajustes que o Windows (ou
+/// outro programa) desfez. O "anterior" do journal continua o original, então
+/// Reverter ainda volta ao estado de antes do CSBoost.
+pub fn reapply(ids: &[String]) -> Result<BatchResult> {
+    let _g = LOCK.lock().map_err(|_| anyhow!("motor ocupado"))?;
+    let journal = Journal::load();
+    let mut results = Vec::new();
+    let mut needs_reboot = false;
+    for id in ids {
+        let Some(entry) = journal.active(id) else {
+            results.push(OpResult { tweak_id: id.clone(), ok: true, skipped: true, message: Some(tr!("Não está aplicado", "No está aplicado", "Not applied")) });
+            continue;
+        };
+        let title = crate::verify::title_for(entry);
+        let mut err = None;
+        for c in &entry.changes {
+            let r = match c {
+                Change::Registry { hive, path, name, applied, .. } => {
+                    match applied.clone().or_else(|| crate::verify::expected_from_catalog(&entry.tweak_id, path, name)) {
+                        Some(v) if platform::reg_read(*hive, path, name).ok().flatten().as_ref() != Some(&v) => platform::reg_write(*hive, path, name, &v),
+                        _ => Ok(()),
+                    }
+                }
+                Change::PowerPlan { applied, .. } => match platform::power_active() {
+                    Ok(now) if now.eq_ignore_ascii_case(applied) => Ok(()),
+                    _ => platform::power_set(applied),
+                },
+                Change::DisplayRefresh { device, applied_hz, .. } => platform::set_display_refresh(device, *applied_hz),
+                // arquivo (autoexec): o conteúdo é do usuário, não regrava sozinho
+                Change::File { .. } => Ok(()),
+            };
+            if let Err(e) = r {
+                err = Some(explain(&title, &e));
+                break;
+            }
+        }
+        if err.is_none() && catalog::find(id).map(|t| t.requires_reboot).unwrap_or(false) {
+            needs_reboot = true;
+        }
+        results.push(OpResult { tweak_id: id.clone(), ok: err.is_none(), skipped: false, message: err });
+    }
+    Ok(BatchResult { results, needs_reboot })
+}
+
 pub fn revert_all() -> Result<BatchResult> {
     let mut ids = Journal::load().active_ids();
     ids.reverse(); // desfaz do mais recente para o mais antigo

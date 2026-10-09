@@ -297,6 +297,12 @@ struct WmiOs {
 }
 
 #[derive(Deserialize)]
+#[serde(rename = "Win32_ComputerSystem", rename_all = "PascalCase")]
+struct WmiCs {
+    manufacturer: Option<String>,
+}
+
+#[derive(Deserialize)]
 #[serde(rename = "Win32_Processor", rename_all = "PascalCase")]
 struct WmiCpu {
     name: Option<String>,
@@ -340,6 +346,11 @@ pub fn hardware_info() -> Result<HardwareInfo> {
             if let Some(os) = v.into_iter().next() {
                 info.os_name = os.caption.unwrap_or_default().trim().to_string();
                 info.os_build = os.build_number.and_then(|b| b.parse().ok()).unwrap_or(0);
+            }
+        }
+        if let Ok(v) = wmi.query::<WmiCs>() {
+            if let Some(c) = v.into_iter().next() {
+                info.manufacturer = c.manufacturer.unwrap_or_default().trim().to_string();
             }
         }
         if let Ok(v) = wmi.query::<WmiCpu>() {
@@ -501,4 +512,216 @@ pub fn create_restore_point(description: &str) -> Result<()> {
 pub fn boot_time_ms() -> Option<u64> {
     let uptime = unsafe { windows::Win32::System::SystemInformation::GetTickCount64() };
     crate::journal::now_ms().checked_sub(uptime)
+}
+
+// ---------------------------------------------------------------- GPU em uso
+//
+// Só leitura: lista de placas pelo DXGI e contadores de desempenho do Windows
+// (os mesmos do Gerenciador de Tarefas). Nada abre o processo do jogo.
+
+use windows::Win32::Graphics::Dxgi::{CreateDXGIFactory1, IDXGIFactory1, DXGI_ADAPTER_FLAG_SOFTWARE};
+use windows::Win32::System::Performance::{
+    PdhAddEnglishCounterW, PdhCloseQuery, PdhCollectQueryData, PdhGetFormattedCounterArrayW, PdhOpenQueryW,
+    PDH_FMT_COUNTERVALUE_ITEM_W, PDH_FMT_DOUBLE, PDH_HCOUNTER, PDH_HQUERY, PDH_MORE_DATA,
+};
+
+pub fn gpu_adapters() -> Result<Vec<GpuAdapter>> {
+    let mut out = Vec::new();
+    unsafe {
+        let factory: IDXGIFactory1 = CreateDXGIFactory1().map_err(|e| anyhow!("DXGI: {e}"))?;
+        let mut i = 0u32;
+        while let Ok(a) = factory.EnumAdapters1(i) {
+            i += 1;
+            let Ok(d) = a.GetDesc1() else { continue };
+            // ignora o "Microsoft Basic Render Driver" e outros adaptadores de software
+            if d.Flags & (DXGI_ADAPTER_FLAG_SOFTWARE.0 as u32) != 0 || d.VendorId == 0x1414 {
+                continue;
+            }
+            out.push(GpuAdapter {
+                name: wide_to_string(&d.Description).trim().to_string(),
+                vendor_id: d.VendorId,
+                dedicated_mb: (d.DedicatedVideoMemory / (1024 * 1024)) as u64,
+                luid_low: d.AdapterLuid.LowPart,
+                luid_high: d.AdapterLuid.HighPart,
+            });
+        }
+    }
+    Ok(out)
+}
+
+/// PIDs dos processos com esse nome, pela lista de processos do Windows.
+pub fn pids_named(exe: &str) -> Vec<u32> {
+    let mut v = Vec::new();
+    unsafe {
+        let Ok(snap) = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0) else {
+            return v;
+        };
+        let mut e = PROCESSENTRY32W {
+            dwSize: std::mem::size_of::<PROCESSENTRY32W>() as u32,
+            ..Default::default()
+        };
+        if Process32FirstW(snap, &mut e).is_ok() {
+            loop {
+                if wide_to_string(&e.szExeFile).eq_ignore_ascii_case(exe) {
+                    v.push(e.th32ProcessID);
+                }
+                if Process32NextW(snap, &mut e).is_err() {
+                    break;
+                }
+            }
+        }
+        let _ = CloseHandle(snap);
+    }
+    v
+}
+
+/// Uso de GPU por processo e placa, lido de `\GPU Engine(*)\Utilization Percentage`
+/// em duas amostras com `sample_ms` de intervalo.
+pub fn gpu_engine_usage(sample_ms: u64) -> Result<Vec<GpuEngineSample>> {
+    unsafe {
+        let mut q = PDH_HQUERY::default();
+        let r = PdhOpenQueryW(PCWSTR::null(), 0, &mut q);
+        if r != 0 {
+            bail!("PDH {r:#x}");
+        }
+        let path = to_wide(r"\GPU Engine(*)\Utilization Percentage");
+        let mut c = PDH_HCOUNTER::default();
+        let r = PdhAddEnglishCounterW(q, PCWSTR(path.as_ptr()), 0, &mut c);
+        if r != 0 {
+            let _ = PdhCloseQuery(q);
+            bail!("PDH {r:#x}");
+        }
+        let _ = PdhCollectQueryData(q);
+        std::thread::sleep(std::time::Duration::from_millis(sample_ms));
+        let _ = PdhCollectQueryData(q);
+
+        let mut size = 0u32;
+        let mut count = 0u32;
+        let r = PdhGetFormattedCounterArrayW(c, PDH_FMT_DOUBLE, &mut size, &mut count, None);
+        let mut out = Vec::new();
+        if r == PDH_MORE_DATA && size > 0 {
+            let mut buf = vec![0u8; size as usize];
+            let items = buf.as_mut_ptr() as *mut PDH_FMT_COUNTERVALUE_ITEM_W;
+            let r = PdhGetFormattedCounterArrayW(c, PDH_FMT_DOUBLE, &mut size, &mut count, Some(items));
+            if r == 0 {
+                for k in 0..count as usize {
+                    let it = &*items.add(k);
+                    if it.FmtValue.CStatus != 0 {
+                        continue;
+                    }
+                    let name = it.szName.to_string().unwrap_or_default();
+                    if let Some(s) = parse_gpu_instance(&name, it.FmtValue.Anonymous.doubleValue) {
+                        out.push(s);
+                    }
+                }
+            }
+        }
+        let _ = PdhCloseQuery(q);
+        Ok(out)
+    }
+}
+
+// ---------------------------------------------------------------- rede
+// Só rede: ping (ICMP) até os relays da Valve, rota do Windows e um GET HTTPS
+// pedido pelo usuário. Nada toca no jogo.
+
+use windows::Win32::NetworkManagement::IpHelper::{
+    GetBestInterface, GetIfEntry2, IcmpCloseHandle, IcmpCreateFile, IcmpSendEcho, ICMP_ECHO_REPLY, MIB_IF_ROW2,
+};
+use windows::Win32::Networking::WinHttp::*;
+
+/// Um ping ICMP; `None` = sem resposta no tempo limite.
+pub fn icmp_ping(ip: std::net::Ipv4Addr, timeout_ms: u32) -> Option<u32> {
+    unsafe {
+        let h = IcmpCreateFile().ok()?;
+        let data = [0x43u8; 32];
+        let mut reply = vec![0u8; std::mem::size_of::<ICMP_ECHO_REPLY>() + data.len() + 8];
+        let n = IcmpSendEcho(
+            h,
+            u32::from_ne_bytes(ip.octets()),
+            data.as_ptr() as *const _,
+            data.len() as u16,
+            None,
+            reply.as_mut_ptr() as *mut _,
+            reply.len() as u32,
+            timeout_ms,
+        );
+        let _ = IcmpCloseHandle(h);
+        if n == 0 {
+            return None;
+        }
+        let r = &*(reply.as_ptr() as *const ICMP_ECHO_REPLY);
+        (r.Status == 0).then_some(r.RoundTripTime)
+    }
+}
+
+/// Placa de rede que o Windows usa para chegar em `ip`.
+pub fn route_interface(ip: std::net::Ipv4Addr) -> Result<NetInterface> {
+    unsafe {
+        let mut idx = 0u32;
+        let r = GetBestInterface(u32::from_ne_bytes(ip.octets()), &mut idx);
+        if r != 0 {
+            bail!("GetBestInterface {r}");
+        }
+        let mut row = MIB_IF_ROW2 { InterfaceIndex: idx, ..Default::default() };
+        GetIfEntry2(&mut row).ok().map_err(|e| anyhow!("GetIfEntry2: {e}"))?;
+        // 71 = IF_TYPE_IEEE80211; 9 = NdisPhysicalMediumNative802_11
+        let wifi = row.Type == 71 || row.PhysicalMediumType.0 == 9;
+        Ok(NetInterface {
+            name: wide_to_string(&row.Alias),
+            description: wide_to_string(&row.Description),
+            wifi,
+            link_mbps: row.ReceiveLinkSpeed.min(row.TransmitLinkSpeed) / 1_000_000,
+        })
+    }
+}
+
+/// GET HTTPS pelo WinHTTP do Windows (usa o proxy e os certificados do sistema).
+pub fn https_get(host: &str, path: &str) -> Result<Vec<u8>> {
+    unsafe {
+        let agent = to_wide("CSBoost");
+        let ses = WinHttpOpen(PCWSTR(agent.as_ptr()), WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY, PCWSTR::null(), PCWSTR::null(), 0);
+        if ses.is_null() {
+            bail!("WinHttpOpen: {}", std::io::Error::last_os_error());
+        }
+        let _ = WinHttpSetTimeouts(ses, 8000, 8000, 8000, 8000);
+        let h = to_wide(host);
+        let con = WinHttpConnect(ses, PCWSTR(h.as_ptr()), INTERNET_DEFAULT_HTTPS_PORT, 0);
+        let result = (|| -> Result<Vec<u8>> {
+            if con.is_null() {
+                bail!("WinHttpConnect: {}", std::io::Error::last_os_error());
+            }
+            let verb = to_wide("GET");
+            let p = to_wide(path);
+            let req = WinHttpOpenRequest(con, PCWSTR(verb.as_ptr()), PCWSTR(p.as_ptr()), PCWSTR::null(), PCWSTR::null(), std::ptr::null(), WINHTTP_FLAG_SECURE);
+            if req.is_null() {
+                bail!("WinHttpOpenRequest: {}", std::io::Error::last_os_error());
+            }
+            let body = (|| -> Result<Vec<u8>> {
+                WinHttpSendRequest(req, None, None, 0, 0, 0).map_err(|e| anyhow!("{e}"))?;
+                WinHttpReceiveResponse(req, std::ptr::null_mut()).map_err(|e| anyhow!("{e}"))?;
+                let mut out = Vec::new();
+                let mut buf = vec![0u8; 64 * 1024];
+                loop {
+                    let mut read = 0u32;
+                    WinHttpReadData(req, buf.as_mut_ptr() as *mut _, buf.len() as u32, &mut read).map_err(|e| anyhow!("{e}"))?;
+                    if read == 0 {
+                        break;
+                    }
+                    out.extend_from_slice(&buf[..read as usize]);
+                    if out.len() > 8 * 1024 * 1024 {
+                        bail!("resposta grande demais");
+                    }
+                }
+                Ok(out)
+            })();
+            let _ = WinHttpCloseHandle(req);
+            body
+        })();
+        if !con.is_null() {
+            let _ = WinHttpCloseHandle(con);
+        }
+        let _ = WinHttpCloseHandle(ses);
+        result
+    }
 }

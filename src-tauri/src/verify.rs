@@ -66,7 +66,7 @@ fn plan_label(guid: &str) -> String {
 }
 
 /// Valor esperado de um registro em journals antigos (sem `applied`).
-fn expected_from_catalog(tweak_id: &str, path: &str, name: &str) -> Option<RegData> {
+pub(crate) fn expected_from_catalog(tweak_id: &str, path: &str, name: &str) -> Option<RegData> {
     let t = catalog::find(tweak_id)?;
     t.actions.iter().find_map(|a| match a {
         Action::Registry { path: p, name: n, value, .. } if p.eq_ignore_ascii_case(path) && n == name => Some(value.clone()),

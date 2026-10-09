@@ -6,6 +6,7 @@ import { fmtBytes, fmtNum } from "../lib/format";
 import { useApp } from "../lib/store";
 import type { CleanTarget } from "../lib/types";
 import { t as tr } from "../i18n";
+import { NetTest } from "../components/NetTest";
 
 function Cleanup() {
   const { notify } = useApp();
@@ -179,6 +180,7 @@ export function ToolsPage() {
     <>
       <PageHeader title={tr("nav.ferramentas")} lead={tr("tools.lead")} />
       <div className="space-y-6">
+        <NetTest />
         <Cleanup />
         <MouseTest />
       </div>

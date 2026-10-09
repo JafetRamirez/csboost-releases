@@ -95,7 +95,15 @@ Quem estiver com o app aberto vê o aviso "Versão X disponível — Atualizar a
 
 ---
 
-## O que já funciona (v0.3)
+## O que já funciona (v0.4)
+
+**Novo na 0.4:**
+- **Três idiomas:** português, espanhol e inglês no app, no instalador e na LP (seletor em Configurações).
+- **Placa de vídeo do CS2** (Counter-Strike 2): mostra em qual placa o jogo está rodando agora, lendo os contadores de GPU do Windows, e um guia por marca de notebook (MUX switch) quando está na integrada.
+- **Manutenção:** ao abrir, o app confere os ajustes aplicados e oferece reaplicar o que o Windows desfez (comum depois de atualização).
+- **Teste de rede** (Ferramentas): ping, variação e perda até os servidores da Valve, com aviso de Wi-Fi. Só mede; roda só quando você clica.
+- Mensagens de "Acesso negado (erro 5)" agora dizem qual ajuste e qual chave o Windows bloqueou.
+- Nova fonte (Orbitron) e logo refeito; licença GPL-3.0.
 
 **Novo na 0.3:**
 - **Benchmark** com o PresentMon (Intel, MIT, embutido em `src-tauri/resources/presentmon/`): FPS médio, 1% low, 0,1% low e engasgos, comparação antes × depois com gráfico de frametime e imagem para compartilhar.
@@ -203,7 +211,7 @@ Papéis, o que é assinado e a declaração de privacidade: [`docs/CODE_SIGNING_
 
 ## Privacidade
 
-O CSBoost não coleta nem envia dados pessoais ou do computador. A única conexão automática é a consulta de novas versões no GitHub.
+O CSBoost não coleta nem envia dados pessoais ou do computador. A única conexão automática é a consulta de novas versões no GitHub. O teste de rede só se conecta (lista pública de servidores da Steam + ping) quando você clica em Testar.
 
 ## Verificações feitas nesta versão
 - `npm run build` (TypeScript + Vite) sem erros.

@@ -32,6 +32,7 @@ O CSBoost não coleta nem envia dados pessoais ou informações do computador. O
 
 A única conexão automática é a consulta de novas versões no GitHub
 (`https://github.com/JafetRamirez/csboost-releases/releases/latest/download/latest.json`), que não envia dados do usuário.
+O **Teste de rede** (Ferramentas) só roda quando o usuário clica em Testar: baixa a lista pública de servidores da Steam (`https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=730`) e envia pings (ICMP) para eles. Nenhum dado do usuário é enviado.
 Os links do app (código-fonte, "Me paga um café", fontes das configs de pros) só abrem no navegador quando o usuário clica.
 
 This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.

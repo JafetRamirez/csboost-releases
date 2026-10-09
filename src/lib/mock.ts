@@ -1,6 +1,6 @@
 // Dados de exemplo usados só fora do app (pré-visualização no navegador).
 import catalogRaw from "../../catalog/tweaks.json";
-import type { BatchResult, BenchRun, CleanResult, CleanTarget, Cs2Info, EntryCheck, JournalEntry, Report, TweakView } from "./types";
+import type { BatchResult, BenchRun, CleanResult, CleanTarget, Cs2Info, EntryCheck, GpuInUse, JournalEntry, NetReport, Report, TweakView } from "./types";
 import { getLang } from "../i18n";
 
 // Mesmo comportamento do núcleo: textos do catálogo no idioma atual.
@@ -178,6 +178,13 @@ const tw = (id: string) => {
   return { title: x.title, how_to_check: x.how_to_check ?? null };
 };
 
+// exemplo de manutenção: uma atualização do Windows religou o Game DVR
+let dvrUndone = true;
+export function reapply(ids: string[]): BatchResult {
+  if (ids.includes("gamedvr.disable")) dvrUndone = false;
+  return { results: ids.map((id) => ({ tweak_id: id, ok: true, skipped: false, message: null })), needs_reboot: false };
+}
+
 export function verify(): EntryCheck[] {
   const base: EntryCheck[] = [
     {
@@ -192,9 +199,9 @@ export function verify(): EntryCheck[] {
     },
     {
       entry_id: 1, tweak_id: "gamedvr.disable", title: tw("gamedvr.disable").title, applied_at: Date.now() - 7300_000,
-      status: "ok", how_to_check: tw("gamedvr.disable").how_to_check,
+      status: dvrUndone ? "changed" : "ok", how_to_check: tw("gamedvr.disable").how_to_check,
       checks: [
-        { label: "HKCU\\System\\GameConfigStore\\GameDVR_Enabled", before: "1", expected: "0", now: "0", status: "ok" },
+        { label: "HKCU\\System\\GameConfigStore\\GameDVR_Enabled", before: "1", expected: "0", now: dvrUndone ? "1" : "0", status: dvrUndone ? "changed" : "ok" },
         { label: "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR\\AppCaptureEnabled", before: m("não existia", "no existía", "did not exist"), expected: "0", now: "0", status: "ok" },
       ],
     },
@@ -237,4 +244,41 @@ export function cleanupScan(): CleanTarget[] {
 export function cleanupRun(ids: string[]): CleanResult {
   const t = cleanupScan().filter((x) => ids.includes(x.id));
   return { freed_bytes: t.reduce((s, x) => s + x.bytes * 0.92, 0), deleted_files: t.reduce((s, x) => s + x.files, 0) - 14, skipped_files: 14 };
+}
+
+// ---- placa de vídeo em uso (exemplo: notebook híbrido com o CS2 na integrada)
+export function gpuInUse(): GpuInUse {
+  const igpu = { name: "Intel(R) UHD Graphics", dedicated_mb: 128, integrated: true };
+  return {
+    cs2_running: true,
+    adapters: [igpu, { name: "NVIDIA GeForce RTX 3050 Laptop GPU", dedicated_mb: 3962, integrated: false }],
+    in_use: igpu,
+    laptop: true,
+    guide: [
+      m("Jogue com o carregador conectado: na bateria muitos notebooks forçam a placa integrada.", "Juega con el cargador conectado: con batería muchas notebooks fuerzan la placa integrada.", "Play with the charger plugged in: on battery many laptops force the integrated GPU."),
+      m("No Lenovo Vantage (ou Legion Space), procure Modo de trabalho da GPU / Modo híbrido e escolha a GPU dedicada (dGPU). Reinicie.", "En Lenovo Vantage (o Legion Space), busca Modo de trabajo de la GPU / Modo híbrido y elige la GPU dedicada (dGPU). Reinicia.", "In Lenovo Vantage (or Legion Space), look for GPU Working Mode / Hybrid mode and pick the dedicated GPU (dGPU). Restart."),
+      m("Placa NVIDIA: Painel de Controle da NVIDIA › Gerenciar as configurações 3D › Configurações do programa › cs2.exe › Processador gráfico preferido: alto desempenho.", "Placa NVIDIA: Panel de control de NVIDIA › Administrar la configuración 3D › Configuración de programa › cs2.exe › Procesador de gráficos preferido: alto rendimiento.", "NVIDIA card: NVIDIA Control Panel › Manage 3D settings › Program Settings › cs2.exe › Preferred graphics processor: high-performance."),
+      m("Feche e abra o CS2 de novo e confira aqui.", "Cierra y vuelve a abrir CS2 y compruébalo aquí.", "Close and reopen CS2 and check here again."),
+    ],
+  };
+}
+
+// ---- rede (exemplo: Wi-Fi, servidores da América do Sul)
+export async function netTest(): Promise<NetReport> {
+  await new Promise((r) => setTimeout(r, 1200));
+  const pop = (code: string, name: string, avg: number | null, jitter: number | null, loss: number) => ({
+    code, name, sent: 20, received: avg == null ? 0 : Math.round(20 * (1 - loss / 100)), avg_ms: avg, min_ms: avg == null ? null : Math.round(avg - 2), jitter_ms: jitter, loss_pct: avg == null ? 100 : loss,
+  });
+  return {
+    interface: { name: "Wi-Fi", description: "Intel(R) Wi-Fi 6 AX201 160MHz", wifi: true, link_mbps: 866 },
+    pops: [
+      pop("gru", "Sao Paulo (Brazil)", 14.6, 6.2, 0), pop("eze", "Buenos Aires (Argentina)", 48.9, 7.1, 5), pop("scl", "Santiago (Chile)", 61.3, 5.8, 0),
+      pop("lim", "Lima (Peru)", 79.4, 6.6, 0), pop("mia", "Miami", 128.2, 7.4, 0), pop("atl", "Atlanta", 142.7, 8.0, 0),
+      pop("iad", "Sterling (Virginia)", 151.0, 6.9, 0), pop("mad", "Madrid", 196.3, 9.2, 0), pop("fra", "Frankfurt", 214.5, 8.1, 0),
+    ],
+    tips: [
+      m("Você está no Wi-Fi. Cabo de rede é a melhora mais certa: menos variação e menos perda de pacote.", "Estás por Wi-Fi. El cable de red es la mejora más segura: menos variación y menos pérdida de paquetes.", "You're on Wi-Fi. An Ethernet cable is the surest improvement: less jitter and less packet loss."),
+      m("O ping está variando bastante. Feche downloads, streams e atualizações (Steam, Windows, OneDrive) enquanto joga.", "El ping varía bastante. Cierra descargas, streams y actualizaciones (Steam, Windows, OneDrive) mientras juegas.", "Your ping is fluctuating a lot. Close downloads, streams and updates (Steam, Windows, OneDrive) while playing."),
+    ],
+  };
 }

@@ -103,6 +103,44 @@ export interface SteamUser {
   most_recent: boolean;
 }
 
+export interface GpuAdapterView {
+  name: string;
+  dedicated_mb: number;
+  integrated: boolean;
+}
+
+export interface GpuInUse {
+  cs2_running: boolean;
+  adapters: GpuAdapterView[];
+  in_use: GpuAdapterView | null;
+  laptop: boolean;
+  guide: string[];
+}
+
+export interface NetInterface {
+  name: string;
+  description: string;
+  wifi: boolean;
+  link_mbps: number;
+}
+
+export interface PopResult {
+  code: string;
+  name: string;
+  sent: number;
+  received: number;
+  avg_ms: number | null;
+  min_ms: number | null;
+  jitter_ms: number | null;
+  loss_pct: number;
+}
+
+export interface NetReport {
+  interface: NetInterface | null;
+  pops: PopResult[];
+  tips: string[];
+}
+
 export interface Cs2Info {
   steam_found: boolean;
   steam_path: string | null;

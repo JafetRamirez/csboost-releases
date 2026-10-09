@@ -7,6 +7,8 @@ mod commands;
 mod cs2;
 mod diagnostics;
 mod engine;
+mod gpu;
+mod net;
 mod journal;
 mod platform;
 mod vdf;
@@ -40,6 +42,7 @@ pub fn run() {
             commands::write_autoexec,
             commands::is_elevated,
             commands::verify_changes,
+            commands::reapply_tweaks,
             commands::bench_run,
             commands::bench_list,
             commands::bench_delete,
@@ -47,6 +50,8 @@ pub fn run() {
             commands::cleanup_scan,
             commands::cleanup_run,
             commands::set_language,
+            commands::gpu_in_use,
+            commands::net_test,
         ])
         .run(tauri::generate_context!())
         .expect("erro ao iniciar o CSBoost");

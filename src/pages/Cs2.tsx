@@ -5,6 +5,7 @@ import { api, errorText, openUrl } from "../lib/api";
 import { useApp } from "../lib/store";
 import type { Cs2Info } from "../lib/types";
 import { t } from "../i18n";
+import { GpuCard } from "../components/GpuCard";
 
 // Launch options enxutas. Muitas opções antigas do CS:GO não fazem nada no
 // CS2 — a lista é curada e NUNCA inclui -allow_third_party_software.
@@ -132,6 +133,8 @@ export function Cs2() {
           )}
         </Panel>
       </div>
+
+      <GpuCard />
 
       <Panel className="p-6 mt-6">
         <div className="flex items-end justify-between gap-4 mb-3">
