@@ -82,7 +82,9 @@ Legenda — **Impacto**: o quanto melhora o resultado ou a confiança · **Esfor
 | 11 | **Teste do mouse** (taxa de polling medida dentro da janela do CSBoost) e aviso de mouse em 125 Hz | Fácil, visual e útil | Médio | P |
 | 12 | **Rotina de manutenção** (o "Boost-Ups" do Hone): lembrete mensal para rodar Raio-X + limpeza e reaplicar o que o Windows desfez após updates | O Windows desfaz ajustes em atualizações grandes; nossa conferência já detecta isso | Médio | P |
 | 13 | **Rede (versão grátis)**: ping, jitter e perda até os relays da Valve na América do Sul (validar se respondem a ping), teste de bufferbloat, aviso de Wi-Fi e de downloads em segundo plano, ajustes reversíveis da placa de rede | Muita gente fala de "ms". Diagnostica e tira o que atrapalha do lado do PC; nunca promete "menos ping" | Médio | M |
-| 14 | **Inglês e espanhol** | Grupos LATAM de CS são enormes | Médio | P |
+| 14 | ✅ **Inglês e espanhol** (feito na v0.4: app, instalador e LP) | Grupos LATAM de CS são enormes | Médio | P |
+| 21 | **Central de ajuda** em `jafetramirez.com.br/csboost/ajuda` (e `/es/ayuda`, `/en/help`): documentação de cada tela, FAQ, "como resolver" (erro 5 / acesso negado, aviso do SmartScreen e antivírus, CS2 na placa integrada, ajuste que o Windows desfez, como desinstalar e desfazer tudo) | Tira dúvida antes de virar mensagem e ajuda no orgânico (cada problema vira uma página que o Google encontra) | Alto | M |
+| 22 | **Abrir chamado**: formulário na central de ajuda (nome, contato, versão, Windows, o que aconteceu, print opcional) e botão **"Copiar diagnóstico"** no app (versão, build do Windows, placas de vídeo, últimos erros) para colar no chamado | Hoje o suporte é comentário no Facebook. Custo zero: reaproveita a API do site (`api/lead.js` já grava no Google Sheets e manda e-mail). ⚠️ Botão de WhatsApp só com número separado do pessoal (WhatsApp Business ou chip de suporte), porque número público em grupo de jogo atrai spam. Bugs técnicos também podem ir para as Issues do GitHub | Alto | P |
 
 ### Depois (v1.0+)
 
