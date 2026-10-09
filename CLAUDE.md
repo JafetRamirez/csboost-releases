@@ -30,6 +30,13 @@ de uma dessas APIs, o recurso está errado.
 - **Overlay de FPS:** se existir um dia, só como janela externa — nunca dentro do jogo.
 - Qualquer recurso novo que interaja com o jogo precisa de justificativa escrita aqui antes de ser implementado.
 
+## Produto 100% gratuito (decisão do Jafet)
+O CSBoost é e continua 100% gratuito, sem anúncio e sem versão paga. Isso define o produto:
+- Nada que gere custo para o usuário final (assinatura, compra, serviço pago indicado pelo app).
+- Nada que gere custo alto para manter, principalmente no início (servidores, rede própria, APIs pagas).
+- Ideias que dependem disso vão para a seção "Só com patrocínio" do `docs/ROADMAP.md` e só voltam com patrocínio.
+- O único apoio aceito é o "Me paga um café" (voluntário).
+
 ## Configs de pros (`catalog/pros.json`)
 - Só exibição e cópia. O app nunca grava a config de um pro no jogo sozinho.
 - Cada jogador tem fonte e data de conferência. Nunca preencher valor de memória: se não achou numa fonte aberta, fica `null`.

@@ -81,7 +81,7 @@ Legenda — **Impacto**: o quanto melhora o resultado ou a confiança · **Esfor
 | 10 | **Perfil do driver NVIDIA** (NVAPI): modo de energia "máximo desempenho" e filtragem de texturas para o cs2.exe | Ajuste no driver, sem tocar no jogo. Ganho real em placas NVIDIA | Médio | M |
 | 11 | **Teste do mouse** (taxa de polling medida dentro da janela do CSBoost) e aviso de mouse em 125 Hz | Fácil, visual e útil | Médio | P |
 | 12 | **Rotina de manutenção** (o "Boost-Ups" do Hone): lembrete mensal para rodar Raio-X + limpeza e reaplicar o que o Windows desfez após updates | O Windows desfaz ajustes em atualizações grandes; nossa conferência já detecta isso | Médio | P |
-| 13 | **Rede**: teste de ping/jitter até os servidores da Valve na América do Sul, aviso de Wi-Fi e de downloads rodando | Muita gente fala de "ms"; sem prometer o que um otimizador local não entrega | Médio | M |
+| 13 | **Rede (versão grátis)**: ping, jitter e perda até os relays da Valve na América do Sul (validar se respondem a ping), teste de bufferbloat, aviso de Wi-Fi e de downloads em segundo plano, ajustes reversíveis da placa de rede | Muita gente fala de "ms". Diagnostica e tira o que atrapalha do lado do PC; nunca promete "menos ping" | Médio | M |
 | 14 | **Inglês e espanhol** | Grupos LATAM de CS são enormes | Médio | P |
 
 ### Depois (v1.0+)
@@ -89,11 +89,20 @@ Legenda — **Impacto**: o quanto melhora o resultado ou a confiança · **Esfor
 | # | Melhoria | Observação |
 |---|---|---|
 | 15 | **Outros jogos** (Valorant, Fortnite, PUBG, FiveM…) | ⚠️ Só os ajustes do **Windows** valem para todos. Mexer em config de jogo com anti-cheat de kernel (Vanguard, BattlEye, EAC) só depois de checar a política de cada um. Começar listando "o CSBoost funciona com qualquer jogo no nível do Windows" |
-| 16 | **Recordes de FPS por hardware** (opt-in, anônimo): "Ryzen 5 4500 + GTX 1050 Ti: média de +X% no 1% low em N medições" | Prova coletiva; precisa de backend e LGPD |
+| 16 | **Recordes de FPS por hardware** (opt-in, anônimo): "Ryzen 5 4500 + GTX 1050 Ti: média de +X% no 1% low em N medições" | Prova coletiva; precisa de backend e LGPD. 💰 Só se couber em plano gratuito de hospedagem; senão, vai para a lista de patrocínio |
 | 17 | **Guias de BIOS** por fabricante (XMP/EXPO, Resizable BAR) com prints | O Hone cobra por "BIOS tweaks"; aqui vira guia grátis |
 | 18 | **Distribuição na Microsoft Store / Epic** | Confiança e alcance; exige assinatura e empacotamento |
 | 19 | **Comunidade no Discord** com canal de suporte e de resultados | Os comentários já pedem um lugar para conversar |
 | 20 | **Overlay de FPS** | ⚠️ Só como **janela externa** sempre visível, nunca desenhado dentro do jogo. Avaliar se vale; o próprio CS2 já tem telemetria de FPS |
+
+### Só com patrocínio 💰
+
+Ideias boas que hoje geram custo para o usuário ou custo alto para manter. Ficam paradas até existir patrocínio que pague por elas (ver "Produto 100% gratuito" no `CLAUDE.md`).
+
+| Ideia | Por que está aqui |
+|---|---|
+| **Otimização de rota** (tipo ExitLag / NoPing): desviar o tráfego do jogo por uma rede própria de servidores | Exige rede de servidores no mundo todo (custo mensal alto) e driver de rede (certificado mais caro, mais alerta de antivírus). No CS2 o ganho é menor porque o jogo já usa a rede de relays da Valve (SDR); testar antes de prometer. Se um dia entrar, revisar contra a Regra nº 1 |
+| **Indicação paga de serviços de rota** (link de afiliado no diagnóstico de rede) | Leva o usuário a pagar por algo; conflita com o produto 100% gratuito |
 
 ---
 
