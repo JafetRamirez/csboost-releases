@@ -220,12 +220,34 @@ fn apply_one(t: &Tweak, ctx: &Ctx, journal: &mut Journal) -> OpResult {
                 for c in done.iter().rev() {
                     let _ = undo_change(c);
                 }
-                return OpResult { tweak_id: t.id.clone(), ok: false, skipped: false, message: Some(e.to_string()) };
+                return OpResult { tweak_id: t.id.clone(), ok: false, skipped: false, message: Some(explain(&t.title, &e)) };
             }
         }
     }
     journal.push(&t.id, &t.title, done);
     OpResult { tweak_id: t.id.clone(), ok: true, skipped: false, message: None }
+}
+
+/// Mensagem de erro de um ajuste: nome do ajuste + o que falhou + uma dica
+/// quando o Windows nega acesso (erro 5), que costuma ser proteção do próprio
+/// Windows, política da empresa ou o antivírus bloqueando aquela chave.
+fn explain(title: &str, e: &anyhow::Error) -> String {
+    let denied = e.chain().any(|c| {
+        c.downcast_ref::<std::io::Error>()
+            .map(|io| io.kind() == std::io::ErrorKind::PermissionDenied || io.raw_os_error() == Some(5))
+            .unwrap_or(false)
+    });
+    let base = format!("{title}: {e:#}");
+    if denied {
+        let hint = tr!(
+            "Essa configuração está protegida neste PC (pelo Windows, por uma política ou pelo antivírus). Este ajuste fica de fora; os outros foram aplicados normalmente.",
+            "Esta configuración está protegida en esta PC (por Windows, por una política o por el antivirus). Este ajuste queda afuera; los demás se aplicaron normalmente.",
+            "This setting is protected on this PC (by Windows, a policy or your antivirus). This tweak is skipped; the others were applied normally."
+        );
+        format!("{base}. {hint}")
+    } else {
+        base
+    }
 }
 
 pub fn apply(ids: &[String]) -> Result<BatchResult> {

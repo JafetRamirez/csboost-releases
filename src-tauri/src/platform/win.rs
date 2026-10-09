@@ -66,20 +66,30 @@ pub fn reg_read(hive: Hive, path: &str, name: &str) -> Result<Option<RegData>> {
 }
 
 pub fn reg_write(hive: Hive, path: &str, name: &str, value: &RegData) -> Result<()> {
-    let (key, _) = root(hive)
-        .create_subkey(path)
-        .with_context(|| tr!("sem permissão para escrever em {path} (rode como administrador)", "sin permiso para escribir en {path} (ejecuta como administrador)", "no permission to write to {path} (run as administrator)"))?;
-    match value {
-        RegData::Dword(v) => key.set_value(name, v)?,
-        RegData::Sz(s) => key.set_value(name, s)?,
+    let hive_name = match hive {
+        Hive::Hkcu => "HKCU",
+        Hive::Hklm => "HKLM",
+    };
+    let blocked = || {
+        tr!(
+            "o Windows bloqueou a gravação em {hive_name}\\{path}\\{name}",
+            "Windows bloqueó la escritura en {hive_name}\\{path}\\{name}",
+            "Windows blocked writing to {hive_name}\\{path}\\{name}"
+        )
+    };
+    let (key, _) = root(hive).create_subkey(path).with_context(blocked)?;
+    let r = match value {
+        RegData::Dword(v) => key.set_value(name, v),
+        RegData::Sz(s) => key.set_value(name, s),
         RegData::Raw { vtype, bytes } => key.set_raw_value(
             name,
             &RegValue {
                 vtype: regtype_from_u32(*vtype),
                 bytes: Cow::Borrowed(bytes),
             },
-        )?,
-    }
+        ),
+    };
+    r.with_context(blocked)?;
     Ok(())
 }
 
