@@ -9,6 +9,7 @@ name: Publicar versão
 # SIGNPATH_ORGANIZATION_ID existir em Settings → Secrets and variables → Actions → Variables.
 # Também precisa: secret SIGNPATH_API_TOKEN e variáveis SIGNPATH_PROJECT_SLUG e
 # SIGNPATH_POLICY_SLUG. Passo a passo em docs/SIGNPATH.md.
+# Opcional: secret VIRUSTOTAL_API_KEY (chave gratuita) envia o instalador ao VirusTotal.
 # Sem essas variáveis, o fluxo continua igual ao de antes (instalador sem assinatura).
 on:
   workflow_dispatch:
@@ -141,3 +142,18 @@ jobs:
             echo "Código-fonte sob GPL-3.0-or-later · [Code signing policy](https://github.com/JafetRamirez/csboost-releases/blob/main/docs/CODE_SIGNING_POLICY.md)"
           } > notes.md
           gh release create "v$V" release/* --title "CSBoost $V" --notes-file notes.md
+
+      # 5. Manda o instalador para o VirusTotal, para o link das notas já abrir
+      #    com a análise. Chave gratuita no secret VIRUSTOTAL_API_KEY; sem ela,
+      #    o passo é pulado. Uma falha aqui não desfaz a release.
+      - name: Enviar instalador ao VirusTotal
+        continue-on-error: true
+        shell: bash
+        env:
+          VT_KEY: ${{ secrets.VIRUSTOTAL_API_KEY }}
+        run: |
+          if [ -z "$VT_KEY" ]; then echo "Sem VIRUSTOTAL_API_KEY; pulando."; exit 0; fi
+          EXE=$(ls release/*_x64-setup.exe)
+          curl -sS --fail-with-body -X POST https://www.virustotal.com/api/v3/files \
+            -H "x-apikey: $VT_KEY" -F "file=@$EXE" -o vt.json
+          echo "Enviado: https://www.virustotal.com/gui/file/$(sha256sum "$EXE" | cut -d' ' -f1)"
