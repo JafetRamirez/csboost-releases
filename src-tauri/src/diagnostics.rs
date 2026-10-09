@@ -53,9 +53,7 @@ pub struct Report {
 }
 
 fn is_integrated(name: &str) -> bool {
-    let n = name.to_lowercase();
-    (n.contains("intel") && (n.contains("uhd") || n.contains("iris") || n.contains("hd graphics") || n.contains("arc graphics")))
-        || (n.contains("amd") && n.contains("radeon") && !n.contains(" rx") && (n.contains("graphics") || n.contains("vega")))
+    crate::gpu::name_says_integrated(name)
 }
 
 /// (ano, mês) de hoje a partir do relógio do sistema.
@@ -177,11 +175,18 @@ pub fn run() -> Report {
             34 => ("DDR5", 4800),
             _ => ("", 0),
         };
-        if base > 0 && cfg > 0 && cfg <= base && !power.has_battery {
+        let locked = memory_speed_locked(&hardware.cpu, &hardware.board);
+        if base > 0 && cfg > 0 && cfg <= base && locked && ty == 26 {
+            ok.push(tr!(
+                "Memória a {cfg} MT/s (é o máximo desta placa-mãe: chipset Intel B/H/Q não aumenta a velocidade da memória)",
+                "Memoria a {cfg} MT/s (es el máximo de esta placa madre: el chipset Intel B/H/Q no sube la velocidad de la memoria)",
+                "Memory at {cfg} MT/s (the most this motherboard allows: Intel B/H/Q chipsets can't raise memory speed)"
+            ));
+        } else if base > 0 && cfg > 0 && cfg <= base && !power.has_battery {
             issues.push(Issue {
                 id: "ram.xmp".into(),
                 severity: Severity::Warning,
-                title: tr!("Memória {label} a {cfg} MT/s — provavelmente sem XMP/EXPO", "Memoria {label} a {cfg} MT/s — probablemente sin XMP/EXPO", "{label} memory at {cfg} MT/s — probably without XMP/EXPO"),
+                title: tr!("Memória {label} a {cfg} MT/s — pode estar sem XMP/EXPO", "Memoria {label} a {cfg} MT/s — puede estar sin XMP/EXPO", "{label} memory at {cfg} MT/s — XMP/EXPO may be off"),
                 detail: tr!(
                     "Pentes de memória gamer vêm de fábrica numa velocidade básica. Ativar o perfil XMP (Intel) ou EXPO (AMD) na BIOS costuma dar ganho real no CS2.",
                     "Las memorias gamer vienen de fábrica a una velocidad básica. Activar el perfil XMP (Intel) o EXPO (AMD) en la BIOS suele dar una mejora real en CS2.",
@@ -192,6 +197,7 @@ pub fn run() -> Report {
                         tr!("Reinicie o PC e entre na BIOS (geralmente tecla Del ou F2 ao ligar).", "Reinicia la PC y entra a la BIOS (normalmente con Supr o F2 al encender).", "Restart the PC and enter the BIOS (usually Del or F2 while it boots)."),
                         tr!("Procure por XMP, EXPO, D.O.C.P ou A-XMP (na aba AI Tweaker, OC ou Extreme Tweaker).", "Busca XMP, EXPO, D.O.C.P o A-XMP (en la pestaña AI Tweaker, OC o Extreme Tweaker).", "Look for XMP, EXPO, D.O.C.P or A-XMP (under AI Tweaker, OC or Extreme Tweaker)."),
                         tr!("Ative o Perfil 1, salve (F10) e reinicie.", "Activa el Perfil 1, guarda (F10) y reinicia.", "Enable Profile 1, save (F10) and restart."),
+                        tr!("Se o Perfil 1 já mostra a mesma velocidade que aparece aqui (ex.: DDR4-2666), seus pentes já estão no máximo deles: pode ignorar este aviso.", "Si el Perfil 1 ya muestra la misma velocidad que aparece acá (ej.: DDR4-2666), tus módulos ya están en su máximo: puedes ignorar este aviso.", "If Profile 1 already shows the same speed as here (e.g. DDR4-2666), your sticks are already at their maximum: you can ignore this warning."),
                         tr!("Se o PC não ligar, ele volta sozinho ao padrão após algumas tentativas.", "Si la PC no arranca, vuelve sola a la configuración original después de algunos intentos.", "If the PC does not boot, it goes back to the defaults by itself after a few tries."),
                     ],
                 }),
@@ -261,6 +267,41 @@ pub fn run() -> Report {
             } else {
                 ok.push(tr!("CS2 configurado para a GPU dedicada", "CS2 configurado para la GPU dedicada", "CS2 set to use the dedicated GPU"));
             }
+        }
+    }
+
+    // 5b. Monitor ligado na saída da placa-mãe (desktop com placa dedicada).
+    // Só lê a lista de placas e monitores pelo DXGI; não toca no jogo.
+    if !power.has_battery {
+        let raw = platform::gpu_adapters().unwrap_or_default();
+        let views = crate::gpu::classify(&raw);
+        let on_igpu: Vec<&str> = raw.iter().zip(&views).filter(|(a, v)| v.integrated && a.outputs > 0).map(|(a, _)| a.name.as_str()).collect();
+        let dgpu = raw.iter().zip(&views).filter(|(_, v)| !v.integrated).map(|(a, _)| a).max_by_key(|a| a.dedicated_mb);
+        if let (Some(igpu), Some(d)) = (on_igpu.first(), dgpu) {
+            let (igpu, dname) = (igpu.to_string(), d.name.clone());
+            let all = d.outputs == 0;
+            issues.push(Issue {
+                id: "gpu.monitor_on_igpu".into(),
+                severity: if all { Severity::Critical } else { Severity::Warning },
+                title: if all {
+                    tr!("Monitor ligado na saída da placa-mãe", "Monitor conectado a la salida de la placa madre", "Monitor plugged into the motherboard")
+                } else {
+                    tr!("Um dos monitores está na saída da placa-mãe", "Uno de los monitores está en la salida de la placa madre", "One monitor is plugged into the motherboard")
+                },
+                detail: tr!(
+                    "O monitor está no vídeo integrado ({igpu}), não na {dname}. Assim a imagem passa pela placa fraca e o FPS cai ou fica travado.",
+                    "El monitor está en el video integrado ({igpu}), no en la {dname}. Así la imagen pasa por la placa débil y el FPS baja o queda trabado.",
+                    "The monitor is on the integrated graphics ({igpu}), not the {dname}. The image goes through the weaker chip and FPS drops or gets capped."
+                ),
+                fix: Some(Fix::Guide {
+                    steps: vec![
+                        tr!("Desligue o PC e olhe atrás do gabinete.", "Apaga la PC y mira atrás del gabinete.", "Turn off the PC and look at the back of the case."),
+                        tr!("Tire o cabo do monitor da saída de vídeo de cima (a da placa-mãe, na vertical, perto das USB).", "Saca el cable del monitor de la salida de video de arriba (la de la placa madre, en vertical, cerca de los USB).", "Unplug the monitor cable from the upper video port (the motherboard one, vertical, next to the USB ports)."),
+                        tr!("Ligue na saída da placa de vídeo, mais embaixo e na horizontal.", "Conéctalo en la salida de la placa de video, más abajo y en horizontal.", "Plug it into the graphics card's port, lower down and horizontal."),
+                        tr!("Ligue o PC e rode o Raio-X de novo.", "Enciende la PC y vuelve a correr Rayos X.", "Turn the PC on and run the PC Scan again."),
+                    ],
+                }),
+            });
         }
     }
 
@@ -410,3 +451,36 @@ mod tests {
         assert!(y >= 2024 && (1..=12).contains(&m));
     }
 }
+
+/// Placas Intel com chipset B/H/Q das séries 100 a 400 (ex.: B250, B360, H310, B460)
+/// travam a memória na velocidade oficial do processador: XMP acima disso não
+/// tem efeito. A partir da série 500 (B560, H570…) a memória pode subir.
+fn memory_speed_locked(cpu: &str, board: &str) -> bool {
+    if !cpu.to_lowercase().contains("intel") {
+        return false;
+    }
+    board.to_uppercase().split(|c: char| !c.is_ascii_alphanumeric()).any(|w| {
+        let b = w.as_bytes();
+        // pega "B360", "H310M", "B365M" etc.
+        b.len() >= 4
+            && matches!(b[0], b'B' | b'H' | b'Q')
+            && (b'1'..=b'4').contains(&b[1])
+            && b[2].is_ascii_digit()
+            && b[3].is_ascii_digit()
+            && b[4..].iter().all(|c| c.is_ascii_alphabetic())
+    })
+}
+
+#[cfg(test)]
+mod ram_tests {
+    #[test]
+    fn locked_chipsets() {
+        let i = "Intel(R) Core(TM) i5-9400F CPU @ 2.90GHz";
+        assert!(super::memory_speed_locked(i, "TUF B360M-PLUS GAMING/BR"));
+        assert!(super::memory_speed_locked(i, "PRIME H310M-E R2.0"));
+        assert!(!super::memory_speed_locked(i, "ROG STRIX Z390-F GAMING"));
+        assert!(!super::memory_speed_locked(i, "PRIME B560M-A"));
+        assert!(!super::memory_speed_locked("AMD Ryzen 5 5600", "B450M PRO4"));
+    }
+}
+

@@ -24,7 +24,7 @@ pub struct GpuInUse {
     pub guide: Vec<String>,
 }
 
-fn name_says_integrated(name: &str) -> bool {
+pub(crate) fn name_says_integrated(name: &str) -> bool {
     let n = name.to_lowercase();
     if n.contains("intel") {
         // Arc dedicada tem modelo (A380, A770, B580…); a integrada é só "Arc(TM) Graphics"
@@ -162,7 +162,7 @@ mod tests {
     use crate::platform::GpuAdapter;
 
     fn a(name: &str, mb: u64) -> GpuAdapter {
-        GpuAdapter { name: name.into(), vendor_id: 0, dedicated_mb: mb, luid_low: 0, luid_high: 0 }
+        GpuAdapter { name: name.into(), vendor_id: 0, dedicated_mb: mb, outputs: 0, luid_low: 0, luid_high: 0 }
     }
 
     #[test]

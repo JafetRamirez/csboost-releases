@@ -303,6 +303,12 @@ struct WmiCs {
 }
 
 #[derive(Deserialize)]
+#[serde(rename = "Win32_BaseBoard", rename_all = "PascalCase")]
+struct WmiBoard {
+    product: Option<String>,
+}
+
+#[derive(Deserialize)]
 #[serde(rename = "Win32_Processor", rename_all = "PascalCase")]
 struct WmiCpu {
     name: Option<String>,
@@ -351,6 +357,11 @@ pub fn hardware_info() -> Result<HardwareInfo> {
         if let Ok(v) = wmi.query::<WmiCs>() {
             if let Some(c) = v.into_iter().next() {
                 info.manufacturer = c.manufacturer.unwrap_or_default().trim().to_string();
+            }
+        }
+        if let Ok(v) = wmi.query::<WmiBoard>() {
+            if let Some(b) = v.into_iter().next() {
+                info.board = b.product.unwrap_or_default().trim().to_string();
             }
         }
         if let Ok(v) = wmi.query::<WmiCpu>() {
@@ -537,10 +548,20 @@ pub fn gpu_adapters() -> Result<Vec<GpuAdapter>> {
             if d.Flags & (DXGI_ADAPTER_FLAG_SOFTWARE.0 as u32) != 0 || d.VendorId == 0x1414 {
                 continue;
             }
+            // monitores ligados nesta placa
+            let mut outputs = 0u32;
+            let mut j = 0u32;
+            while let Ok(o) = a.EnumOutputs(j) {
+                j += 1;
+                if o.GetDesc().map(|od| od.AttachedToDesktop.as_bool()).unwrap_or(false) {
+                    outputs += 1;
+                }
+            }
             out.push(GpuAdapter {
                 name: wide_to_string(&d.Description).trim().to_string(),
                 vendor_id: d.VendorId,
                 dedicated_mb: (d.DedicatedVideoMemory / (1024 * 1024)) as u64,
+                outputs,
                 luid_low: d.AdapterLuid.LowPart,
                 luid_high: d.AdapterLuid.HighPart,
             });

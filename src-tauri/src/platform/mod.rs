@@ -71,6 +71,8 @@ pub struct RamModule {
 pub struct HardwareInfo {
     /// Fabricante do computador (para o guia de MUX switch em notebooks).
     pub manufacturer: String,
+    /// Modelo da placa-mãe (Win32_BaseBoard.Product), ex.: "TUF B360M-PLUS GAMING/BR".
+    pub board: String,
     pub os_name: String,
     pub os_build: u32,
     pub cpu: String,
@@ -112,6 +114,8 @@ pub struct GpuAdapter {
     pub name: String,
     pub vendor_id: u32,
     pub dedicated_mb: u64,
+    /// Monitores ligados nesta placa (saídas ativas na área de trabalho).
+    pub outputs: u32,
     #[serde(skip)]
     pub luid_low: u32,
     #[serde(skip)]

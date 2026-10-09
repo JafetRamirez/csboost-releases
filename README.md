@@ -97,6 +97,10 @@ Quem estiver com o app aberto vê o aviso "Versão X disponível — Atualizar a
 
 ## O que já funciona (v0.4)
 
+**Novo na 0.4.1:**
+- Raio-X avisa quando o monitor está ligado na saída da placa-mãe num PC com placa de vídeo dedicada.
+- Aviso de XMP corrigido: em placas Intel B/H/Q das séries 100 a 400 (ex.: H310, B360), 2666 MT/s já é o máximo e não aparece mais como problema.
+
 **Novo na 0.4:**
 - **Três idiomas:** português, espanhol e inglês no app, no instalador e na LP (seletor em Configurações).
 - **Placa de vídeo do CS2** (Counter-Strike 2): mostra em qual placa o jogo está rodando agora, lendo os contadores de GPU do Windows, e um guia por marca de notebook (MUX switch) quando está na integrada.
