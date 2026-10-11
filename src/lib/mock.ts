@@ -107,7 +107,7 @@ export function report(): Report {
   issues.push({
     id: "ram.xmp",
     severity: "warning",
-    title: m("Memória DDR4 a 2666 MT/s — provavelmente sem XMP/EXPO", "Memoria DDR4 a 2666 MT/s — probablemente sin XMP/EXPO", "DDR4 memory at 2666 MT/s — probably without XMP/EXPO"),
+    title: m("Memória DDR4 a 2666 MT/s — pode estar sem XMP/EXPO", "Memoria DDR4 a 2666 MT/s — puede estar sin XMP/EXPO", "DDR4 memory at 2666 MT/s — XMP/EXPO may be off"),
     detail: m(
       "Pentes de memória gamer vêm de fábrica numa velocidade básica. Ativar o perfil XMP (Intel) ou EXPO (AMD) na BIOS costuma dar ganho real no CS2.",
       "Las memorias gamer vienen de fábrica a una velocidad básica. Activar el perfil XMP (Intel) o EXPO (AMD) en la BIOS suele dar una mejora real en CS2.",
