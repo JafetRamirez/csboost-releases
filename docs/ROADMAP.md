@@ -11,7 +11,7 @@
 - ✅ #12 Manutenção: ao abrir, avisa se o Windows desfez algum ajuste e reaplica com um clique (v0.4). Falta o lembrete mensal
 - ✅ #13 Teste de rede grátis: ping, variação e perda até os relays da Valve + aviso de Wi-Fi (v0.4). Falta bufferbloat e ajustes da placa de rede
 - ✅ #14 Português, espanhol e inglês no app, no instalador e na LP (v0.4)
-- ⏳ #5 Assinatura de código: grátis pela SignPath Foundation (pedido em andamento; ver `docs/SIGNPATH.md`). Repositório já em GPL-3.0, fonte trocada para Orbitron (OFL) e logo refeito
+- ⏸️ #5 Assinatura de código: SignPath Foundation **recusou em 11/10/2026** por falta de visibilidade pública (estrelas, forks, contribuidores, artigos, Reddit/YouTube). Pode pedir de novo quando o projeto tiver esses sinais. O workflow continua pronto e liga sozinho com as variáveis do SignPath. Opções pagas (SignPath pago, Certum, Azure) ficam em "Só com patrocínio"
 - Próximos: #21 central de ajuda, #22 abrir chamado, #7 Modo Sessão, #8 presets de vídeo, #10 perfil NVIDIA
 
 ### Correções para o próximo update
@@ -107,6 +107,7 @@ Ideias boas que hoje geram custo para o usuário ou custo alto para manter. Fica
 | Ideia | Por que está aqui |
 |---|---|
 | **Otimização de rota** (tipo ExitLag / NoPing): desviar o tráfego do jogo por uma rede própria de servidores | Exige rede de servidores no mundo todo (custo mensal alto) e driver de rede (certificado mais caro, mais alerta de antivírus). No CS2 o ganho é menor porque o jogo já usa a rede de relays da Valve (SDR); testar antes de prometer. Se um dia entrar, revisar contra a Regra nº 1 |
+| **Certificado de assinatura pago** (SignPath pago, Certum Open Source, Azure Artifact Signing) | Custo anual para o Jafet. Volta se a SignPath Foundation recusar de novo e houver patrocínio |
 | **Indicação paga de serviços de rota** (link de afiliado no diagnóstico de rede) | Leva o usuário a pagar por algo; conflita com o produto 100% gratuito |
 
 
