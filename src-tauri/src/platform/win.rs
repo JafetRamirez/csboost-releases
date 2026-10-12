@@ -108,9 +108,49 @@ pub fn reg_delete(hive: Hive, path: &str, name: &str) -> Result<()> {
 // ---------------------------------------------------------------- energia
 
 use windows::Win32::System::Power::{
-    GetSystemPowerStatus, PowerDuplicateScheme, PowerGetActiveScheme, PowerSetActiveScheme,
-    SYSTEM_POWER_STATUS,
+    GetSystemPowerStatus, PowerDuplicateScheme, PowerGetActiveScheme, PowerReadACValueIndex, PowerReadFriendlyName,
+    PowerSetActiveScheme, SYSTEM_POWER_STATUS,
 };
+
+/// Subgrupo do processador e "Estado mínimo do processador" (em %).
+const SUB_PROCESSOR: &str = "54533251-82be-4824-96c1-47b60b740d00";
+const PROC_THROTTLE_MIN: &str = "893dee8e-2bef-41e0-89c6-b55d0929964c";
+
+/// Estado mínimo do processador na tomada (0–100). Planos de desempenho
+/// (Alto desempenho, Desempenho máximo, AMD Ryzen High Performance) usam 100.
+pub fn power_min_cpu(guid: &str) -> Option<u32> {
+    let (s, sub, set) = (guid_from(guid).ok()?, guid_from(SUB_PROCESSOR).ok()?, guid_from(PROC_THROTTLE_MIN).ok()?);
+    let mut v = 0u32;
+    let r = unsafe { PowerReadACValueIndex(None, Some(&s), Some(&sub), Some(&set), &mut v) };
+    (r == WIN32_ERROR(0)).then_some(v)
+}
+
+/// Nome do plano como aparece no Windows (ex.: "AMD Ryzen High Performance").
+pub fn power_friendly_name(guid: &str) -> Option<String> {
+    let s = guid_from(guid).ok()?;
+    unsafe {
+        let mut size = 0u32;
+        if PowerReadFriendlyName(None, Some(&s), None, None, None, &mut size) != WIN32_ERROR(0) || size < 2 {
+            return None;
+        }
+        let mut buf = vec![0u8; size as usize];
+        if PowerReadFriendlyName(None, Some(&s), None, None, Some(buf.as_mut_ptr()), &mut size) != WIN32_ERROR(0) {
+            return None;
+        }
+        let w: Vec<u16> = buf.chunks_exact(2).map(|c| u16::from_le_bytes([c[0], c[1]])).collect();
+        let name = wide_to_string(&w).trim().to_string();
+        (!name.is_empty()).then_some(name)
+    }
+}
+
+/// Modo de energia do Windows 10/11 (o controle "Modo de energia" nas
+/// Configurações), na tomada. GUID vazio = Equilibrado.
+pub fn power_overlay() -> Option<String> {
+    match reg_read(Hive::Hklm, r"SYSTEM\CurrentControlSet\Control\Power\User\PowerSchemes", "ActiveOverlayAcPowerScheme") {
+        Ok(Some(RegData::Sz(s))) => Some(s.trim().to_ascii_lowercase()),
+        _ => None,
+    }
+}
 
 fn guid_str(g: &GUID) -> String {
     guid_to_string(g.data1, g.data2, g.data3, g.data4)

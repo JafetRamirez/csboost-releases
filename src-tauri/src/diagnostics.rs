@@ -137,8 +137,17 @@ pub fn run() -> Report {
     }
 
     // 3. Plano de energia
-    match plan_guid.as_deref() {
-        Some(platform::PLAN_POWER_SAVER) => issues.push(Issue {
+    let kind = plan_guid.as_deref().and_then(platform::plan_kind);
+    // Equilibrado + modo "Melhor desempenho" do Windows 11 já segura o clock.
+    let best_mode = platform::power_overlay().as_deref() == Some(platform::OVERLAY_BEST_PERFORMANCE);
+    match kind {
+        Some(platform::PlanKind::Balanced) if best_mode => ok.push(tr!(
+            "Plano {} com o modo Melhor desempenho do Windows",
+            "Plan {} con el modo Mejor rendimiento de Windows",
+            "{} plan with Windows Best performance mode",
+            power_plan.name
+        )),
+        Some(platform::PlanKind::Saver) => issues.push(Issue {
             id: "power.plan".into(),
             severity: Severity::Critical,
             title: tr!("Plano de energia em Economia", "Plan de energía en Ahorro", "Power plan set to Power saver"),
@@ -149,10 +158,10 @@ pub fn run() -> Report {
             ),
             fix: Some(Fix::Tweak { tweak_id: "power.high_performance".into() }),
         }),
-        Some(platform::PLAN_BALANCED) => issues.push(Issue {
+        Some(platform::PlanKind::Balanced) => issues.push(Issue {
             id: "power.plan".into(),
             severity: Severity::Warning,
-            title: tr!("Plano de energia Equilibrado", "Plan de energía Equilibrado", "Balanced power plan"),
+            title: tr!("Plano de energia {}", "Plan de energía {}", "{} power plan", power_plan.name),
             detail: tr!(
                 "O Equilibrado reduz o clock quando acha que não precisa, o que pode causar quedas de FPS em momentos de ação.",
                 "El plan Equilibrado baja la frecuencia cuando cree que no hace falta, y eso puede causar caídas de FPS en plena acción.",

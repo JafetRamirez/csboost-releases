@@ -95,13 +95,12 @@ fn unsupported_reason(t: &Tweak, ctx: &Ctx) -> Option<String> {
 
 fn action_applied(a: &Action, ctx: &Ctx, journal_applied_plan: Option<&str>) -> Option<bool> {
     match a {
-        Action::Registry { hive, path, name, value } => {
-            platform::reg_read(*hive, path, name).ok().map(|cur| cur.as_ref() == Some(value))
+        Action::Registry { hive, path, name, value, absent } => {
+            platform::reg_read(*hive, path, name).ok().map(|cur| cur.as_ref().or(absent.as_ref()) == Some(value))
         }
         Action::PowerPlan { plan: PowerPlanTarget::HighPerformance } => {
             platform::power_active().ok().map(|g| {
-                g == platform::PLAN_HIGH
-                    || g == platform::PLAN_ULTIMATE
+                platform::plan_kind(&g) == Some(platform::PlanKind::Performance)
                     || journal_applied_plan.map(|p| p == g).unwrap_or(false)
             })
         }
@@ -155,7 +154,7 @@ pub fn list() -> Vec<TweakView> {
 
 fn apply_action(a: &Action, ctx: &Ctx) -> Result<Change> {
     match a {
-        Action::Registry { hive, path, name, value } => {
+        Action::Registry { hive, path, name, value, .. } => {
             let previous = platform::reg_read(*hive, path, name)?;
             platform::reg_write(*hive, path, name, value)?;
             if platform::reg_read(*hive, path, name)?.as_ref() != Some(value) {

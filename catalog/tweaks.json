@@ -134,14 +134,16 @@
           "hive": "HKCU",
           "path": "Software\\Microsoft\\GameBar",
           "name": "AutoGameModeEnabled",
-          "value": 1
+          "value": 1,
+          "absent": 1
         },
         {
           "type": "registry",
           "hive": "HKCU",
           "path": "Software\\Microsoft\\GameBar",
           "name": "AllowAutoGameMode",
-          "value": 1
+          "value": 1,
+          "absent": 1
         }
       ],
       "i18n": {

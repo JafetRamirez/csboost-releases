@@ -19,6 +19,28 @@ pub const PLAN_BALANCED: &str = "381b4222-f694-41f0-9685-ff5bb260df2e";
 pub const PLAN_HIGH: &str = "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c";
 pub const PLAN_ULTIMATE: &str = "e9a42b02-d5df-448d-aa00-03f14749eb61";
 
+/// Modo "Melhor desempenho" do Windows 10/11 (overlay).
+pub const OVERLAY_BEST_PERFORMANCE: &str = "ded574b5-45a0-4f42-8737-46345c09c238";
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PlanKind {
+    Saver,
+    Balanced,
+    Performance,
+}
+
+/// Classifica o plano ativo. Planos com GUID próprio (cópias do Desempenho
+/// máximo feitas por guias, "AMD Ryzen High Performance" etc.) são julgados
+/// pelo estado mínimo do processador: 90% ou mais = plano de desempenho.
+pub fn plan_kind(guid: &str) -> Option<PlanKind> {
+    match guid.to_ascii_lowercase().as_str() {
+        PLAN_POWER_SAVER => Some(PlanKind::Saver),
+        PLAN_BALANCED => Some(PlanKind::Balanced),
+        PLAN_HIGH | PLAN_ULTIMATE => Some(PlanKind::Performance),
+        g => power_min_cpu(g).map(|min| if min >= 90 { PlanKind::Performance } else { PlanKind::Balanced }),
+    }
+}
+
 pub fn is_known_plan(guid: &str) -> bool {
     matches!(guid.to_ascii_lowercase().as_str(), PLAN_POWER_SAVER | PLAN_BALANCED | PLAN_HIGH | PLAN_ULTIMATE)
 }
@@ -29,7 +51,7 @@ pub fn plan_name(guid: &str) -> String {
         PLAN_BALANCED => tr!("Equilibrado", "Equilibrado", "Balanced"),
         PLAN_HIGH => tr!("Alto desempenho", "Alto rendimiento", "High performance"),
         PLAN_ULTIMATE => tr!("Desempenho máximo", "Máximo rendimiento", "Ultimate performance"),
-        _ => tr!("Personalizado", "Personalizado", "Custom"),
+        g => power_friendly_name(g).unwrap_or_else(|| tr!("Personalizado", "Personalizado", "Custom")),
     }
 }
 

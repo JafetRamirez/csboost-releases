@@ -53,6 +53,10 @@ pub enum Action {
         path: String,
         name: String,
         value: RegData,
+        /// Valor que o Windows assume quando a chave não existe (ex.: Modo de
+        /// Jogo vem ligado por padrão). Só afeta a detecção.
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        absent: Option<RegData>,
     },
     PowerPlan {
         plan: PowerPlanTarget,

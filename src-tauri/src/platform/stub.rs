@@ -12,6 +12,9 @@ pub fn reg_write(_: Hive, _: &str, _: &str, _: &RegData) -> Result<()> { bail!(M
 pub fn reg_delete(_: Hive, _: &str, _: &str) -> Result<()> { bail!(MSG) }
 pub fn power_active() -> Result<String> { bail!(MSG) }
 pub fn power_set(_: &str) -> Result<()> { bail!(MSG) }
+pub fn power_min_cpu(_: &str) -> Option<u32> { None }
+pub fn power_friendly_name(_: &str) -> Option<String> { None }
+pub fn power_overlay() -> Option<String> { None }
 pub fn power_ensure_high_performance() -> Result<String> { bail!(MSG) }
 pub fn power_status() -> PowerStatus { PowerStatus { has_battery: false, on_ac: true } }
 pub fn displays() -> Result<Vec<DisplayInfo>> { bail!(MSG) }

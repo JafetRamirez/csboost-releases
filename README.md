@@ -100,6 +100,8 @@ Quem estiver com o app aberto vê o aviso "Versão X disponível — Atualizar a
 **Novo na 0.4.1:**
 - Raio-X avisa quando o monitor está ligado na saída da placa-mãe num PC com placa de vídeo dedicada.
 - Aviso de XMP corrigido: em placas Intel B/H/Q das séries 100 a 400 (ex.: H310, B360), 2666 MT/s já é o máximo e não aparece mais como problema.
+- Plano de energia: planos próprios (cópia do Desempenho máximo, "AMD Ryzen High Performance") contam como desempenho pelo estado mínimo do processador, e o modo "Melhor desempenho" do Windows 11 não é mais tratado como Equilibrado.
+- Modo de Jogo: ligado por padrão no Windows quando a chave não existe; não aparece mais como desligado.
 
 **Novo na 0.4:**
 - **Três idiomas:** português, espanhol e inglês no app, no instalador e na LP (seletor em Configurações).
