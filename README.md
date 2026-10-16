@@ -4,6 +4,9 @@ Otimizador gratuito de Windows para Counter-Strike 2.
 
 ## Baixar
 
+Site: **https://csboost.com.br** (código em `site/`).
+
+
 **[Baixe a versão mais recente em Releases](https://github.com/JafetRamirez/csboost-releases/releases/latest)** e rode o `CSBoost_x.y.z_x64-setup.exe`.
 
 - Windows 10 e 11 (64 bits). O app pede permissão de administrador ao abrir.

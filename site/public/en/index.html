@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSBoost — free optimizer for more FPS in CS2 (Windows)</title>
+<meta name="description" content="CSBoost scans Windows, fixes what holds back your FPS in CS2 and lets you undo everything. Free, ad-free, open source and it never touches the game.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="CSBoost">
+<meta property="og:url" content="https://csboost.com.br/en/">
+<meta property="og:title" content="CSBoost — steadier FPS in CS2, without touching the game">
+<meta property="og:description" content="PC scan, reversible Windows tweaks, a benchmark with 1% lows and configs from 30 pros. Free and open source.">
+<meta property="og:image" content="https://csboost.com.br/img/csboost-og-en.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CSBoost home screen">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://csboost.com.br/en/">
+<link rel="alternate" hreflang="pt-BR" href="https://csboost.com.br/">
+<link rel="alternate" hreflang="es" href="https://csboost.com.br/es/">
+<link rel="alternate" hreflang="en" href="https://csboost.com.br/en/">
+<link rel="alternate" hreflang="x-default" href="https://csboost.com.br/en/">
+<link rel="icon" href="/img/favicon.png">
+<meta name="theme-color" content="#11142A">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CSBoost",
+  "url": "https://csboost.com.br/en/",
+  "description": "Free Windows optimizer for Counter-Strike 2: PC scan, reversible tweaks, FPS benchmark and pro player configs. It never touches the game process.",
+  "applicationCategory": "UtilitiesApplication",
+  "applicationSubCategory": "Game optimizer",
+  "operatingSystem": "Windows 10, Windows 11",
+  "softwareVersion": "0.4.0",
+  "fileSize": "2.8MB",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "downloadUrl": "https://github.com/JafetRamirez/csboost-releases/releases/latest",
+  "screenshot": "https://csboost.com.br/img/csboost-painel-en.webp",
+  "image": "https://csboost.com.br/img/csboost-og-en.jpg",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+  "author": { "@type": "Person", "name": "Jafet Ramirez", "url": "https://www.jafetramirez.com.br/" },
+  "sameAs": ["https://github.com/JafetRamirez/csboost-releases"]
+}
+</script>
+<!-- Este <head> NÃO vai para o Elementor. Transcreva no plugin de SEO.
+     og:image precisa de URL absoluta quando a página for publicada. -->
+<!-- analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WYPCC7WB42"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-WYPCC7WB42',{content_group:'csboost',language:'en'});</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body style="margin:0;background:#11142A">
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     CSBoost — LP de divulgação
+     COPY: escrita do zero (não havia documento de copy). Revisar antes de publicar.
+     IMAGENS: capturas reais do app, com dados de exemplo (modo de pré-visualização).
+       A captura do Benchmark mostra números de exemplo e leva o selo "Dados de exemplo".
+     DOWNLOAD: o script consulta a API do GitHub e troca o link, a versão, o tamanho
+       e o SHA256 pela release mais recente. Sem rede, ficam os valores da v0.4.0.
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     INÍCIO DO BLOCO ELEMENTOR — copie a partir daqui
+     Cole num widget "HTML" dentro de um Container com:
+     Largura do conteúdo: Largura total · Padding: 0 · Gap: 0 · Página em Canvas
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="csb-root" id="csb-topo">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:ital,wght@0,700;0,800;1,800&display=swap');
+
+/* ═══ CAMADA 1 · TOKENS (cores do logo) ════════════════════════════════ */
+.csb-root{
+  --csb-ambar:#F9AB19;
+  --csb-ambar-forte:#FFC04A;
+  --csb-navy:#28397F;
+  --csb-tinta:#1C1C1C;
+  --csb-base:#11142A;
+  --csb-painel:#181C36;
+  --csb-elevado:#212647;
+  --csb-claro:#F3F4F9;
+  --csb-branco:#FFFFFF;
+
+  --csb-fundo:var(--csb-base);
+  --csb-texto:#F2F3F8;
+  --csb-texto-suave:rgba(226,229,242,.72);
+  --csb-acento:var(--csb-ambar);
+  --csb-borda:rgba(255,255,255,.10);
+  --csb-borda-forte:rgba(255,255,255,.20);
+  --csb-cartao:var(--csb-painel);
+
+  --csb-fonte:'Barlow',-apple-system,'Segoe UI',system-ui,sans-serif;
+  --csb-fonte-titulo:'Barlow Semi Condensed','Barlow','Arial Narrow',sans-serif;
+
+  --csb-h1:clamp(2.5rem,5.2vw,4.5rem);
+  --csb-h2:clamp(2rem,3.9vw,3.25rem);
+  --csb-h3:clamp(1.15rem,1.5vw,1.35rem);
+  --csb-corpo:clamp(1.02rem,1.15vw,1.1rem);
+  --csb-mini:.8125rem;
+
+  --csb-max:1200px;
+  --csb-gutter:clamp(20px,5vw,40px);
+  --csb-secao:clamp(80px,9vw,140px);
+  --csb-raio:16px;
+  --csb-raio-p:10px;
+  --csb-sombra:0 1px 2px rgba(0,0,0,.2),0 24px 60px -24px rgba(0,0,0,.6);
+
+  --csb-mola:cubic-bezier(.16,1,.3,1);
+  --csb-suave:cubic-bezier(.4,0,.2,1);
+  --csb-t-rapido:220ms;
+  --csb-t-medio:640ms;
+  --csb-t-lento:1100ms;
+  --csb-desloca:26px;
+
+  font-family:var(--csb-fonte);
+  font-size:var(--csb-corpo);
+  line-height:1.6;
+  color:var(--csb-texto);
+  background:var(--csb-fundo);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+  position:relative;
+  isolation:isolate;
+}
+.csb-root *,.csb-root *::before,.csb-root *::after{box-sizing:border-box}
+:where(.csb-root) :where(p,h1,h2,h3,h4,ul,ol,figure,blockquote){margin:0}
+:where(.csb-root) :where(ul,ol){padding:0;list-style:none}
+:where(.csb-root) :where(img,video,svg){display:block;max-width:100%;height:auto}
+:where(.csb-root) :where(a){color:inherit;text-decoration:none}
+:where(.csb-root) :where(button){font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.csb-root [id]{scroll-margin-top:96px}
+.csb-root :focus-visible{outline:2px solid var(--csb-ambar);outline-offset:3px;border-radius:6px}
+
+/* Seção clara: inverte os tokens. Âmbar não passa contraste sobre claro,
+   então o acento vira navy e o âmbar fica só como marca/sublinhado. */
+.csb-clara{--csb-fundo:var(--csb-claro);--csb-texto:#11142A;--csb-texto-suave:#4A5070;--csb-acento:var(--csb-navy);
+  --csb-borda:rgba(17,20,42,.10);--csb-borda-forte:rgba(17,20,42,.2);--csb-cartao:#fff;background:var(--csb-fundo);color:var(--csb-texto)}
+.csb-branca{--csb-fundo:#fff;--csb-cartao:var(--csb-claro)}
+
+/* ═══ CAMADA 2 · COMPONENTES ═════════════════════════════════════════════ */
+.csb-secao{padding-block:var(--csb-secao);position:relative}
+.csb-sangria{width:100vw;margin-inline:calc(50% - 50vw)}
+.csb-wrap{width:100%;max-width:var(--csb-max);margin-inline:auto;padding-inline:var(--csb-gutter)}
+
+.csb-cab-secao{max-width:60ch;margin-bottom:clamp(40px,4.5vw,68px)}
+.csb-cab-secao--centro{margin-inline:auto;text-align:center}
+.csb-rotulo{display:inline-flex;align-items:center;gap:10px;font-size:var(--csb-mini);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--csb-acento);margin-bottom:16px}
+.csb-rotulo::before{content:'';width:18px;height:2px;background:var(--csb-ambar)}
+.csb-titulo{font-family:var(--csb-fonte-titulo);font-size:var(--csb-h2);font-weight:800;line-height:1.04;letter-spacing:-.01em;text-wrap:balance}
+.csb-titulo em,.csb-hero__titulo em{font-style:italic;color:var(--csb-ambar);padding-right:.04em}
+.csb-clara .csb-titulo em{color:var(--csb-navy)}
+.csb-apoio{margin-top:18px;color:var(--csb-texto-suave);font-size:1.06em;max-width:58ch}
+.csb-cab-secao--centro .csb-apoio{margin-inline:auto}
+
+.csb-marca{background-image:linear-gradient(var(--csb-ambar),var(--csb-ambar));background-repeat:no-repeat;
+  background-position:0 92%;background-size:0% .18em;-webkit-box-decoration-break:clone;box-decoration-break:clone;
+  transition:background-size var(--csb-t-lento) var(--csb-mola);transition-delay:300ms}
+.csb-visivel .csb-marca,.csb-marca.csb-visivel{background-size:100% .18em}
+
+/* Botões: âmbar com texto escuro, como no logo e no app. Raio do app (10px). */
+.csb-botao{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:.6em;
+  min-height:56px;padding:0 28px;border-radius:var(--csb-raio-p);font-weight:700;font-size:1.02rem;letter-spacing:.01em;
+  background:var(--csb-ambar);color:var(--csb-tinta);box-shadow:0 10px 30px -10px rgba(249,171,25,.55);
+  transition:transform var(--csb-t-rapido) var(--csb-suave),background var(--csb-t-rapido) var(--csb-suave)}
+.csb-botao svg{width:20px;height:20px;flex:none}
+.csb-botao::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-120%);transition:transform 700ms var(--csb-mola)}
+.csb-botao:hover{background:var(--csb-ambar-forte);transform:translateY(-2px)}
+.csb-botao:hover::after{transform:translateX(120%)}
+.csb-botao--fantasma{background:transparent;color:var(--csb-texto);box-shadow:inset 0 0 0 1px var(--csb-borda-forte)}
+.csb-botao--fantasma::after{display:none}
+.csb-botao--fantasma:hover{background:rgba(255,255,255,.06)}
+.csb-botao--pequeno{min-height:44px;padding:0 18px;font-size:.95rem}
+
+.csb-grade{display:grid;gap:clamp(16px,2vw,24px)}
+.csb-grade--2{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.csb-grade--3{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.csb-grade--4{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+
+.csb-cartao{position:relative;padding:clamp(24px,2.4vw,32px);border-radius:var(--csb-raio);background:var(--csb-cartao);
+  box-shadow:inset 0 0 0 1px var(--csb-borda);overflow:hidden;
+  transition:transform var(--csb-t-rapido) var(--csb-suave),box-shadow var(--csb-t-rapido) var(--csb-suave)}
+.csb-cartao:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--csb-borda-forte),0 22px 44px -26px rgba(17,20,42,.45)}
+.csb-cartao h3{font-family:var(--csb-fonte-titulo);font-size:var(--csb-h3);font-weight:700;line-height:1.2;margin-bottom:10px}
+.csb-cartao p{color:var(--csb-texto-suave);font-size:.98rem}
+.csb-icone{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;margin-bottom:20px;background:rgba(249,171,25,.14);color:var(--csb-ambar)}
+.csb-clara .csb-icone{background:rgba(40,57,127,.09);color:var(--csb-navy)}
+.csb-icone svg{width:22px;height:22px}
+@media (hover:hover) and (pointer:fine){
+  .csb-cartao::before{content:'';position:absolute;inset:0;opacity:0;pointer-events:none;
+    background:radial-gradient(380px circle at var(--csb-mx,50%) var(--csb-my,50%),rgba(249,171,25,.12),transparent 62%);
+    transition:opacity var(--csb-t-rapido) var(--csb-suave)}
+  .csb-cartao:hover::before{opacity:1}
+}
+
+/* Janela do app (moldura das capturas) */
+.csb-janela{position:relative;border-radius:14px;background:var(--csb-painel);overflow:hidden;
+  box-shadow:0 0 0 1px rgba(255,255,255,.12),0 40px 80px -30px rgba(0,0,0,.75),0 0 120px -40px rgba(249,171,25,.25)}
+.csb-janela__barra{display:flex;align-items:center;justify-content:flex-end;gap:18px;height:30px;padding:0 14px;background:#0D1024;color:rgba(255,255,255,.45)}
+.csb-janela__barra i{display:block;width:10px;height:10px;border:1.5px solid currentColor;border-radius:2px}
+.csb-janela__barra i:first-child{height:0;border-width:1.5px 0 0;border-radius:0}
+.csb-janela__barra i:last-child{border:0;position:relative}
+.csb-janela__barra i:last-child::before,.csb-janela__barra i:last-child::after{content:'';position:absolute;left:-2px;top:4px;width:14px;height:1.5px;background:currentColor;transform:rotate(45deg)}
+.csb-janela__barra i:last-child::after{transform:rotate(-45deg)}
+.csb-janela img{width:100%}
+.csb-selo-exemplo{position:absolute;top:42px;right:12px;padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  background:rgba(13,16,36,.82);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+
+/* ─── Cabeçalho ─────────────────────────────────────────────────────────── */
+.csb-cabecalho{position:sticky;top:0;z-index:50;transition:background var(--csb-t-rapido) var(--csb-suave),box-shadow var(--csb-t-rapido) var(--csb-suave)}
+.csb-cabecalho__interno{display:flex;align-items:center;gap:28px;min-height:76px}
+.csb-cabecalho.csb-compacto{background:rgba(17,20,42,.84);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--csb-borda)}
+.csb-logo{display:block;color:#fff}
+.csb-logo svg{width:auto;height:26px}
+.csb-nav{display:flex;gap:28px;margin-left:auto;font-size:.95rem;font-weight:500}
+.csb-nav a{color:var(--csb-texto-suave);transition:color var(--csb-t-rapido) var(--csb-suave)}
+.csb-nav a:hover{color:#fff}
+@media (max-width:900px){.csb-nav{display:none}.csb-cabecalho__interno .csb-botao{margin-left:auto}}
+@media (max-width:420px){.csb-cabecalho__interno .csb-botao{padding:0 14px}.csb-logo svg{height:21px}}
+
+.csb-idiomas{display:flex;gap:2px;padding:3px;border-radius:999px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px var(--csb-borda)}
+.csb-idiomas a{min-width:34px;height:30px;display:grid;place-items:center;padding:0 8px;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.06em;color:var(--csb-texto-suave)}
+.csb-idiomas a:hover{color:#fff}
+.csb-idiomas a[aria-current="true"]{background:var(--csb-ambar);color:var(--csb-tinta)}
+@media (max-width:900px){.csb-idiomas{margin-left:auto}.csb-cabecalho__interno .csb-botao{margin-left:0}}
+@media (max-width:480px){.csb-cabecalho__interno{gap:10px}.csb-cabecalho__interno .csb-botao{display:none}}
+
+/* ─── Hero (vitrine dividida: o produto é a prova) ──────────────────────── */
+.csb-hero{position:relative;margin-top:-76px;padding-top:calc(76px + clamp(48px,7vw,96px));padding-bottom:clamp(64px,8vw,120px);overflow:clip;min-height:min(100svh,940px)}
+.csb-hero__fundo{position:absolute;inset:-12%;z-index:-1;pointer-events:none;
+  background:radial-gradient(50% 50% at 78% 38%,rgba(40,57,127,.75),transparent 70%),
+             radial-gradient(34% 40% at 70% 58%,rgba(249,171,25,.16),transparent 70%),
+             radial-gradient(40% 40% at 8% 10%,rgba(40,57,127,.35),transparent 70%)}
+.csb-hero__grade{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(70% 60% at 60% 40%,#000,transparent 75%);-webkit-mask-image:radial-gradient(70% 60% at 60% 40%,#000,transparent 75%)}
+.csb-hero__layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:clamp(36px,5vw,72px);align-items:center}
+.csb-hero__titulo{font-family:var(--csb-fonte-titulo);font-size:var(--csb-h1);font-weight:800;line-height:.98;letter-spacing:-.015em;max-width:15ch;text-wrap:balance}
+.csb-hero .csb-apoio{font-size:1.12em;max-width:46ch;margin-top:24px}
+.csb-hero__acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.csb-meta{margin-top:14px;font-size:.86rem;color:var(--csb-texto-suave)}
+.csb-selos{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:30px;color:var(--csb-texto-suave);font-size:.92rem}
+.csb-selos li{display:flex;align-items:center;gap:8px}
+.csb-selos svg{width:16px;height:16px;color:var(--csb-ambar)}
+.csb-hero__visual{position:relative;perspective:1600px}
+.csb-hero__visual .csb-janela{transform:rotateY(-9deg) rotateX(3deg) scale(.96);transform-origin:20% 50%;transition:transform 1400ms var(--csb-mola)}
+.csb-visivel.csb-hero__visual .csb-janela{transform:rotateY(-5deg) rotateX(2deg) scale(1)}
+.csb-chip{position:absolute;display:flex;align-items:center;gap:10px;max-width:260px;padding:12px 16px;border-radius:12px;font-size:.88rem;font-weight:600;line-height:1.3;
+  background:rgba(24,28,54,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 18px 40px -16px rgba(0,0,0,.7)}
+.csb-chip svg{width:18px;height:18px;flex:none;color:var(--csb-ambar)}
+.csb-chip--a{left:-6%;bottom:12%}
+.csb-chip--b{right:-3%;top:-5%}
+@media (max-width:980px){
+  .csb-hero{min-height:0}
+  .csb-hero__layout{grid-template-columns:1fr}
+  .csb-hero__visual .csb-janela,.csb-visivel.csb-hero__visual .csb-janela{transform:none}
+  .csb-chip{position:static;max-width:none;margin-top:10px}
+  .csb-hero__chips{display:grid;gap:0}
+}
+
+/* ─── Marquee ───────────────────────────────────────────────────────────── */
+.csb-faixa{border-block:1px solid var(--csb-borda);background:var(--csb-painel);padding-block:20px}
+.csb-marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.csb-marquee__trilha{display:flex;width:max-content;animation:csb-desliza 48s linear infinite}
+.csb-marquee:hover .csb-marquee__trilha{animation-play-state:paused}
+.csb-marquee ul{display:flex;align-items:center}
+.csb-marquee li{display:flex;align-items:center;font-family:var(--csb-fonte-titulo);font-style:italic;font-weight:800;font-size:clamp(1.1rem,1.8vw,1.45rem);white-space:nowrap;color:rgba(242,243,248,.86)}
+.csb-marquee li::after{content:'';width:8px;height:8px;margin-inline:clamp(22px,3vw,40px);background:var(--csb-ambar);transform:rotate(45deg)}
+@keyframes csb-desliza{to{transform:translate3d(-50%,0,0)}}
+
+/* ─── Sintomas ──────────────────────────────────────────────────────────── */
+.csb-sintoma__num{display:block;font-family:var(--csb-fonte-titulo);font-weight:800;font-size:.95rem;letter-spacing:.12em;color:var(--csb-navy);margin-bottom:18px}
+
+/* ─── Como funciona (seção fixada) ──────────────────────────────────────── */
+.csb-como{background:radial-gradient(60% 50% at 0% 0%,rgba(40,57,127,.55),transparent 70%),var(--csb-base)}
+.csb-pin{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(36px,6vw,96px);align-items:start}
+.csb-pin__fixo{position:sticky;top:16vh}
+.csb-passos-indice{margin-top:36px;display:grid;gap:4px}
+.csb-passos-indice a{display:flex;align-items:center;gap:14px;padding:10px 0;color:var(--csb-texto-suave);font-weight:600;transition:color var(--csb-t-rapido) var(--csb-suave)}
+.csb-passos-indice a span{font-family:var(--csb-fonte-titulo);font-weight:800;color:rgba(255,255,255,.35);transition:color var(--csb-t-rapido) var(--csb-suave)}
+.csb-passos-indice a.csb-ativo,.csb-passos-indice a:hover{color:#fff}
+.csb-passos-indice a.csb-ativo span{color:var(--csb-ambar)}
+.csb-pin__rolagem{display:grid;gap:clamp(56px,8vw,110px)}
+.csb-passo__num{font-family:var(--csb-fonte-titulo);font-weight:800;font-size:clamp(2.6rem,4vw,3.4rem);line-height:1;color:var(--csb-ambar);font-variant-numeric:tabular-nums}
+.csb-passo h3{font-family:var(--csb-fonte-titulo);font-size:clamp(1.5rem,2.2vw,1.9rem);font-weight:800;line-height:1.1;margin:12px 0 10px}
+.csb-passo p{color:var(--csb-texto-suave);max-width:52ch}
+.csb-passo .csb-janela{margin-top:26px}
+@media (max-width:900px){
+  .csb-pin{grid-template-columns:1fr;gap:40px}
+  .csb-pin__fixo{position:static}
+  .csb-passos-indice{display:none}
+}
+
+/* ─── Segurança (comparativo) ───────────────────────────────────────────── */
+.csb-lado{padding:clamp(26px,3vw,40px);border-radius:var(--csb-raio)}
+.csb-lado h3{font-family:var(--csb-fonte-titulo);font-size:1.4rem;font-weight:800;margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.csb-lado h3 svg{width:26px;height:26px;flex:none}
+.csb-lado li{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--csb-borda)}
+.csb-lado li svg{width:20px;height:20px;flex:none;margin-top:3px}
+.csb-lado--faz{background:var(--csb-claro);box-shadow:inset 0 0 0 1px var(--csb-borda)}
+.csb-lado--faz svg{color:#1F8A5B}
+.csb-lado--nunca{background:var(--csb-base);color:#F2F3F8;--csb-borda:rgba(255,255,255,.12)}
+.csb-lado--nunca svg{color:var(--csb-ambar)}
+.csb-lado code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;padding:1px 6px;border-radius:5px;background:rgba(249,171,25,.16);color:var(--csb-ambar-forte);word-break:break-all}
+.csb-lado--faz code{background:rgba(40,57,127,.1);color:var(--csb-navy)}
+.csb-nota{display:flex;gap:16px;align-items:flex-start;margin-top:28px;padding:22px 24px;border-radius:var(--csb-raio);background:rgba(40,57,127,.07);box-shadow:inset 0 0 0 1px rgba(40,57,127,.16);color:var(--csb-texto-suave)}
+.csb-nota svg{width:24px;height:24px;flex:none;color:var(--csb-navy);margin-top:2px}
+.csb-nota a{color:var(--csb-navy);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* ─── Pros (faixa com captura sangrando) ────────────────────────────────── */
+.csb-pros{position:relative;background:var(--csb-base);overflow:clip}
+.csb-pros__imagem{position:absolute;top:50%;right:-4%;width:min(58%,880px);transform:translateY(-50%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26%);mask-image:linear-gradient(90deg,transparent 0,#000 26%)}
+.csb-pros__imagem img{width:100%;border-radius:14px 0 0 14px;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+.csb-pros__texto{position:relative;max-width:500px}
+.csb-lista-check{display:grid;gap:12px;margin-top:28px}
+.csb-lista-check li{display:flex;gap:12px;color:var(--csb-texto-suave)}
+.csb-lista-check svg{width:20px;height:20px;flex:none;margin-top:3px;color:var(--csb-ambar)}
+.csb-lista-check strong{color:var(--csb-texto);font-weight:600}
+@media (max-width:900px){
+  .csb-pros__imagem{position:relative;top:auto;right:auto;transform:none;width:calc(100% + var(--csb-gutter));margin:40px calc(var(--csb-gutter) * -1) 0 0;margin-left:auto}
+  .csb-pros__texto{max-width:none}
+}
+
+/* ─── Números ───────────────────────────────────────────────────────────── */
+.csb-numeros{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:clamp(48px,5vw,72px);border-radius:var(--csb-raio);overflow:hidden;background:var(--csb-borda);box-shadow:inset 0 0 0 1px var(--csb-borda)}
+.csb-numeros > div{background:#fff;padding:26px 24px}
+.csb-numero{display:block;font-family:var(--csb-fonte-titulo);font-size:clamp(2.2rem,3.6vw,3rem);font-weight:800;line-height:1;color:var(--csb-navy);font-variant-numeric:tabular-nums}
+.csb-numeros p{margin-top:8px;font-size:.92rem;color:var(--csb-texto-suave)}
+@media (max-width:760px){.csb-numeros{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ─── FAQ ───────────────────────────────────────────────────────────────── */
+.csb-faq__item{border-bottom:1px solid var(--csb-borda)}
+.csb-faq__item summary{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:24px 0;font-family:var(--csb-fonte-titulo);font-size:1.25rem;font-weight:700;cursor:pointer;list-style:none}
+.csb-faq__item summary::-webkit-details-marker{display:none}
+.csb-faq__item summary::after{content:'+';font-family:var(--csb-fonte);font-size:1.6em;font-weight:400;line-height:1;color:var(--csb-navy);transition:transform var(--csb-t-rapido) var(--csb-suave)}
+.csb-faq__item[open] summary::after{transform:rotate(45deg)}
+.csb-faq__resposta{padding-bottom:24px;color:var(--csb-texto-suave);max-width:70ch}
+.csb-faq__resposta p + p{margin-top:12px}
+.csb-faq__resposta a{color:var(--csb-navy);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* ─── CTA final ─────────────────────────────────────────────────────────── */
+.csb-final{text-align:center;background:radial-gradient(55% 70% at 50% 100%,rgba(249,171,25,.18),transparent 70%),radial-gradient(70% 80% at 50% 0%,rgba(40,57,127,.6),transparent 70%),var(--csb-base)}
+.csb-final .csb-titulo{font-size:clamp(2.3rem,5vw,4rem);max-width:18ch;margin-inline:auto}
+.csb-final .csb-hero__acoes{justify-content:center}
+.csb-verificar{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin-top:22px;font-size:.88rem;color:var(--csb-texto-suave)}
+.csb-verificar a{text-decoration:underline;text-underline-offset:3px}
+.csb-verificar a:hover{color:#fff}
+.csb-assinatura{margin:14px auto 0;max-width:62ch;font-size:.8rem;color:rgba(226,229,242,.6)}
+.csb-assinatura a{text-decoration:underline;text-underline-offset:3px}
+.csb-sha{display:block;margin:18px auto 0;max-width:100%;font-family:ui-monospace,Consolas,monospace;font-size:.76rem;color:rgba(226,229,242,.5);overflow-wrap:anywhere}
+
+/* ─── Rodapé ────────────────────────────────────────────────────────────── */
+.csb-rodape{background:#0B0E20;color:rgba(226,229,242,.66);padding-block:clamp(56px,7vw,80px) 32px;font-size:.95rem}
+.csb-rodape__topo{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.csb-rodape h4{color:#fff;font-size:var(--csb-mini);letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px}
+.csb-rodape ul{display:grid;gap:10px}
+.csb-rodape a:hover{color:#fff}
+.csb-rodape__base{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);font-size:.82rem;line-height:1.6}
+.csb-rodape__base a{text-decoration:underline;text-underline-offset:3px}
+@media (max-width:760px){.csb-rodape__topo{grid-template-columns:1fr}}
+
+/* ─── Barra do celular: o app é para PC, então oferece mandar o link ───── */
+.csb-barra{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;align-items:center;gap:12px;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(13,16,36,.95);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  box-shadow:0 -1px 0 rgba(255,255,255,.1);transform:translateY(110%);transition:transform var(--csb-t-medio) var(--csb-mola)}
+.csb-barra p{flex:1;min-width:0;font-size:.84rem;line-height:1.35;color:var(--csb-texto-suave)}
+.csb-barra p strong{display:block;color:#fff;font-size:.92rem}
+.csb-barra.csb-mostra{transform:none}
+@media (max-width:860px){.csb-barra{display:flex}}
+
+/* ═══ CAMADA 3 · MOVIMENTO ═══════════════════════════════════════════════ */
+.csb-js [data-anim]{opacity:0;transition:opacity var(--csb-t-medio) var(--csb-mola),transform var(--csb-t-medio) var(--csb-mola)}
+.csb-js [data-anim="sobe"]{transform:translate3d(0,var(--csb-desloca),0)}
+.csb-js [data-anim="desce"]{transform:translate3d(0,calc(var(--csb-desloca) * -.7),0)}
+.csb-js [data-anim="escala"]{transform:scale(.96)}
+.csb-js [data-anim="linha"]{opacity:1;transform:scaleX(0);transform-origin:0 50%}
+.csb-js [data-anim].csb-visivel{opacity:1;transform:none}
+.csb-js [data-anim="visual"]{opacity:0;transition:opacity 900ms var(--csb-mola)}
+.csb-js [data-anim="visual"].csb-visivel{opacity:1}
+
+.csb-palavra{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.06em;margin-bottom:-.06em}
+.csb-palavra > span{display:inline-block;transform:translate3d(0,110%,0);transition:transform 820ms var(--csb-mola);transition-delay:var(--csb-atraso,0ms)}
+.csb-visivel .csb-palavra > span{transform:none}
+
+.csb-progresso{position:fixed;inset:0 0 auto 0;height:3px;background:var(--csb-ambar);transform:scaleX(0);transform-origin:0 50%;z-index:70;display:none}
+@supports (animation-timeline:scroll()){
+  .csb-progresso{display:block;animation:csb-avanca linear both;animation-timeline:scroll(root)}
+  @keyframes csb-avanca{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .csb-root *,.csb-root *::before,.csb-root *::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+  .csb-js [data-anim]{opacity:1 !important;transform:none !important}
+  .csb-palavra > span{transform:none !important}
+  .csb-marca{background-size:100% .18em !important}
+  .csb-marquee__trilha{animation:none !important}
+}
+</style>
+
+<!-- Logo vetorizado do PNG original (potrace). Quadrado navy/âmbar fixo; o
+     nome usa currentColor. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="csb-logo-simbolo" viewBox="0 0 3631 513"><path fill="#28397F" fill-rule="evenodd" d="M52 511C28 506 7 485 2 460C-1 448 -1 65 2 53C7 28 27 7 53 2C60 0 79 -0 259 0L458 0L466 3C477 7 484 11 492 20C501 28 505 35 509 46L512 54L512 256L512 458L509 466C505 478 501 485 492 493C484 502 477 506 466 510L458 512L258 513C86 513 59 513 52 511Z"/><path fill="#F9AB19" fill-rule="evenodd" d="M52 511C28 506 7 485 2 460C-1 448 -1 65 2 53C7 28 27 7 53 2C59 0 75 0 187 0L315 -0L318 5C324 14 324 16 324 93L324 163L382 163C443 163 446 163 455 168C462 172 469 179 473 187C476 194 476 195 476 205C476 214 476 216 474 221C472 225 434 278 368 370L264 513L162 513C76 513 58 513 52 511ZM236 494C238 493 432 226 441 213C445 207 445 203 442 199L439 196L370 196C302 196 301 195 298 193C297 192 295 190 294 189C292 186 291 185 291 105C291 24 290 23 288 20C286 17 280 16 276 19C274 21 70 302 69 305C67 309 69 313 72 315C75 317 78 317 143 317L210 317L213 319C217 322 220 326 221 331C222 333 222 369 222 413L222 491L224 494C227 496 233 497 236 494Z"/><path fill="#FFFFFF" fill-rule="evenodd" d="M226 495C225 495 224 494 223 493C223 492 222 455 222 410L222 328L219 325C214 317 220 318 143 317C92 317 74 316 72 315C69 314 68 309 69 306C70 301 275 19 278 18C282 16 285 17 288 19L290 22L290 101C290 184 290 185 295 190C300 196 297 196 368 196C410 196 435 196 437 197C442 198 444 203 444 207C443 209 242 487 236 493C234 496 230 497 226 495Z"/><path fill="currentColor" d="M703.6773333333333 412.0Q682.7126666666666 412.0 665.5829999999999 403.33333333333337Q648.4533333333333 394.6666666666667 638.2266666666667 380.15Q628.0 365.6333333333333 628.0 347.8666666666667V164.13333333333333Q628.0 146.36666666666667 638.2266666666667 131.85Q648.4533333333333 117.33333333333331 665.5829999999999 108.66666666666666Q682.7126666666666 100.0 703.6773333333333 100.0H995.1373333333333V167.6H724.1306666666667Q715.9493333333332 167.6 711.603 171.06666666666666Q707.2566666666667 174.53333333333333 707.2566666666667 181.9V330.1Q707.2566666666667 337.0333333333333 711.603 340.71666666666664Q715.9493333333332 344.4 724.1306666666667 344.4H995.1373333333333V412.0Z M1141.6906666666666 412.0Q1121.2373333333333 412.0 1103.8519999999999 403.33333333333337Q1086.4666666666665 394.6666666666667 1076.2399999999998 379.93333333333334Q1066.0133333333333 365.2 1066.0133333333333 347.8666666666667V318.8333333333333H1145.27V344.4Q1145.27 344.4 1145.27 344.4Q1145.27 344.4 1145.27 344.4H1353.8939999999998Q1353.8939999999998 344.4 1353.8939999999998 344.4Q1353.8939999999998 344.4 1353.8939999999998 344.4V289.8Q1353.8939999999998 289.8 1353.8939999999998 289.8Q1353.8939999999998 289.8 1353.8939999999998 289.8H1141.6906666666666Q1121.2373333333333 289.8 1103.8519999999999 281.1333333333333Q1086.4666666666665 272.4666666666667 1076.2399999999998 257.95000000000005Q1066.0133333333333 243.43333333333334 1066.0133333333333 225.66666666666666V164.13333333333333Q1066.0133333333333 146.36666666666667 1076.2399999999998 131.85Q1086.4666666666665 117.33333333333331 1103.8519999999999 108.66666666666666Q1121.2373333333333 100.0 1141.6906666666666 100.0H1358.4959999999999Q1378.9493333333332 100.0 1396.0789999999997 108.66666666666666Q1413.2086666666664 117.33333333333331 1423.6909999999998 131.85Q1434.1733333333332 146.36666666666667 1434.1733333333332 164.13333333333333V193.16666666666666H1353.8939999999998V167.6Q1353.8939999999998 167.6 1353.8939999999998 167.6Q1353.8939999999998 167.6 1353.8939999999998 167.6H1145.27Q1145.27 167.6 1145.27 167.6Q1145.27 167.6 1145.27 167.6V222.2Q1145.27 222.2 1145.27 222.2Q1145.27 222.2 1145.27 222.2H1358.4959999999999Q1378.9493333333332 222.2 1396.0789999999997 230.86666666666667Q1413.2086666666664 239.53333333333333 1423.6909999999998 254.05Q1434.1733333333332 268.56666666666666 1434.1733333333332 286.3333333333333V347.8666666666667Q1434.1733333333332 365.2 1423.6909999999998 379.93333333333334Q1413.2086666666664 394.6666666666667 1396.0789999999997 403.33333333333337Q1378.9493333333332 412.0 1358.4959999999999 412.0Z M1510.674 412.0V100.0H1788.8393333333333Q1809.2926666666667 100.0 1826.4223333333334 108.66666666666666Q1843.552 117.33333333333331 1854.0343333333333 131.85Q1864.5166666666667 146.36666666666667 1864.5166666666667 164.13333333333333V222.63333333333333Q1864.5166666666667 228.26666666666665 1863.7496666666666 233.25Q1862.9826666666665 238.23333333333332 1860.9373333333333 242.56666666666666Q1868.6073333333334 250.79999999999998 1873.7206666666666 261.6333333333333Q1878.8339999999998 272.4666666666667 1878.8339999999998 283.29999999999995V347.8666666666667Q1878.8339999999998 365.2 1868.3516666666665 379.93333333333334Q1857.8693333333333 394.6666666666667 1840.7396666666666 403.33333333333337Q1823.61 412.0 1802.6453333333334 412.0H1510.674ZM1589.9306666666666 344.4H1798.5546666666667Q1798.5546666666667 344.4 1798.5546666666667 344.4Q1798.5546666666667 344.4 1798.5546666666667 344.4V287.2Q1798.5546666666667 287.2 1798.5546666666667 287.2Q1798.5546666666667 287.2 1798.5546666666667 287.2H1589.9306666666666Q1589.9306666666666 287.2 1589.9306666666666 287.2Q1589.9306666666666 287.2 1589.9306666666666 287.2V344.4Q1589.9306666666666 344.4 1589.9306666666666 344.4Q1589.9306666666666 344.4 1589.9306666666666 344.4ZM1589.9306666666666 219.6H1784.2373333333333Q1784.2373333333333 219.6 1784.2373333333333 219.6Q1784.2373333333333 219.6 1784.2373333333333 219.6V167.6Q1784.2373333333333 167.6 1784.2373333333333 167.6Q1784.2373333333333 167.6 1784.2373333333333 167.6H1589.9306666666666Q1589.9306666666666 167.6 1589.9306666666666 167.6Q1589.9306666666666 167.6 1589.9306666666666 167.6V219.6Q1589.9306666666666 219.6 1589.9306666666666 219.6Q1589.9306666666666 219.6 1589.9306666666666 219.6Z M2027.9439999999997 412.0Q2007.4906666666664 412.0 1990.105333333333 403.33333333333337Q1972.7199999999996 394.6666666666667 1962.4933333333329 379.93333333333334Q1952.2666666666664 365.2 1952.2666666666664 347.8666666666667V164.13333333333333Q1952.2666666666664 146.36666666666667 1962.4933333333329 131.85Q1972.7199999999996 117.33333333333331 1990.105333333333 108.66666666666666Q2007.4906666666664 100.0 2027.9439999999997 100.0H2244.749333333333Q2265.202666666666 100.0 2282.332333333333 108.66666666666666Q2299.4619999999995 117.33333333333331 2309.944333333333 131.85Q2320.4266666666663 146.36666666666667 2320.4266666666663 164.13333333333333V347.8666666666667Q2320.4266666666663 365.2 2309.944333333333 379.93333333333334Q2299.4619999999995 394.6666666666667 2282.332333333333 403.33333333333337Q2265.202666666666 412.0 2244.749333333333 412.0ZM2031.523333333333 344.4H2240.147333333333Q2240.147333333333 344.4 2240.147333333333 344.4Q2240.147333333333 344.4 2240.147333333333 344.4V167.6Q2240.147333333333 167.6 2240.147333333333 167.6Q2240.147333333333 167.6 2240.147333333333 167.6H2031.523333333333Q2031.523333333333 167.6 2031.523333333333 167.6Q2031.523333333333 167.6 2031.523333333333 167.6V344.4Q2031.523333333333 344.4 2031.523333333333 344.4Q2031.523333333333 344.4 2031.523333333333 344.4Z M2470.048 412.0Q2449.5946666666664 412.0 2432.2093333333332 403.33333333333337Q2414.824 394.6666666666667 2404.597333333333 379.93333333333334Q2394.3706666666667 365.2 2394.3706666666667 347.8666666666667V164.13333333333333Q2394.3706666666667 146.36666666666667 2404.597333333333 131.85Q2414.824 117.33333333333331 2432.2093333333332 108.66666666666666Q2449.5946666666664 100.0 2470.048 100.0H2686.8533333333335Q2707.3066666666664 100.0 2724.436333333333 108.66666666666666Q2741.566 117.33333333333331 2752.048333333333 131.85Q2762.5306666666665 146.36666666666667 2762.5306666666665 164.13333333333333V347.8666666666667Q2762.5306666666665 365.2 2752.048333333333 379.93333333333334Q2741.566 394.6666666666667 2724.436333333333 403.33333333333337Q2707.3066666666664 412.0 2686.8533333333335 412.0ZM2473.6273333333334 344.4H2682.251333333333Q2682.251333333333 344.4 2682.251333333333 344.4Q2682.251333333333 344.4 2682.251333333333 344.4V167.6Q2682.251333333333 167.6 2682.251333333333 167.6Q2682.251333333333 167.6 2682.251333333333 167.6H2473.6273333333334Q2473.6273333333334 167.6 2473.6273333333334 167.6Q2473.6273333333334 167.6 2473.6273333333334 167.6V344.4Q2473.6273333333334 344.4 2473.6273333333334 344.4Q2473.6273333333334 344.4 2473.6273333333334 344.4Z M2912.1519999999996 412.0Q2891.698666666666 412.0 2874.313333333333 403.33333333333337Q2856.928 394.6666666666667 2846.7013333333334 379.93333333333334Q2836.4746666666665 365.2 2836.4746666666665 347.8666666666667V318.8333333333333H2915.731333333333V344.4Q2915.731333333333 344.4 2915.731333333333 344.4Q2915.731333333333 344.4 2915.731333333333 344.4H3124.355333333333Q3124.355333333333 344.4 3124.355333333333 344.4Q3124.355333333333 344.4 3124.355333333333 344.4V289.8Q3124.355333333333 289.8 3124.355333333333 289.8Q3124.355333333333 289.8 3124.355333333333 289.8H2912.1519999999996Q2891.698666666666 289.8 2874.313333333333 281.1333333333333Q2856.928 272.4666666666667 2846.7013333333334 257.95000000000005Q2836.4746666666665 243.43333333333334 2836.4746666666665 225.66666666666666V164.13333333333333Q2836.4746666666665 146.36666666666667 2846.7013333333334 131.85Q2856.928 117.33333333333331 2874.313333333333 108.66666666666666Q2891.698666666666 100.0 2912.1519999999996 100.0H3128.957333333333Q3149.4106666666667 100.0 3166.5403333333334 108.66666666666666Q3183.6699999999996 117.33333333333331 3194.152333333333 131.85Q3204.6346666666664 146.36666666666667 3204.6346666666664 164.13333333333333V193.16666666666666H3124.355333333333V167.6Q3124.355333333333 167.6 3124.355333333333 167.6Q3124.355333333333 167.6 3124.355333333333 167.6H2915.731333333333Q2915.731333333333 167.6 2915.731333333333 167.6Q2915.731333333333 167.6 2915.731333333333 167.6V222.2Q2915.731333333333 222.2 2915.731333333333 222.2Q2915.731333333333 222.2 2915.731333333333 222.2H3128.957333333333Q3149.4106666666667 222.2 3166.5403333333334 230.86666666666667Q3183.6699999999996 239.53333333333333 3194.152333333333 254.05Q3204.6346666666664 268.56666666666666 3204.6346666666664 286.3333333333333V347.8666666666667Q3204.6346666666664 365.2 3194.152333333333 379.93333333333334Q3183.6699999999996 394.6666666666667 3166.5403333333334 403.33333333333337Q3149.4106666666667 412.0 3128.957333333333 412.0Z M3405.389333333333 412.0V167.6H3261.1933333333327V100.0H3629.353333333333V167.6H3485.157333333333V412.0Z"/></symbol>
+</svg>
+
+<div class="csb-progresso" aria-hidden="true"></div>
+
+<!-- ─── CABEÇALHO ─────────────────────────────────────────────────────────── -->
+<header class="csb-cabecalho">
+  <div class="csb-wrap csb-cabecalho__interno">
+    <a class="csb-logo" href="#csb-topo" aria-label="CSBoost, home">
+      <svg viewBox="0 0 3631 513" width="184" height="26" role="img" aria-label="CSBoost"><use href="#csb-logo-simbolo"/></svg>
+    </a>
+    <nav class="csb-nav" aria-label="Main">
+      <a href="#csb-como">How it works</a>
+      <a href="#csb-seguranca">Safety</a>
+      <a href="#csb-recursos">Features</a>
+      <a href="#csb-faq">FAQ</a>
+    </nav>
+    <nav class="csb-idiomas" aria-label="Language"><a href="/" hreflang="pt-BR" lang="pt-BR">PT</a><a href="/es/" hreflang="es" lang="es">ES</a><a href="/en/" hreflang="en" lang="en" aria-current="true">EN</a></nav>
+    <a class="csb-botao csb-botao--pequeno" href="https://github.com/JafetRamirez/csboost-releases/releases/latest" data-csb-download>Download free</a>
+  </div>
+</header>
+
+<!-- ─── HERO ──────────────────────────────────────────────────────────────── -->
+<section class="csb-hero" id="csb-hero" data-anim-hero>
+  <div class="csb-hero__fundo" data-parallax="0.08" aria-hidden="true"></div>
+  <div class="csb-hero__grade" aria-hidden="true"></div>
+  <div class="csb-wrap csb-hero__layout">
+    <div>
+      <span class="csb-rotulo" data-anim="desce">Free optimizer for CS2</span>
+      <h1 class="csb-hero__titulo" data-texto><em>Steadier</em> FPS in CS2, without touching the game</h1>
+      <p class="csb-apoio" data-anim="sobe">CSBoost scans Windows, shows what is holding back your performance and fixes it in one click. Every tweak keeps the previous value and can be undone.</p>
+      <div class="csb-hero__acoes" data-anim="sobe">
+        <a class="csb-botao" href="https://github.com/JafetRamirez/csboost-releases/releases/latest" data-csb-download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download free</a>
+        <a class="csb-botao csb-botao--fantasma" href="#csb-como">See how it works</a>
+      </div>
+      <p class="csb-meta" data-anim="sobe">Windows 10 and 11 · 64-bit · <span data-csb-versao>v0.4.0</span> · <span data-csb-tamanho>2.9 MB</span></p>
+      <ul class="csb-selos" data-stagger="70">
+        <li data-anim="sobe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Free and ad-free</li>
+        <li data-anim="sobe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Open source</li>
+        <li data-anim="sobe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Fully reversible</li>
+      </ul>
+    </div>
+    <div class="csb-hero__visual" data-anim="visual">
+      <div class="csb-janela">
+        <div class="csb-janela__barra" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="/img/csboost-painel-en.webp" alt="CSBoost home screen with the PC performance score, the Safe, Competitive and Low-end PC modes and the Optimize now button" width="1600" height="1032" fetchpriority="high">
+      </div>
+      <div class="csb-hero__chips">
+        <p class="csb-chip csb-chip--b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Restore point before any tweak</p>
+        <p class="csb-chip csb-chip--a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Never opens the CS2 process</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAIXA MARQUEE ─────────────────────────────────────────────────────── -->
+<div class="csb-faixa">
+  <div class="csb-marquee">
+    <div class="csb-marquee__trilha">
+      <ul>
+        <li>PC Scan</li>
+        <li>Dedicated GPU on laptops</li>
+        <li>Power plan</li>
+        <li>Game DVR off</li>
+        <li>Mouse acceleration</li>
+        <li>Benchmark with 1% lows</li>
+        <li>Configs from 30 pros</li>
+        <li>Cache cleanup</li>
+        <li>Polling test</li>
+        <li>Undo everything</li>
+      </ul>
+      <ul aria-hidden="true">
+        <li>PC Scan</li>
+        <li>Dedicated GPU on laptops</li>
+        <li>Power plan</li>
+        <li>Game DVR off</li>
+        <li>Mouse acceleration</li>
+        <li>Benchmark with 1% lows</li>
+        <li>Configs from 30 pros</li>
+        <li>Cache cleanup</li>
+        <li>Polling test</li>
+        <li>Undo everything</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SINTOMAS ──────────────────────────────────────────────────────────── -->
+<section class="csb-secao csb-clara" id="csb-problema">
+  <div class="csb-wrap">
+    <div class="csb-cab-secao">
+      <span class="csb-rotulo" data-anim="desce">What holds your FPS back</span>
+      <h2 class="csb-titulo" data-anim="sobe">Often the problem is not your PC. It is Windows <span class="csb-marca">set up for something else</span></h2>
+      <p class="csb-apoio" data-anim="sobe">These are cases the PC Scan finds often. None of them shows up on screen until someone goes looking.</p>
+    </div>
+    <div class="csb-grade csb-grade--4" data-stagger="80">
+      <article class="csb-cartao" data-anim="sobe">
+        <span class="csb-sintoma__num">01</span>
+        <h3>A 144 Hz monitor running at 60</h3>
+        <p>Windows does not always use your monitor's maximum refresh rate. You paid for a fast monitor and play seeing fewer frames.</p>
+      </article>
+      <article class="csb-cartao" data-anim="sobe">
+        <span class="csb-sintoma__num">02</span>
+        <h3>Laptop using the integrated GPU</h3>
+        <p>On laptops with two graphics cards, CS2 can open on the weaker one. The FPS difference is usually big.</p>
+      </article>
+      <article class="csb-cartao" data-anim="sobe">
+        <span class="csb-sintoma__num">03</span>
+        <h3>Balanced power plan</h3>
+        <p>It lowers the processor clock when it thinks it is not needed, and the drops show up right in the middle of a fight.</p>
+      </article>
+      <article class="csb-cartao" data-anim="sobe">
+        <span class="csb-sintoma__num">04</span>
+        <h3>Background recording turned on</h3>
+        <p>Xbox Game Bar can keep recording the last minutes of gameplay all the time, using GPU and disk.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COMO FUNCIONA (seção fixada) ──────────────────────────────────────── -->
+<section class="csb-secao csb-como" id="csb-como">
+  <div class="csb-wrap csb-pin">
+    <div class="csb-pin__fixo">
+      <span class="csb-rotulo" data-anim="desce">How it works</span>
+      <h2 class="csb-titulo" data-anim="sobe">From diagnosis to testing, in <em>four</em> steps</h2>
+      <p class="csb-apoio" data-anim="sobe">Nothing is hidden. You see what each tweak does before applying it and check afterwards that it is still there.</p>
+      <nav class="csb-passos-indice" aria-label="Steps">
+        <a href="#csb-passo-1" class="csb-ativo"><span>01</span>PC Scan</a>
+        <a href="#csb-passo-2"><span>02</span>Pick a mode</a>
+        <a href="#csb-passo-3"><span>03</span>Optimize with a safety net</a>
+        <a href="#csb-passo-4"><span>04</span>Measure before and after</a>
+      </nav>
+    </div>
+    <div class="csb-pin__rolagem">
+      <article class="csb-passo" id="csb-passo-1" data-anim="sobe">
+        <span class="csb-passo__num">01</span>
+        <h3>PC Scan</h3>
+        <p>Checks monitor, power, graphics card, memory and Windows, and sorts problems from biggest to smallest impact.</p>
+        <div class="csb-janela"><div class="csb-janela__barra" aria-hidden="true"><i></i><i></i><i></i></div>
+          <img src="/img/csboost-raiox-en.webp" alt="PC Scan screen listing problems such as a monitor at 60 Hz and the Balanced power plan, each with a Fix button" width="1400" height="903" loading="lazy"></div>
+      </article>
+      <article class="csb-passo" id="csb-passo-2" data-anim="sobe">
+        <span class="csb-passo__num">02</span>
+        <h3>Pick a mode</h3>
+        <p>Safe, Competitive or Low-end PC. Each tweak shows what it does, its risk and whether the gain is proven.</p>
+        <div class="csb-janela"><div class="csb-janela__barra" aria-hidden="true"><i></i><i></i><i></i></div>
+          <img src="/img/csboost-otimizacoes-en.webp" alt="Optimizations screen with tweaks grouped by category, risk labels and proven-gain tags" width="1400" height="903" loading="lazy"></div>
+      </article>
+      <article class="csb-passo" id="csb-passo-3" data-anim="sobe">
+        <span class="csb-passo__num">03</span>
+        <h3>Optimize with a safety net</h3>
+        <p>Before changing anything, CSBoost creates a Windows restore point and saves the previous value of every tweak. In History, each one has a Revert button.</p>
+        <div class="csb-janela"><div class="csb-janela__barra" aria-hidden="true"><i></i><i></i><i></i></div>
+          <img src="/img/csboost-historico-en.webp" alt="History screen showing active tweaks, checked in Windows, with a Revert button on each" width="1400" height="903" loading="lazy"></div>
+      </article>
+      <article class="csb-passo" id="csb-passo-4" data-anim="sobe">
+        <span class="csb-passo__num">04</span>
+        <h3>Measure before and after</h3>
+        <p>The benchmark measures average FPS, 1% lows and stutters while you actually play. If it did not improve, you undo it.</p>
+        <div class="csb-janela"><div class="csb-janela__barra" aria-hidden="true"><i></i><i></i><i></i></div>
+          <img src="/img/csboost-bench-en.webp" alt="Benchmark screen comparing two runs, with average FPS, 1% low, 0.1% low and a frametime chart" width="1400" height="903" loading="lazy">
+          <span class="csb-selo-exemplo">Sample data</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SEGURANÇA ─────────────────────────────────────────────────────────── -->
+<section class="csb-secao csb-clara csb-branca" id="csb-seguranca">
+  <div class="csb-wrap">
+    <div class="csb-cab-secao">
+      <span class="csb-rotulo" data-anim="desce">Rule #1</span>
+      <h2 class="csb-titulo" data-anim="sobe">Built to never put <em>your account</em> at risk</h2>
+      <p class="csb-apoio" data-anim="sobe">CSBoost changes Windows and the config files you could edit yourself. The game, never.</p>
+    </div>
+    <div class="csb-grade csb-grade--2" data-stagger="100">
+      <div class="csb-lado csb-lado--faz" data-anim="sobe">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>What CSBoost does</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span>Adjusts Windows settings: registry, power plan, monitor refresh rate.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span>Creates a restore point and saves the previous value of every tweak.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span>Writes <code>autoexec.cfg</code> only when you ask.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span>Measures FPS with PresentMon, Intel's official tool that reads events from Windows itself.</span></li>
+        </ul>
+      </div>
+      <div class="csb-lado csb-lado--nunca" data-anim="sobe">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>What it never does</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span>Open, read or write the memory of <code>cs2.exe</code>.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span>Inject code or draw overlays inside the game.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span>Change game files other than your <code>.cfg</code>.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span>Suggest <code>-allow_third_party_software</code>, which turns off Trusted Mode.</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="csb-nota" data-anim="sobe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg><span>This rule is locked into the code: the build fails if any process-access function shows up. The code is open for anyone to check on <a href="https://github.com/JafetRamirez/csboost-releases" target="_blank" rel="noopener">GitHub</a>.</span></p>
+  </div>
+</section>
+
+<!-- ─── CONFIGS DE PROS ───────────────────────────────────────────────────── -->
+<section class="csb-secao csb-pros csb-sangria" id="csb-pros">
+  <div class="csb-wrap">
+    <div class="csb-pros__texto">
+      <span class="csb-rotulo" data-anim="desce">Pro configs</span>
+      <h2 class="csb-titulo" data-anim="sobe">Crosshair, sens and viewmodel from <em>30 pros</em>, ready to copy</h2>
+      <p class="csb-apoio" data-anim="sobe">From FalleN to ZywOo, with the source and check date for every player.</p>
+      <ul class="csb-lista-check" data-stagger="80">
+        <li data-anim="sobe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span><strong>Crosshair code</strong> to paste in the game, or the console commands.</span></li>
+        <li data-anim="sobe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span><strong>Sensitivity converter:</strong> the pro's sens at your mouse's DPI.</span></li>
+        <li data-anim="sobe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span><strong>Nothing is applied automatically.</strong> You look and copy if you want.</span></li>
+      </ul>
+    </div>
+  </div>
+  <figure class="csb-pros__imagem">
+    <img data-anim="visual" src="/img/csboost-pros-en.webp" alt="Pro configs screen with the player list and the selected player's crosshair, sensitivity and monitor" width="1600" height="1032" loading="lazy">
+  </figure>
+</section>
+
+<!-- ─── RECURSOS ──────────────────────────────────────────────────────────── -->
+<section class="csb-secao csb-clara" id="csb-recursos">
+  <div class="csb-wrap">
+    <div class="csb-cab-secao">
+      <span class="csb-rotulo" data-anim="desce">Everything included</span>
+      <h2 class="csb-titulo" data-anim="sobe">Truly free, <em>no limits</em> at all</h2>
+      <p class="csb-apoio" data-anim="sobe">No paid version, no ads and no optimization quota.</p>
+    </div>
+    <div class="csb-grade csb-grade--3" data-stagger="70">
+      <article class="csb-cartao" data-anim="sobe"><span class="csb-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span><h3>Built-in benchmark</h3><p>Average FPS, 1% low, 0.1% low and stutters, with a before/after chart and a ready-to-share image.</p></article>
+      <article class="csb-cartao" data-anim="sobe"><span class="csb-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><h3>Before → now check</h3><p>Shows the previous value, what was written and what is in Windows now. If an update undid something, you see it.</p></article>
+      <article class="csb-cartao" data-anim="sobe"><span class="csb-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg></span><h3>Cleanup</h3><p>Temp files, crash reports and, if you want, shader caches. Shows how much it will free before deleting.</p></article>
+      <article class="csb-cartao" data-anim="sobe"><span class="csb-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="6"/><path d="M12 7v4"/></svg></span><h3>Mouse test</h3><p>Measures your mouse's real polling rate and warns you if it is at 125 Hz.</p></article>
+      <article class="csb-cartao" data-anim="sobe"><span class="csb-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span><h3>Automatic updates</h3><p>New versions arrive signed and install without losing your tweaks.</p></article>
+      <article class="csb-cartao" data-anim="sobe"><span class="csb-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-4"/></svg></span><h3>Uninstalls cleanly</h3><p>When uninstalling, CSBoost offers to undo all tweaks before it goes.</p></article>
+    </div>
+    <div class="csb-numeros" data-stagger="80">
+      <div data-anim="sobe"><span class="csb-numero" data-contador="14">14</span><p>Windows tweaks, each one reversible</p></div>
+      <div data-anim="sobe"><span class="csb-numero" data-contador="30">30</span><p>checked pro configs</p></div>
+      <div data-anim="sobe"><span class="csb-numero">3 MB</span><p>installer, light on your PC</p></div>
+      <div data-anim="sobe"><span class="csb-numero">$0</span><p>no ads, no subscription</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ───────────────────────────────────────────────────────────────── -->
+<section class="csb-secao csb-clara csb-branca" id="csb-faq">
+  <div class="csb-wrap" style="max-width:860px">
+    <div class="csb-cab-secao">
+      <span class="csb-rotulo" data-anim="desce">FAQ</span>
+      <h2 class="csb-titulo" data-anim="sobe">Questions everyone asks</h2>
+    </div>
+    <div data-stagger="60">
+      <details class="csb-faq__item" data-anim="sobe">
+        <summary>Can it get me banned (VAC)?</summary>
+        <div class="csb-faq__resposta"><p>CSBoost was built around that rule. It does not open the game process, injects nothing and does not change CS2 files other than the <em>autoexec.cfg</em> you ask it to save. The tweaks are Windows settings, the same ones you would change by hand in Control Panel.</p><p>The code is open, so anyone can check what it does.</p></div>
+      </details>
+      <details class="csb-faq__item" data-anim="sobe">
+        <summary>Why do Windows or antivirus show a warning?</summary>
+        <div class="csb-faq__resposta"><p>The installer does not have a code signing certificate yet; it is on the way. A new, unsigned program that asks for admin rights often triggers SmartScreen and some antivirus heuristics.</p><p>Every version has its SHA256 published and a VirusTotal report with dozens of antivirus engines: <a href="https://www.virustotal.com/gui/file/45a4c2691989d9e5ecd28ff8466b1ab0e84c7392994a4d58c0fa406d56bfb46b" target="_blank" rel="noopener" data-csb-vt>see the report for the current version</a>.</p></div>
+      </details>
+      <details class="csb-faq__item" data-anim="sobe">
+        <summary>How much FPS will I gain?</summary>
+        <div class="csb-faq__resposta"><p>It depends on what is wrong with your PC. On an already well-tuned PC, the gain is small. With the monitor at 60 Hz or a laptop on the integrated GPU, the difference is big.</p><p>That is why the benchmark exists: measure before, optimize and measure again on the same map.</p></div>
+      </details>
+      <details class="csb-faq__item" data-anim="sobe">
+        <summary>How do I undo the tweaks?</summary>
+        <div class="csb-faq__resposta"><p>In History, every tweak has a Revert button that restores the previous value. You can undo everything at once, and the uninstaller offers it too.</p></div>
+      </details>
+      <details class="csb-faq__item" data-anim="sobe">
+        <summary>Does it work on laptops?</summary>
+        <div class="csb-faq__resposta"><p>Yes. One tweak makes CS2 always use the dedicated graphics card, and tweaks that use more battery come with a warning.</p></div>
+      </details>
+      <details class="csb-faq__item" data-anim="sobe">
+        <summary>Is it really free?</summary>
+        <div class="csb-faq__resposta"><p>Yes. No ads, no limits and no paid version. If you want to support the project, there is <a href="https://buymeacoffee.com/fallback" target="_blank" rel="noopener">Buy me a coffee</a>.</p></div>
+      </details>
+      <details class="csb-faq__item" data-anim="sobe">
+        <summary>Does it work for other games?</summary>
+        <div class="csb-faq__resposta"><p>The Windows tweaks apply to any game. The specific parts, like pro configs, autoexec and the benchmark, are for CS2.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA FINAL ─────────────────────────────────────────────────────────── -->
+<section class="csb-secao csb-final" id="csb-baixar">
+  <div class="csb-wrap">
+    <h2 class="csb-titulo" data-anim="sobe">Run the PC Scan and see what is <em>holding back</em> your FPS</h2>
+    <p class="csb-apoio" data-anim="sobe" style="margin-inline:auto">It takes a minute. If you don't like it, undo everything.</p>
+    <div class="csb-hero__acoes" data-anim="sobe">
+      <a class="csb-botao" href="https://github.com/JafetRamirez/csboost-releases/releases/latest" data-csb-download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Baixar grátis para Windows</a>
+    </div>
+    <p class="csb-verificar" data-anim="sobe">
+      <span><span data-csb-versao>v0.4.0</span> · <span data-csb-tamanho>2.9 MB</span></span>
+      <a href="https://www.virustotal.com/gui/file/45a4c2691989d9e5ecd28ff8466b1ab0e84c7392994a4d58c0fa406d56bfb46b" target="_blank" rel="noopener" data-csb-vt>VirusTotal report</a>
+      <a href="https://github.com/JafetRamirez/csboost-releases" target="_blank" rel="noopener">Code on GitHub</a>
+      <a href="https://github.com/JafetRamirez/csboost-releases/blob/main/docs/CODE_SIGNING_POLICY.md" target="_blank" rel="noopener">Code signing policy</a>
+    </p>
+    <code class="csb-sha" data-anim="sobe">SHA256 <span data-csb-sha>45a4c2691989d9e5ecd28ff8466b1ab0e84c7392994a4d58c0fa406d56bfb46b</span></code>
+    <p class="csb-assinatura" data-anim="sobe">Code signing: free code signing provided by <a href="https://about.signpath.io" target="_blank" rel="noopener">SignPath.io</a>, certificate by <a href="https://signpath.org" target="_blank" rel="noopener">SignPath Foundation</a> (being rolled out; signed versions are noted in each release's notes).</p>
+  </div>
+</section>
+
+<!-- ─── RODAPÉ ────────────────────────────────────────────────────────────── -->
+<footer class="csb-rodape">
+  <div class="csb-wrap">
+    <div class="csb-rodape__topo">
+      <div>
+        <span class="csb-logo"><svg viewBox="0 0 3631 513" width="170" height="24" role="img" aria-label="CSBoost"><use href="#csb-logo-simbolo"/></svg></span>
+        <p style="margin-top:16px;max-width:36ch">Free Windows optimizer for CS2. Made in Brazil.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#csb-como">How it works</a></li>
+          <li><a href="#csb-seguranca">Safety</a></li>
+          <li><a href="#csb-faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/JafetRamirez/csboost-releases" target="_blank" rel="noopener">Source code</a></li>
+          <li><a href="https://github.com/JafetRamirez/csboost-releases/releases" target="_blank" rel="noopener">All versions</a></li>
+          <li><a href="https://buymeacoffee.com/fallback" target="_blank" rel="noopener">Buy me a coffee</a></li>
+          <li><a href="https://github.com/JafetRamirez/csboost-releases/blob/main/docs/CODE_SIGNING_POLICY.md" target="_blank" rel="noopener">Code signing policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="csb-rodape__base">
+      <p>© <span data-ano>2026</span> Jafet Ramirez. CSBoost is free software under the <a href="https://github.com/JafetRamirez/csboost-releases/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0</a> license. Privacy: the app does not collect or send data; it only checks GitHub for new versions. <a href="https://github.com/JafetRamirez/csboost-releases/blob/main/docs/CODE_SIGNING_POLICY.md" target="_blank" rel="noopener">Code signing policy</a>.</p>
+      <p style="margin-top:8px">Counter-Strike 2 and Steam are trademarks of Valve Corporation. CSBoost is an independent project, not affiliated with or endorsed by Valve.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Barra do celular: quem chega pelo Facebook está no celular, e o app é
+     para PC. Em vez de um download que não roda, oferece mandar o link. -->
+<div class="csb-barra" role="region" aria-label="Download on PC">
+  <p><strong>CSBoost is for Windows PCs</strong>Send the link to open it on your computer.</p>
+  <button type="button" class="csb-botao csb-botao--pequeno" data-csb-compartilhar>Send link</button>
+</div>
+
+<script>
+(function(){
+  function montar(){
+    var raiz = document.querySelector('.csb-root');
+    if(!raiz || raiz.dataset.montado) return;
+    raiz.dataset.montado = '1';
+    raiz.classList.add('csb-js');
+
+    var q = function(s,ctx){ return Array.prototype.slice.call((ctx||raiz).querySelectorAll(s)); };
+    var reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    q('[data-ano]').forEach(function(el){ el.textContent = new Date().getFullYear(); });
+
+    /* ── Release mais recente (GitHub) ── troca link, versão, tamanho e hash */
+    try {
+      fetch('https://api.github.com/repos/JafetRamirez/csboost-releases/releases/latest',{headers:{'Accept':'application/vnd.github+json'}})
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(rel){
+          var exe = (rel.assets||[]).filter(function(a){ return /setup\.exe$/i.test(a.name); })[0];
+          if(!exe) return;
+          q('[data-csb-download]').forEach(function(a){ a.href = exe.browser_download_url; });
+          q('[data-csb-versao]').forEach(function(s){ s.textContent = rel.tag_name; });
+          var mb = (exe.size/1048576).toLocaleString('en',{maximumFractionDigits:1}) + ' MB';
+          q('[data-csb-tamanho]').forEach(function(s){ s.textContent = mb; });
+          var sha = exe.digest && exe.digest.indexOf('sha256:') === 0 ? exe.digest.slice(7) : '';
+          if(sha){
+            q('[data-csb-sha]').forEach(function(s){ s.textContent = sha; });
+            q('[data-csb-vt]').forEach(function(a){ a.href = 'https://www.virustotal.com/gui/file/' + sha; });
+          }
+        }).catch(function(){});
+    } catch(e){}
+
+    /* ── Medição: clique em baixar (GA4, se a tag estiver na página) ── */
+    q('[data-csb-download]').forEach(function(a){
+      a.addEventListener('click', function(){
+        try { if(typeof gtag === 'function') gtag('event','csboost_download',{ link_url: a.href, local: a.closest('section,header') ? (a.closest('section,header').id || 'cabecalho') : '' }); } catch(e){}
+      });
+    });
+
+    /* ── Enviar link (celular) ── */
+    q('[data-csb-compartilhar]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var url = location.href.split('#')[0];
+        try { if(typeof gtag === 'function') gtag('event','csboost_enviar_link'); } catch(e){}
+        if(navigator.share){ navigator.share({title:'CSBoost', text:'Free optimizer for CS2. Open it on your PC:', url:url}).catch(function(){}); return; }
+        if(navigator.clipboard){ navigator.clipboard.writeText(url).then(function(){ b.textContent = 'Link copied'; }); }
+      });
+    });
+
+    /* ── Título do hero: quebra em palavras, preservando o <em> ── */
+    q('[data-texto]').forEach(function(el){
+      el.setAttribute('aria-label', el.textContent.replace(/\s+/g,' ').trim());
+      var i = 0, html = [];
+      Array.prototype.forEach.call(el.childNodes, function(n){
+        var enfase = n.nodeType === 1, txt = n.textContent;
+        txt.split(/\s+/).forEach(function(p){
+          if(!p) return;
+          var w = enfase ? '<em>'+p+'</em>' : p;
+          html.push('<span class="csb-palavra" aria-hidden="true"><span style="--csb-atraso:'+(i++*55)+'ms">'+w+'</span></span>');
+        });
+      });
+      el.innerHTML = html.join(' ');
+      el.setAttribute('data-anim','texto');
+    });
+
+    /* ── Barra do celular: entra depois do hero, sai no CTA final ── */
+    var barra = raiz.querySelector('.csb-barra'), hero = raiz.querySelector('.csb-hero'), final = raiz.querySelector('.csb-final');
+    if(barra && hero && final){
+      var passouHero = false, noFinal = false;
+      var att = function(){ barra.classList.toggle('csb-mostra', passouHero && !noFinal); };
+      new IntersectionObserver(function(e){ passouHero = !e[0].isIntersecting && e[0].boundingClientRect.top < 0; att(); }).observe(hero);
+      new IntersectionObserver(function(e){ noFinal = e[0].isIntersecting; att(); }).observe(final);
+    }
+
+    /* ── Índice dos passos acompanha a rolagem ── */
+    var links = q('.csb-passos-indice a');
+    if(links.length){
+      var obsPasso = new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(!e.isIntersecting) return;
+          links.forEach(function(a){ a.classList.toggle('csb-ativo', a.getAttribute('href') === '#'+e.target.id); });
+        });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+      q('.csb-passo').forEach(function(p){ obsPasso.observe(p); });
+    }
+
+    if(reduzido){
+      q('[data-anim]').forEach(function(el){ el.classList.add('csb-visivel'); });
+      return;
+    }
+
+    q('[data-stagger]').forEach(function(pai){
+      var passo = parseInt(pai.getAttribute('data-stagger'),10) || 80;
+      var teto  = parseInt(pai.getAttribute('data-stagger-max'),10) || 6;
+      q('[data-anim]', pai).forEach(function(f,i){ f.style.transitionDelay = (Math.min(i,teto) * passo) + 'ms'; });
+    });
+
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if(!e.isIntersecting) return;
+        e.target.classList.add('csb-visivel');
+        obs.unobserve(e.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    var doHero = [];
+    q('[data-anim]').forEach(function(el){
+      if(el.closest('[data-anim-hero]')) { doHero.push(el); return; }
+      obs.observe(el);
+    });
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      doHero.forEach(function(el){ el.classList.add('csb-visivel'); });
+    }); });
+
+    var obsNum = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if(!e.isIntersecting) return;
+        obsNum.unobserve(e.target);
+        var alvo = parseFloat(e.target.getAttribute('data-contador')) || 0;
+        var t0 = null, dur = 1200;
+        (function passo(t){
+          if(!t0) t0 = t;
+          var p = Math.min((t - t0)/dur, 1);
+          e.target.textContent = Math.round(alvo*(1 - Math.pow(1 - p, 3))).toLocaleString('en');
+          if(p < 1) requestAnimationFrame(passo);
+        })(performance.now());
+      });
+    }, { threshold: 0.5 });
+    q('[data-contador]').forEach(function(el){ el.textContent = '0'; obsNum.observe(el); });
+
+    var fino = window.matchMedia('(min-width: 861px) and (pointer: fine)').matches;
+    var camadas = fino ? q('[data-parallax]') : [];
+    if(camadas.length){
+      var ativas = [], pendente = false;
+      var obsPar = new IntersectionObserver(function(entradas){
+        entradas.forEach(function(e){
+          var i = ativas.indexOf(e.target);
+          if(e.isIntersecting && i < 0){ ativas.push(e.target); e.target.style.willChange='transform'; }
+          if(!e.isIntersecting && i >= 0){ ativas.splice(i,1); e.target.style.willChange=''; }
+        });
+        agendar();
+      }, { rootMargin: '20% 0px' });
+      camadas.forEach(function(el){ obsPar.observe(el); });
+      function desenhar(){
+        pendente = false;
+        var meio = window.innerHeight / 2;
+        ativas.forEach(function(el){
+          var r = el.getBoundingClientRect();
+          var fator = parseFloat(el.getAttribute('data-parallax')) || 0.1;
+          var lim = r.height * 0.05;
+          var d = Math.max(-lim, Math.min(lim, ((r.top + r.height/2) - meio) * fator));
+          el.style.transform = 'translate3d(0,' + d.toFixed(1) + 'px,0)';
+        });
+      }
+      function agendar(){ if(!pendente){ pendente = true; requestAnimationFrame(desenhar); } }
+      window.addEventListener('scroll', agendar, { passive:true });
+      window.addEventListener('resize', agendar, { passive:true });
+      agendar();
+    }
+
+    var cab = raiz.querySelector('.csb-cabecalho');
+    if(cab){
+      var sentinela = document.createElement('div');
+      sentinela.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none';
+      raiz.prepend(sentinela);
+      new IntersectionObserver(function(e){ cab.classList.toggle('csb-compacto', !e[0].isIntersecting); }, { threshold: 0 }).observe(sentinela);
+    }
+
+    if(window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+      raiz.addEventListener('mousemove', function(ev){
+        var c = ev.target.closest ? ev.target.closest('.csb-cartao') : null;
+        if(!c || !raiz.contains(c)) return;
+        var r = c.getBoundingClientRect();
+        c.style.setProperty('--csb-mx', (ev.clientX - r.left) + 'px');
+        c.style.setProperty('--csb-my', (ev.clientY - r.top)  + 'px');
+      }, { passive:true });
+    }
+  }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', montar); } else { montar(); }
+})();
+</script>
+
+</div>
+<!-- ═══════════════════════════════════════════════════════════════════════
+     FIM DO BLOCO ELEMENTOR — copie até aqui
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+</body>
+</html>

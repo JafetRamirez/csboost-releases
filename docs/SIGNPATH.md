@@ -14,7 +14,7 @@ Termos: https://signpath.org/terms
 - [x] Build automático a partir do código, no GitHub Actions (`.github/workflows/release.yml`)
 - [x] Aprovação manual de cada versão (o workflow só roda quando você dispara)
 - [x] Página "Code signing policy" com papéis, atribuição e privacidade (`docs/CODE_SIGNING_POLICY.md`,
-      linkada no README e na LP https://www.jafetramirez.com.br/csboost/)
+      linkada no README e na LP https://csboost.com.br/)
 - [x] Avisa antes de alterar o sistema e desinstala limpo
 - [x] Workflow já tem os passos de assinatura; ligam sozinhos quando as variáveis existirem
 
@@ -25,7 +25,7 @@ Termos: https://signpath.org/terms
    - Projeto: CSBoost — otimizador gratuito de Windows para Counter-Strike 2
    - Repositório: https://github.com/JafetRamirez/csboost-releases
    - Licença: GPL-3.0-or-later
-   - Página do projeto: https://www.jafetramirez.com.br/csboost/
+   - Página do projeto: https://csboost.com.br/
    - Política: https://github.com/JafetRamirez/csboost-releases/blob/main/docs/CODE_SIGNING_POLICY.md
    - Build: GitHub Actions, workflow "Publicar versão"
    - Arquivos assinados: `csboost.exe` e o instalador NSIS `CSBoost_<versão>_x64-setup.exe`
