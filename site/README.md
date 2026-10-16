@@ -9,3 +9,5 @@ Página do app em português, espanhol e inglês (`/`, `/es/`, `/en/`).
 
 Hospedagem: Vercel (projeto com Root Directory `site`, sem build). O deploy só roda quando algo em `site/` muda.
 O endereço antigo `jafetramirez.com.br/csboost` redireciona para cá.
+
+Vercel: projeto `csboost` (Root Directory `site`, Framework Preset `Other`).
