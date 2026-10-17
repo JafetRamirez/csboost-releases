@@ -1,6 +1,6 @@
 [package]
 name = "csboost"
-version = "0.4.1"
+version = "0.5.0"
 description = "CSBoost — otimizador de Windows para Counter-Strike 2"
 authors = ["Jafet Ramirez"]
 license = "GPL-3.0-or-later"

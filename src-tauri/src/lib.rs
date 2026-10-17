@@ -8,6 +8,7 @@ mod cs2;
 mod diagnostics;
 mod engine;
 mod gpu;
+mod prefs;
 mod net;
 mod journal;
 mod platform;
@@ -51,6 +52,7 @@ pub fn run() {
             commands::cleanup_run,
             commands::set_language,
             commands::gpu_in_use,
+            commands::set_issue_dismissed,
             commands::net_test,
         ])
         .run(tauri::generate_context!())

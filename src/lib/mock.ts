@@ -78,6 +78,12 @@ export function saveAutoexec(_content: string) {
   return "D:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\autoexec.cfg";
 }
 
+const dismissedIds = new Set<string>();
+export function setIssueDismissed(id: string, dismissed: boolean) {
+  if (dismissed) dismissedIds.add(id);
+  else dismissedIds.delete(id);
+}
+
 export function report(): Report {
   const issues: Report["issues"] = [];
   if (displayHz < 165)
@@ -131,11 +137,15 @@ export function report(): Report {
       detail: m("O Windows pode estar gravando o jogo continuamente, gastando GPU e disco.", "Windows puede estar grabando el juego todo el tiempo, gastando GPU y disco.", "Windows may be recording your game all the time, using GPU and disk."),
       fix: { kind: "tweak", tweak_id: "gamedvr.disable" },
     });
-  const penalty = issues.reduce((s, i) => s + (i.severity === "critical" ? 18 : i.severity === "warning" ? 8 : 2), 0);
+  const dismissed = issues.filter((i) => dismissedIds.has(i.id));
+  const kept = issues.filter((i) => !dismissedIds.has(i.id));
+  const penalty = kept.reduce((s, i) => s + (i.severity === "critical" ? 18 : i.severity === "warning" ? 8 : 2), 0);
   return {
     score: Math.max(0, 100 - penalty),
     elevated: true,
     hardware: {
+      manufacturer: "ASUS",
+      board: "TUF GAMING B550M-PLUS",
       os_name: "Microsoft Windows 11 Pro",
       os_build: 26100,
       cpu: "AMD Ryzen 5 5600",
@@ -153,7 +163,8 @@ export function report(): Report {
     power: { has_battery: false, on_ac: true },
     power_plan: { guid: null, name: state["power.high_performance"].applied ? m("Alto desempenho", "Alto rendimiento", "High performance") : m("Equilibrado", "Equilibrado", "Balanced") },
     cs2_found: true,
-    issues,
+    issues: kept,
+    dismissed,
     checks_passed: [m("16 GB de RAM", "16 GB de RAM", "16 GB of RAM"), m("Driver de vídeo recente (NVIDIA GeForce RTX 3060)", "Driver de video reciente (NVIDIA GeForce RTX 3060)", "Recent graphics driver (NVIDIA GeForce RTX 3060)"), m("CS2 encontrado", "CS2 encontrado", "CS2 found")],
   };
 }

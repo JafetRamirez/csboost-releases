@@ -24,6 +24,7 @@ export const api = {
   createRestorePoint: () => call<void>("create_restore_point", undefined, () => undefined),
   setDisplayRefresh: (device: string, hz: number) =>
     call<void>("set_display_refresh", { device, hz }, () => mock.fixDisplay(device, hz)),
+  setIssueDismissed: (id: string, dismissed: boolean) => call<void>("set_issue_dismissed", { id, dismissed }, () => mock.setIssueDismissed(id, dismissed)),
   netTest: () => call<NetReport>("net_test", undefined, mock.netTest),
   gpuInUse: () => call<GpuInUse>("gpu_in_use", undefined, mock.gpuInUse),
   cs2Info: () => call<Cs2Info>("cs2_info", undefined, mock.cs2),

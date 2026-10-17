@@ -2,6 +2,7 @@
 // (Releases do repositório csboost-releases). O instalador novo é verificado
 // com a assinatura do CSBoost antes de rodar — sem assinatura válida, não instala.
 import { isTauri } from "./api";
+import pkg from "../../package.json";
 
 export interface AvailableUpdate {
   version: string;
@@ -10,7 +11,7 @@ export interface AvailableUpdate {
 }
 
 export async function appVersion(): Promise<string> {
-  if (!isTauri) return "0.2.0";
+  if (!isTauri) return pkg.version;
   const { getVersion } = await import("@tauri-apps/api/app");
   return getVersion();
 }

@@ -7,6 +7,7 @@ import { useApp } from "../lib/store";
 import type { BenchRun } from "../lib/types";
 import markUrl from "../assets/brand/mark.png";
 import { t } from "../i18n";
+import { StarCard } from "../components/StarCard";
 
 // Paleta de 2 séries validada (dataviz) contra o fundo #181c36.
 const C_A = "#6f84e0"; // medição mais antiga
@@ -327,6 +328,8 @@ export function Benchmark() {
           <FrametimeChart runs={[{ run: pair[0], color: C_A }, { run: pair[1], color: C_B }]} />
         </Panel>
       )}
+
+      {runs.length >= 1 && <StarCard className="mt-6" />}
 
       <Panel className="mt-6 overflow-hidden">
         <div className="px-6 pt-5 pb-2 flex items-baseline justify-between">

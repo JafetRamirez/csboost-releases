@@ -49,6 +49,8 @@ pub struct Report {
     pub power_plan: PowerPlanInfo,
     pub cs2_found: bool,
     pub issues: Vec<Issue>,
+    /// Avisos que o usuário marcou como "já conferi": não entram na nota.
+    pub dismissed: Vec<Issue>,
     pub checks_passed: Vec<String>,
 }
 
@@ -422,6 +424,8 @@ pub fn run() -> Report {
         Severity::Warning => 1,
         Severity::Info => 2,
     });
+    let ignored = crate::prefs::Prefs::load().dismissed_issues;
+    let (issues, dismissed): (Vec<Issue>, Vec<Issue>) = issues.into_iter().partition(|i| !ignored.contains(&i.id));
     let penalty: i32 = issues
         .iter()
         .map(|i| match i.severity {
@@ -440,6 +444,7 @@ pub fn run() -> Report {
         power_plan,
         cs2_found,
         issues,
+        dismissed,
         checks_passed: ok,
     }
 }

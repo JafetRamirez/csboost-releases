@@ -73,6 +73,8 @@ export interface RamModule {
 }
 
 export interface HardwareInfo {
+  manufacturer: string;
+  board: string;
   os_name: string;
   os_build: number;
   cpu: string;
@@ -93,6 +95,7 @@ export interface Report {
   power_plan: { guid: string | null; name: string };
   cs2_found: boolean;
   issues: Issue[];
+  dismissed: Issue[];
   checks_passed: string[];
 }
 

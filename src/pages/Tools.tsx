@@ -7,6 +7,7 @@ import { useApp } from "../lib/store";
 import type { CleanTarget } from "../lib/types";
 import { t as tr } from "../i18n";
 import { NetTest } from "../components/NetTest";
+import { markMaintenance } from "../lib/prefsLocal";
 
 function Cleanup() {
   const { notify } = useApp();
@@ -36,6 +37,7 @@ function Cleanup() {
     setBusy(true);
     try {
       const r = await api.cleanupRun([...sel]);
+      markMaintenance();
       notify(
         "good",
         tr("tools.freed", { size: fmtBytes(r.freed_bytes), n: fmtNum(r.deleted_files) }) + (r.skipped_files ? " " + tr("tools.skipped", { n: fmtNum(r.skipped_files) }) : ""),

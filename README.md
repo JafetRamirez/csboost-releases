@@ -98,7 +98,13 @@ Quem estiver com o app aberto vê o aviso "Versão X disponível — Atualizar a
 
 ---
 
-## O que já funciona (v0.4)
+## O que já funciona (v0.5)
+
+**Novo na 0.5:**
+- Raio-X: **"Já conferi, ignorar"** em cada aviso. O aviso sai da nota e fica numa lista "Ignorados por você", de onde dá para trazer de volta. Guardado em `%LOCALAPPDATA%\CSBoost\prefs.json`.
+- **Copiar diagnóstico** (Raio-X e Configurações): versão, Windows, peças do PC e avisos, sem nada pessoal, para colar ao pedir ajuda.
+- **Lembrete de manutenção** ao abrir o app quando faz mais de 30 dias da última limpeza.
+- Pedido discreto de ⭐ no GitHub (Configurações e Benchmark).
 
 **Novo na 0.4.1:**
 - Raio-X avisa quando o monitor está ligado na saída da placa-mãe num PC com placa de vídeo dedicada.

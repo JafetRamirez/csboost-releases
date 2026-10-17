@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Coffee, Languages, RefreshCw } from "lucide-react";
+import { ClipboardCopy, Coffee, Languages, RefreshCw } from "lucide-react";
+import { StarCard } from "../components/StarCard";
+import { diagnosticText } from "../lib/diagnosticText";
 import { Button, PageHeader, Panel } from "../components/ui";
 import { DONATE_URL } from "../components/Donate";
-import { isTauri, openUrl } from "../lib/api";
+import { errorText, isTauri, openUrl } from "../lib/api";
 import { useApp } from "../lib/store";
 import { appVersion } from "../lib/updater";
 import mark from "../assets/brand/mark.png";
@@ -11,7 +13,7 @@ import { LANGS, t } from "../i18n";
 import { useLang } from "../i18n/react";
 
 export function SettingsPage() {
-  const { report, update, checkUpdate } = useApp();
+  const { report, update, checkUpdate, notify } = useApp();
   const { lang, setLang } = useLang();
   const [version, setVersion] = useState("…");
   const [checking, setChecking] = useState(false);
@@ -97,6 +99,31 @@ export function SettingsPage() {
             {t("set.coffeeBtn")}
           </Button>
         </Panel>
+
+        <Panel className="p-6 flex flex-wrap items-center gap-5">
+          <ClipboardCopy size={22} className="text-amber shrink-0" />
+          <div className="flex-1 min-w-[220px]">
+            <p className="font-cond font-bold text-[17px]">{t("diag.copy")}</p>
+            <p className="text-dim text-[14px] mt-0.5">{t("diag.copyHint")}</p>
+          </div>
+          <Button
+            disabled={!report}
+            icon={<ClipboardCopy size={16} />}
+            onClick={async () => {
+              if (!report) return;
+              try {
+                await navigator.clipboard.writeText(await diagnosticText(report));
+                notify("good", t("diag.copied"));
+              } catch (e) {
+                notify("bad", errorText(e));
+              }
+            }}
+          >
+            {t("diag.copy")}
+          </Button>
+        </Panel>
+
+        <StarCard always />
 
         <p className="text-[13.5px] text-faint max-w-[64ch]">
           {t("set.valve")}

@@ -12,7 +12,7 @@ const tone = () => ({
   info: { bar: "bg-navy-hi", text: "text-navy-hi", label: t("sev.info") },
 });
 
-export function IssueCard({ issue, compact = false }: { issue: Issue; compact?: boolean }) {
+export function IssueCard({ issue, compact = false, dismissed = false }: { issue: Issue; compact?: boolean; dismissed?: boolean }) {
   const { rescan, notify, summarize } = useApp();
   const [busy, setBusy] = useState(false);
   const [open, setOpen] = useState(false);
@@ -36,6 +36,16 @@ export function IssueCard({ issue, compact = false }: { issue: Issue; compact?: 
     }
   }
 
+  async function toggleDismiss() {
+    try {
+      await api.setIssueDismissed(issue.id, !dismissed);
+      if (!dismissed) notify("info", t("issue.dismissed"));
+      await rescan();
+    } catch (e) {
+      notify("bad", errorText(e));
+    }
+  }
+
   const action =
     issue.fix?.kind === "guide" ? (
       <Button variant="quiet" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
@@ -49,7 +59,7 @@ export function IssueCard({ issue, compact = false }: { issue: Issue; compact?: 
     ) : null;
 
   return (
-    <div className="relative flex gap-4 rounded-xl bg-raised/50 border border-line/70 pl-5 pr-4 py-4 overflow-hidden">
+    <div className={`relative flex gap-4 rounded-xl ${dismissed ? "opacity-60" : ""} bg-raised/50 border border-line/70 pl-5 pr-4 py-4 overflow-hidden`}>
       <span className={`absolute left-0 inset-y-0 w-1 ${sev.bar}`} aria-hidden />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
@@ -57,6 +67,11 @@ export function IssueCard({ issue, compact = false }: { issue: Issue; compact?: 
         </div>
         <h3 className="font-cond font-bold text-[17.5px] leading-snug mt-0.5">{issue.title}</h3>
         {!compact && <p className="text-dim text-[14.5px] mt-1 max-w-[68ch]">{issue.detail}</p>}
+        {!compact && (
+          <button onClick={toggleDismiss} className="mt-2 text-[13px] text-faint hover:text-fg underline-offset-2 hover:underline cursor-pointer">
+            {dismissed ? t("issue.restore") : t("issue.dismiss")}
+          </button>
+        )}
         {open && issue.fix?.kind === "guide" && (
           <ol className="mt-3 space-y-1.5 text-[14.5px] list-decimal pl-5 marker:text-amber">
             {issue.fix.steps.map((s) => (
@@ -65,7 +80,7 @@ export function IssueCard({ issue, compact = false }: { issue: Issue; compact?: 
           </ol>
         )}
       </div>
-      {action && <div className="shrink-0 self-center">{action}</div>}
+      {action && !dismissed && <div className="shrink-0 self-center">{action}</div>}
     </div>
   );
 }

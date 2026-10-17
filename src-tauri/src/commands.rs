@@ -40,6 +40,11 @@ pub async fn revert_all() -> CmdResult<engine::BatchResult> {
 }
 
 #[tauri::command]
+pub fn set_issue_dismissed(id: String, dismissed: bool) -> CmdResult<()> {
+    crate::prefs::set_dismissed(&id, dismissed).map_err(err)
+}
+
+#[tauri::command]
 pub async fn net_test() -> CmdResult<crate::net::NetReport> {
     blocking(crate::net::run).await
 }
