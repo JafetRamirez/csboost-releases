@@ -133,6 +133,10 @@ def page(lang):
         f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>\n'
         "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
         f"gtag('js',new Date());gtag('config','{GA}',{{content_group:'csboost',language:'{HREFLANG[lang]}'}});</script>\n"
+        '<!-- Vercel Web Analytics -->\n'
+        '<script>\n'
+        '  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n'
+        '</script>\n'
         '<script defer src="/_vercel/insights/script.js"></script>\n'
     )
     html = html.replace("</head>", tags + "</head>", 1)
