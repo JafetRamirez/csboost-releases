@@ -30,7 +30,7 @@ HREFLANG = {"pt": "pt-BR", "es": "es", "en": "en"}
 SCREENS = ["painel", "raiox", "otimizacoes", "historico", "bench", "pros"]
 
 VERSAO_URL = "https://github.com/JafetRamirez/csboost-releases/releases/latest"
-SHA = "45a4c2691989d9e5ecd28ff8466b1ab0e84c7392994a4d58c0fa406d56bfb46b"
+SHA = "c7e82988766a8b5fca9ffba66e23a8da35d847800f201a5fd90c77bd0c3e82f2"
 VT = f"https://www.virustotal.com/gui/file/{SHA}"
 GA = "G-WYPCC7WB42"
 
