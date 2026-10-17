@@ -176,6 +176,21 @@
 .csb-botao--fantasma:hover{background:rgba(255,255,255,.06)}
 .csb-botao--pequeno{min-height:44px;padding:0 18px;font-size:.95rem}
 
+/* depoimentos */
+.csb-depo{background:var(--csb-base)}
+.csb-depo__grade{display:grid;gap:clamp(16px,2vw,24px);grid-template-columns:repeat(6,1fr);margin-top:clamp(36px,4vw,56px)}
+.csb-depo__item{grid-column:span 2;display:flex;flex-direction:column;gap:18px;margin:0;padding:clamp(22px,2.2vw,30px);
+  border-radius:var(--csb-raio);background:var(--csb-painel);box-shadow:inset 0 0 0 1px var(--csb-borda)}
+.csb-depo__item--destaque{grid-column:span 3}
+.csb-depo__item blockquote{margin:0;font-size:1.08rem;line-height:1.55;color:var(--csb-texto)}
+.csb-depo__item--destaque blockquote{font-size:clamp(1.15rem,1.5vw,1.3rem)}
+.csb-depo__item blockquote::before{content:'\201C';display:block;font-family:var(--csb-fonte-titulo);font-size:3rem;line-height:.6;color:var(--csb-ambar);margin-bottom:6px}
+.csb-depo__item figcaption{margin-top:auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:var(--csb-mini);color:var(--csb-texto-suave)}
+.csb-depo__item figcaption strong{color:var(--csb-texto);font-size:.95rem}
+.csb-depo__nota{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;background:rgba(249,171,25,.12);color:var(--csb-ambar);font-weight:700;font-variant-numeric:tabular-nums}
+.csb-depo__fonte{margin-top:22px;font-size:var(--csb-mini);color:var(--csb-texto-suave)}
+@media (max-width:900px){.csb-depo__item,.csb-depo__item--destaque{grid-column:span 3}}
+@media (max-width:640px){.csb-depo__grade{grid-template-columns:1fr}.csb-depo__item,.csb-depo__item--destaque{grid-column:auto}}
 .csb-grade{display:grid;gap:clamp(16px,2vw,24px)}
 .csb-grade--2{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
 .csb-grade--3{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
@@ -646,6 +661,40 @@
       <div data-anim="sobe"><span class="csb-numero">3 MB</span><p>de instalador, liviano para la PC</p></div>
       <div data-anim="sobe"><span class="csb-numero">$ 0</span><p>sin anuncios, sin suscripción</p></div>
     </div>
+  </div>
+</section>
+
+<!-- ─── DEPOIMENTOS ───────────────────────────────────────────────────────── -->
+<section class="csb-secao csb-depo" id="csb-depoimentos">
+  <div class="csb-wrap">
+    <div class="csb-cab-secao">
+      <span class="csb-rotulo" data-anim="desce">Quién ya lo usa</span>
+      <h2 class="csb-titulo" data-anim="sobe">Directo desde el <em>grupo de CS</em></h2>
+      <p class="csb-apoio" data-anim="sobe">Lo que comentó la gente después de usar CSBoost en su propia PC.</p>
+    </div>
+    <div class="csb-depo__grade" data-stagger="70">
+      <figure class="csb-depo__item csb-depo__item--destaque" data-anim="sobe">
+        <blockquote>Hermano, el mío estaba en 54 de 100, jajaja. Ahora quedó genial: 100. Creo que estaba corriendo en la integrada, y eso que tengo una RTX 5060 de 8 GB.</blockquote>
+        <figcaption><strong>Maicon D.</strong><span class="csb-depo__nota">54 → 100</span></figcaption>
+      </figure>
+      <figure class="csb-depo__item csb-depo__item--destaque" data-anim="sobe">
+        <blockquote>Ya estaba en 88, pero ahora quedó joya. Buenísimo, hermano.</blockquote>
+        <figcaption><strong>Gustavo A.</strong><span class="csb-depo__nota">88 → 100</span></figcaption>
+      </figure>
+      <figure class="csb-depo__item" data-anim="sobe">
+        <blockquote>Lo acabo de bajar y ya lo estoy usando. Va a llegar lejos, hermano.</blockquote>
+        <figcaption><strong>Emerson S.</strong></figcaption>
+      </figure>
+      <figure class="csb-depo__item" data-anim="sobe">
+        <blockquote>Recién lo conozco. Eres un héroe, ¡gracias!</blockquote>
+        <figcaption><strong>João P.</strong></figcaption>
+      </figure>
+      <figure class="csb-depo__item" data-anim="sobe">
+        <blockquote>Vaya, lo acabo de ver. ¡Qué increíble!</blockquote>
+        <figcaption><strong>Vitor H.</strong></figcaption>
+      </figure>
+    </div>
+    <p class="csb-depo__fonte" data-anim="sobe">Comentarios reales en la publicación de lanzamiento, en un grupo de CS2 de Facebook (traducidos del portugués). La nota es la del panel de CSBoost, de 0 a 100.</p>
   </div>
 </section>
 

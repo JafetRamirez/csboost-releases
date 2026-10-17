@@ -5,6 +5,29 @@ RAW: trechos exatos do HTML/JS/JSON-LD trocados literalmente.
 """
 
 T = {
+    # depoimentos
+    "Quem já usa": ("Quién ya lo usa", "People using it"),
+    "O que a galera comentou depois de rodar o CSBoost no próprio PC.": (
+        "Lo que comentó la gente después de usar CSBoost en su propia PC.",
+        "What players said after running CSBoost on their own PC."),
+    "Caraca, meu irmão, o meu estava em 54 de 100, kkkkk. Agora ficou show: 100. Acho que estava rodando na integrada, sendo que tenho uma RTX 5060 de 8 GB.": (
+        "Hermano, el mío estaba en 54 de 100, jajaja. Ahora quedó genial: 100. Creo que estaba corriendo en la integrada, y eso que tengo una RTX 5060 de 8 GB.",
+        "Bro, mine was at 54 out of 100, lol. Now it's great: 100. I think it was running on the integrated GPU, even though I have an 8 GB RTX 5060."),
+    "Já estava em 88, mas agora tá filé. Top demais, mano.": (
+        "Ya estaba en 88, pero ahora quedó joya. Buenísimo, hermano.",
+        "It was already at 88, but now it's spot on. Awesome, man."),
+    "Acabei de baixar e já tô usando. Vai longe, meu mano.": (
+        "Lo acabo de bajar y ya lo estoy usando. Va a llegar lejos, hermano.",
+        "Just downloaded it and I'm already using it. This is going places, bro."),
+    "Conhecendo agora. Tu é um herói, valeu!": (
+        "Recién lo conozco. Eres un héroe, ¡gracias!",
+        "Just found it. You're a hero, thanks!"),
+    "Rapaz, vi aqui. Que incrível, hein!": (
+        "Vaya, lo acabo de ver. ¡Qué increíble!",
+        "Man, just saw this. Pretty amazing!"),
+    "Comentários reais no post de lançamento, num grupo de CS2 do Facebook. A nota é a do painel do CSBoost, de 0 a 100.": (
+        "Comentarios reales en la publicación de lanzamiento, en un grupo de CS2 de Facebook (traducidos del portugués). La nota es la del panel de CSBoost, de 0 a 100.",
+        "Real comments on the launch post in a Brazilian CS2 Facebook group (translated from Portuguese). The score is CSBoost's dashboard score, from 0 to 100."),
     # cabeçalho e meta
     "CSBoost — otimizador grátis para mais FPS no CS2 (Windows)": (
         "CSBoost — optimizador gratis para más FPS en CS2 (Windows)",
@@ -256,6 +279,9 @@ T = {
 
 # Trechos literais (HTML, JS, JSON-LD) — (pt, es, en)
 RAW = [
+    ('data-anim="sobe">Direto do <em>grupo de CS</em></h2>',
+     'data-anim="sobe">Directo desde el <em>grupo de CS</em></h2>',
+     'data-anim="sobe">Straight from the <em>CS group</em></h2>'),
     ('data-texto>FPS mais <em>estável</em> no CS2, sem tocar no jogo</h1>',
      'data-texto>FPS más <em>estables</em> en CS2, sin tocar el juego</h1>',
      'data-texto><em>Steadier</em> FPS in CS2, without touching the game</h1>'),
