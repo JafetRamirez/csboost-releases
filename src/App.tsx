@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CircleCheck, CircleAlert, Info, ShieldAlert } from "lucide-react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Sidebar, type Page } from "./components/Sidebar";
 import { TitleBar } from "./components/TitleBar";
 import { UpdateBanner } from "./components/UpdateBanner";
@@ -76,6 +77,7 @@ export default function App() {
     <LangProvider>
       <AppProvider>
         <Shell />
+        <SpeedInsights />
       </AppProvider>
     </LangProvider>
   );
