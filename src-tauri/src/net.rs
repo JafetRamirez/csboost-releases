@@ -36,6 +36,9 @@ pub struct PopResult {
 #[derive(Debug, Clone, Serialize)]
 pub struct NetReport {
     pub interface: Option<NetInterface>,
+    /// Tráfego da placa durante o teste (Mbps), sem contar o próprio teste.
+    pub download_mbps: Option<f64>,
+    pub upload_mbps: Option<f64>,
     pub pops: Vec<PopResult>,
     pub tips: Vec<String>,
 }
@@ -95,8 +98,16 @@ fn probe(p: &Pop) -> PopResult {
     stats(&p.code, &p.name, &rtts)
 }
 
-fn tips(iface: &Option<NetInterface>, pops: &[PopResult]) -> Vec<String> {
+fn tips(iface: &Option<NetInterface>, pops: &[PopResult], down: Option<f64>, up: Option<f64>) -> Vec<String> {
     let mut t = Vec::new();
+    if down.unwrap_or(0.0) >= 3.0 || up.unwrap_or(0.0) >= 2.0 {
+        let (d, u) = (down.unwrap_or(0.0).round(), up.unwrap_or(0.0).round());
+        t.push(tr!(
+            "Algo está usando a sua internet agora ({d} Mbps baixando, {u} Mbps enviando). Downloads, atualizações e streams aumentam o ping e a perda durante a partida.",
+            "Algo está usando tu internet ahora ({d} Mbps de bajada, {u} Mbps de subida). Descargas, actualizaciones y streams aumentan el ping y la pérdida durante la partida.",
+            "Something is using your internet right now ({d} Mbps down, {u} Mbps up). Downloads, updates and streams raise ping and loss during a match."
+        ));
+    }
     if iface.as_ref().map(|i| i.wifi).unwrap_or(false) {
         t.push(tr!(
             "Você está no Wi-Fi. Cabo de rede é a melhora mais certa: menos variação e menos perda de pacote.",
@@ -143,6 +154,10 @@ pub fn run() -> Result<NetReport> {
         .map_err(|e| anyhow!(tr!("não foi possível baixar a lista de servidores da Steam: {e}", "no se pudo descargar la lista de servidores de Steam: {e}", "couldn't download Steam's server list: {e}")))?;
     let pops = parse_sdr(&String::from_utf8_lossy(&body))?;
     let iface = pops.first().and_then(|p| platform::route_interface(p.relays[0]).ok());
+    let probe_ip = pops.first().map(|p| p.relays[0]);
+    let before = probe_ip.and_then(platform::interface_octets);
+    let t0 = std::time::Instant::now();
+    let n_pops = pops.len() as f64;
     let handles: Vec<_> = pops.into_iter().map(|p| std::thread::spawn(move || probe(&p))).collect();
     let mut results: Vec<PopResult> = handles.into_iter().filter_map(|h| h.join().ok()).collect();
     results.sort_by(|a, b| match (a.avg_ms, b.avg_ms) {
@@ -151,7 +166,18 @@ pub fn run() -> Result<NetReport> {
         (None, Some(_)) => std::cmp::Ordering::Greater,
         (None, None) => a.name.cmp(&b.name),
     });
-    Ok(NetReport { tips: tips(&iface, &results), interface: iface, pops: results })
+    // tráfego da placa no período, descontando os pings do teste (~100 bytes cada, ida e volta)
+    let secs = t0.elapsed().as_secs_f64().max(1.0);
+    let after = probe_ip.and_then(platform::interface_octets);
+    let own = n_pops * (PROBES as f64 + 3.0) * 100.0;
+    let (down, up) = match (before, after) {
+        (Some((i0, o0)), Some((i1, o1))) => (
+            Some(((i1.saturating_sub(i0)) as f64 - own).max(0.0) * 8.0 / secs / 1e6),
+            Some(((o1.saturating_sub(o0)) as f64 - own).max(0.0) * 8.0 / secs / 1e6),
+        ),
+        _ => (None, None),
+    };
+    Ok(NetReport { tips: tips(&iface, &results, down, up), interface: iface, download_mbps: down, upload_mbps: up, pops: results })
 }
 
 #[cfg(test)]

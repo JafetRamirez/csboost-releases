@@ -132,6 +132,23 @@ fn check_change(tweak_id: &str, c: &Change, pending: bool) -> ChangeCheck {
                 status: settle(exists),
             }
         }
+        Change::NvidiaSetting { setting_id, previous, applied } => {
+            let id = *setting_id;
+            let now = platform::nv_get(&[id]).ok().and_then(|v| v.into_iter().next());
+            ChangeCheck {
+                label: format!("NVIDIA · {}", crate::nvidia::label(id)),
+                before: crate::nvidia::value_label(id, *previous),
+                expected: crate::nvidia::value_label(id, Some(*applied)),
+                now: match &now {
+                    Some(v) => crate::nvidia::value_label(id, *v),
+                    None => tr!("não foi possível ler", "no se pudo leer", "could not read"),
+                },
+                status: match now {
+                    Some(v) => settle(v == Some(*applied)),
+                    None => CheckStatus::Unknown,
+                },
+            }
+        }
         Change::DisplayRefresh { device, previous_hz, applied_hz } => {
             let now = platform::displays()
                 .ok()
@@ -162,6 +179,11 @@ pub fn title_for(e: &crate::journal::Entry) -> String {
             tr!("Monitor em {hz} Hz", "Monitor a {hz} Hz", "Monitor at {hz} Hz")
         }
         ("cs2.autoexec", _) => tr!("Autoexec do CS2", "Autoexec de CS2", "CS2 autoexec"),
+        (_, Some(Change::NvidiaSetting { setting_id, .. })) => format!("NVIDIA: {}", crate::nvidia::label(*setting_id)),
+        (id, _) if id.starts_with("cs2.video.") => {
+            let preset = e.title.split(": ").nth(1).unwrap_or("").to_string();
+            tr!("Vídeo do CS2: {preset}", "Video de CS2: {preset}", "CS2 video: {preset}")
+        }
         _ => e.title.clone(),
     }
 }

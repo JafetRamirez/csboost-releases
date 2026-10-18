@@ -1,6 +1,6 @@
 // Dados de exemplo usados só fora do app (pré-visualização no navegador).
 import catalogRaw from "../../catalog/tweaks.json";
-import type { BatchResult, BenchRun, CleanResult, CleanTarget, Cs2Info, EntryCheck, GpuInUse, JournalEntry, NetReport, Report, TweakView } from "./types";
+import type { BatchResult, BenchRun, CleanResult, CleanTarget, Cs2Info, EntryCheck, GpuInUse, JournalEntry, NetReport, VideoFile, VideoApply, VideoPreset, SessionStatus, NvInfo, Report, TweakView } from "./types";
 import { getLang } from "../i18n";
 
 // Mesmo comportamento do núcleo: textos do catálogo no idioma atual.
@@ -282,6 +282,8 @@ export async function netTest(): Promise<NetReport> {
   });
   return {
     interface: { name: "Wi-Fi", description: "Intel(R) Wi-Fi 6 AX201 160MHz", wifi: true, link_mbps: 866 },
+    download_mbps: 0.4,
+    upload_mbps: 0.1,
     pops: [
       pop("gru", "Sao Paulo (Brazil)", 14.6, 6.2, 0), pop("eze", "Buenos Aires (Argentina)", 48.9, 7.1, 5), pop("scl", "Santiago (Chile)", 61.3, 5.8, 0),
       pop("lim", "Lima (Peru)", 79.4, 6.6, 0), pop("mia", "Miami", 128.2, 7.4, 0), pop("atl", "Atlanta", 142.7, 8.0, 0),
@@ -292,4 +294,41 @@ export async function netTest(): Promise<NetReport> {
       m("O ping está variando bastante. Feche downloads, streams e atualizações (Steam, Windows, OneDrive) enquanto joga.", "El ping varía bastante. Cierra descargas, streams y actualizaciones (Steam, Windows, OneDrive) mientras juegas.", "Your ping is fluctuating a lot. Close downloads, streams and updates (Steam, Windows, OneDrive) while playing."),
     ],
   };
+}
+
+// ---- presets de vídeo (exemplo)
+let mockPreset: VideoPreset | null = null;
+export function videoInfo(): VideoFile[] {
+  return [{ id3: "123456789", persona: "jafet", path: "C:\\Program Files (x86)\\Steam\\userdata\\123456789\\730\\local\\cfg\\cs2_video.txt", preset: mockPreset, resolution: "1920×1080" }];
+}
+export function videoApply(preset: string): VideoApply {
+  mockPreset = preset as VideoPreset;
+  return { files: 1, changed: 7 };
+}
+
+// ---- Modo Sessão (exemplo: ligado, CS2 aberto, OneDrive rodando)
+let sessionOn = false;
+export function sessionStatus(): SessionStatus {
+  return { enabled: sessionOn, active: sessionOn, started_at: sessionOn ? Date.now() - 12 * 60_000 : null, plan_changed: true, background_apps: ["OneDrive"] };
+}
+export function sessionSet(enabled: boolean): SessionStatus {
+  sessionOn = enabled;
+  return sessionStatus();
+}
+
+// ---- perfil NVIDIA (exemplo)
+let nvApplied = false;
+export function nvidiaInfo(): NvInfo {
+  return {
+    available: true,
+    error: null,
+    settings: [
+      { id: 0x1057eb71, label: m("Modo de gerenciamento de energia", "Modo de administración de energía", "Power management mode"), now: nvApplied ? m("Preferir desempenho máximo", "Preferir rendimiento máximo", "Prefer maximum performance") : m("padrão do driver", "predeterminado del driver", "driver default"), target: m("Preferir desempenho máximo", "Preferir rendimiento máximo", "Prefer maximum performance"), ok: nvApplied },
+      { id: 0xce2691, label: m("Filtragem de textura - qualidade", "Filtrado de texturas - calidad", "Texture filtering - quality"), now: nvApplied ? m("Alto desempenho", "Alto rendimiento", "High performance") : m("Qualidade", "Calidad", "Quality"), target: m("Alto desempenho", "Alto rendimiento", "High performance"), ok: nvApplied },
+    ],
+  };
+}
+export function nvidiaApply(): number {
+  nvApplied = true;
+  return 2;
 }

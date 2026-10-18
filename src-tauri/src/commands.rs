@@ -40,6 +40,36 @@ pub async fn revert_all() -> CmdResult<engine::BatchResult> {
 }
 
 #[tauri::command]
+pub async fn session_status() -> CmdResult<crate::session::SessionStatus> {
+    blocking(|| Ok(crate::session::status())).await
+}
+
+#[tauri::command]
+pub async fn session_set(enabled: bool) -> CmdResult<crate::session::SessionStatus> {
+    blocking(move || crate::session::set_enabled(enabled)).await
+}
+
+#[tauri::command]
+pub async fn nvidia_info() -> CmdResult<crate::nvidia::NvInfo> {
+    blocking(|| Ok(crate::nvidia::info())).await
+}
+
+#[tauri::command]
+pub async fn nvidia_apply() -> CmdResult<usize> {
+    blocking(crate::nvidia::apply).await
+}
+
+#[tauri::command]
+pub async fn video_info() -> CmdResult<Vec<crate::video::VideoFile>> {
+    blocking(|| Ok(crate::video::files())).await
+}
+
+#[tauri::command]
+pub async fn video_apply(preset: String) -> CmdResult<crate::video::ApplyResult> {
+    blocking(move || crate::video::apply(&preset)).await
+}
+
+#[tauri::command]
 pub fn set_issue_dismissed(id: String, dismissed: bool) -> CmdResult<()> {
     crate::prefs::set_dismissed(&id, dismissed).map_err(err)
 }

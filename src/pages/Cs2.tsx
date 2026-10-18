@@ -6,6 +6,9 @@ import { useApp } from "../lib/store";
 import type { Cs2Info } from "../lib/types";
 import { t } from "../i18n";
 import { GpuCard } from "../components/GpuCard";
+import { VideoPresets } from "../components/VideoPresets";
+import { SessionCard } from "../components/SessionCard";
+import { NvidiaCard } from "../components/NvidiaCard";
 
 // Launch options enxutas. Muitas opções antigas do CS:GO não fazem nada no
 // CS2 — a lista é curada e NUNCA inclui -allow_third_party_software.
@@ -133,6 +136,12 @@ export function Cs2() {
           )}
         </Panel>
       </div>
+
+      <VideoPresets cs2Running={info.cs2_running} />
+
+      <SessionCard />
+
+      <NvidiaCard />
 
       <GpuCard />
 

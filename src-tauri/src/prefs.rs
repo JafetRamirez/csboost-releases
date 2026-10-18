@@ -8,6 +8,20 @@ use serde::{Deserialize, Serialize};
 pub struct Prefs {
     #[serde(default)]
     pub dismissed_issues: Vec<String>,
+    /// Modo Sessão ligado pelo usuário.
+    #[serde(default)]
+    pub session_enabled: bool,
+    /// Sessão em andamento (o que trocar de volta quando o CS2 fechar).
+    #[serde(default)]
+    pub session: Option<SessionState>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SessionState {
+    pub started_at: u64,
+    /// Plano de energia de antes e o que o Modo Sessão ativou (None = não trocou).
+    pub previous_plan: Option<String>,
+    pub applied_plan: Option<String>,
 }
 
 fn path() -> std::path::PathBuf {

@@ -3,7 +3,7 @@
 // para trabalhar no visual sem compilar o Rust.
 
 import { invoke } from "@tauri-apps/api/core";
-import type { BatchResult, BenchRun, CleanResult, CleanTarget, Cs2Info, EntryCheck, JournalEntry, Report, TweakView, GpuInUse, NetReport } from "./types";
+import type { BatchResult, BenchRun, CleanResult, CleanTarget, Cs2Info, EntryCheck, JournalEntry, Report, TweakView, GpuInUse, NetReport, VideoFile, VideoApply, SessionStatus, NvInfo } from "./types";
 import * as mock from "./mock";
 import { t } from "../i18n";
 
@@ -24,6 +24,12 @@ export const api = {
   createRestorePoint: () => call<void>("create_restore_point", undefined, () => undefined),
   setDisplayRefresh: (device: string, hz: number) =>
     call<void>("set_display_refresh", { device, hz }, () => mock.fixDisplay(device, hz)),
+  sessionStatus: () => call<SessionStatus>("session_status", undefined, mock.sessionStatus),
+  sessionSet: (enabled: boolean) => call<SessionStatus>("session_set", { enabled }, () => mock.sessionSet(enabled)),
+  nvidiaInfo: () => call<NvInfo>("nvidia_info", undefined, mock.nvidiaInfo),
+  nvidiaApply: () => call<number>("nvidia_apply", undefined, mock.nvidiaApply),
+  videoInfo: () => call<VideoFile[]>("video_info", undefined, mock.videoInfo),
+  videoApply: (preset: string) => call<VideoApply>("video_apply", { preset }, () => mock.videoApply(preset)),
   setIssueDismissed: (id: string, dismissed: boolean) => call<void>("set_issue_dismissed", { id, dismissed }, () => mock.setIssueDismissed(id, dismissed)),
   netTest: () => call<NetReport>("net_test", undefined, mock.netTest),
   gpuInUse: () => call<GpuInUse>("gpu_in_use", undefined, mock.gpuInUse),

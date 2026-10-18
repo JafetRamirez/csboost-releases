@@ -35,6 +35,12 @@ pub enum Change {
         previous_hz: u32,
         applied_hz: u32,
     },
+    /// Ajuste no perfil do cs2.exe do driver NVIDIA. `previous: None` = padrão do driver.
+    NvidiaSetting {
+        setting_id: u32,
+        previous: Option<u32>,
+        applied: u32,
+    },
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

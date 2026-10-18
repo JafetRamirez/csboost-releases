@@ -29,4 +29,7 @@ pub fn pids_named(_: &str) -> Vec<u32> { Vec::new() }
 pub fn gpu_engine_usage(_: u64) -> Result<Vec<GpuEngineSample>> { bail!(MSG) }
 pub fn icmp_ping(_: std::net::Ipv4Addr, _: u32) -> Option<u32> { None }
 pub fn route_interface(_: std::net::Ipv4Addr) -> Result<NetInterface> { bail!(MSG) }
+pub fn interface_octets(_: std::net::Ipv4Addr) -> Option<(u64, u64)> { None }
 pub fn https_get(_: &str, _: &str) -> Result<Vec<u8>> { bail!(MSG) }
+pub fn nv_get(_: &[u32]) -> Result<Vec<Option<u32>>> { bail!(MSG) }
+pub fn nv_set(_: u32, _: Option<u32>) -> Result<()> { bail!(MSG) }

@@ -98,7 +98,13 @@ Quem estiver com o app aberto vê o aviso "Versão X disponível — Atualizar a
 
 ---
 
-## O que já funciona (v0.5)
+## O que já funciona (v0.6)
+
+**Novo na 0.6:**
+- **Presets de vídeo do CS2** (FPS máximo, Equilibrado, Visibilidade): editam o `cs2_video.txt` da conta Steam com o jogo fechado, só trocando valores que já existem; o original vai para o Histórico.
+- **Modo Sessão:** com o CS2 aberto, plano de energia de desempenho; ao fechar o jogo, volta o de antes. Avisa apps pesados em segundo plano (OneDrive, torrents, launchers).
+- **Perfil NVIDIA:** grava no perfil do cs2.exe do driver (NVAPI oficial) "Preferir desempenho máximo" e "Filtragem de textura: alto desempenho". Desfaz pelo Histórico.
+- **Teste de rede** mostra quanto a internet foi usada durante o teste e avisa se algo está baixando.
 
 **Novo na 0.5:**
 - Raio-X: **"Já conferi, ignorar"** em cada aviso. O aviso sai da nota e fica numa lista "Ignorados por você", de onde dá para trazer de volta. Guardado em `%LOCALAPPDATA%\CSBoost\prefs.json`.

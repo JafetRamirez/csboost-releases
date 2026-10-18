@@ -120,6 +120,43 @@ export interface GpuInUse {
   guide: string[];
 }
 
+export interface SessionStatus {
+  enabled: boolean;
+  active: boolean;
+  started_at: number | null;
+  plan_changed: boolean;
+  background_apps: string[];
+}
+
+export interface NvSetting {
+  id: number;
+  label: string;
+  now: string;
+  target: string;
+  ok: boolean;
+}
+
+export interface NvInfo {
+  available: boolean;
+  error: string | null;
+  settings: NvSetting[];
+}
+
+export type VideoPreset = "max_fps" | "balanced" | "visibility";
+
+export interface VideoFile {
+  id3: string;
+  persona: string | null;
+  path: string;
+  preset: VideoPreset | null;
+  resolution: string | null;
+}
+
+export interface VideoApply {
+  files: number;
+  changed: number;
+}
+
 export interface NetInterface {
   name: string;
   description: string;
@@ -140,6 +177,8 @@ export interface PopResult {
 
 export interface NetReport {
   interface: NetInterface | null;
+  download_mbps: number | null;
+  upload_mbps: number | null;
   pops: PopResult[];
   tips: string[];
 }
@@ -161,7 +200,8 @@ export type Change =
   | { type: "registry"; hive: string; path: string; name: string; previous: unknown }
   | { type: "power_plan"; previous: string; applied: string }
   | { type: "file"; path: string; previous: string | null }
-  | { type: "display_refresh"; device: string; previous_hz: number; applied_hz: number };
+  | { type: "display_refresh"; device: string; previous_hz: number; applied_hz: number }
+  | { type: "nvidia_setting"; setting_id: number; previous: number | null; applied: number };
 
 export interface JournalEntry {
   id: number;

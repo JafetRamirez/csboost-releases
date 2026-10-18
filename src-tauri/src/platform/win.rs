@@ -737,6 +737,19 @@ pub fn route_interface(ip: std::net::Ipv4Addr) -> Result<NetInterface> {
     }
 }
 
+/// Bytes recebidos/enviados até agora pela placa que leva até `ip`.
+pub fn interface_octets(ip: std::net::Ipv4Addr) -> Option<(u64, u64)> {
+    unsafe {
+        let mut idx = 0u32;
+        if GetBestInterface(u32::from_ne_bytes(ip.octets()), &mut idx) != 0 {
+            return None;
+        }
+        let mut row = MIB_IF_ROW2 { InterfaceIndex: idx, ..Default::default() };
+        GetIfEntry2(&mut row).ok().ok()?;
+        Some((row.InOctets, row.OutOctets))
+    }
+}
+
 /// GET HTTPS pelo WinHTTP do Windows (usa o proxy e os certificados do sistema).
 pub fn https_get(host: &str, path: &str) -> Result<Vec<u8>> {
     unsafe {
@@ -785,4 +798,191 @@ pub fn https_get(host: &str, path: &str) -> Result<Vec<u8>> {
         let _ = WinHttpCloseHandle(ses);
         result
     }
+}
+
+// ---------------------------------------------------------------- NVIDIA
+// Perfil do driver NVIDIA para o cs2.exe pela NVAPI oficial (DRS), o mesmo
+// banco que o Painel de Controle da NVIDIA usa. A nvapi64.dll é carregada só
+// no processo do CSBoost; nada toca no jogo. IDs e estruturas tirados dos
+// headers públicos da NVIDIA (github.com/NVIDIA/nvapi).
+
+mod nv {
+    use anyhow::{bail, Result};
+    use std::ffi::c_void;
+    use windows::core::{s, w};
+    use windows::Win32::System::LibraryLoader::{GetProcAddress, LoadLibraryW};
+
+    const UNI: usize = 2048;
+
+    #[repr(C)]
+    pub struct Setting {
+        pub version: u32,
+        pub name: [u16; UNI],
+        pub id: u32,
+        pub kind: u32,
+        pub location: u32,
+        pub is_current_predefined: u32,
+        pub is_predefined_valid: u32,
+        pub predefined: [u32; 1025],
+        pub current: [u32; 1025],
+    }
+
+    #[repr(C)]
+    pub struct Application {
+        pub version: u32,
+        pub is_predefined: u32,
+        pub app_name: [u16; UNI],
+        pub friendly: [u16; UNI],
+        pub launcher: [u16; UNI],
+        pub file_in_folder: [u16; UNI],
+        pub flags: u32,
+        pub command_line: [u16; UNI],
+    }
+
+    pub const SETTING_VER: u32 = std::mem::size_of::<Setting>() as u32 | (1 << 16);
+    pub const APP_VER: u32 = std::mem::size_of::<Application>() as u32 | (4 << 16);
+    const OK: i32 = 0;
+    pub const SETTING_NOT_FOUND: i32 = -160;
+    pub const EXECUTABLE_NOT_FOUND: i32 = -166;
+
+    type Query = unsafe extern "C" fn(u32) -> *const c_void;
+    type Init = unsafe extern "C" fn() -> i32;
+    type Create = unsafe extern "C" fn(*mut *mut c_void) -> i32;
+    type One = unsafe extern "C" fn(*mut c_void) -> i32;
+    type FindApp = unsafe extern "C" fn(*mut c_void, *const u16, *mut *mut c_void, *mut Application) -> i32;
+    type Get = unsafe extern "C" fn(*mut c_void, *mut c_void, u32, *mut Setting) -> i32;
+    type Set = unsafe extern "C" fn(*mut c_void, *mut c_void, *mut Setting) -> i32;
+    type Restore = unsafe extern "C" fn(*mut c_void, *mut c_void, u32) -> i32;
+
+    pub struct Session {
+        h: *mut c_void,
+        pub profile: *mut c_void,
+        destroy: One,
+        save: One,
+        get: Get,
+        set: Set,
+        restore: Restore,
+    }
+
+    unsafe fn f<T: Copy>(q: Query, id: u32) -> Result<T> {
+        let p = q(id);
+        if p.is_null() {
+            bail!("NVAPI: função {id:#x} indisponível");
+        }
+        Ok(std::mem::transmute_copy::<*const c_void, T>(&p))
+    }
+
+    impl Session {
+        /// Abre o banco de perfis e acha o perfil do cs2.exe.
+        pub fn open() -> Result<Session> {
+            unsafe {
+                let lib = LoadLibraryW(w!("nvapi64.dll")).map_err(|_| anyhow::anyhow!(tr!(
+                    "Driver da NVIDIA não encontrado.",
+                    "No se encontró el driver de NVIDIA.",
+                    "NVIDIA driver not found."
+                )))?;
+                let Some(qi) = GetProcAddress(lib, s!("nvapi_QueryInterface")) else { bail!("NVAPI indisponível") };
+                let q: Query = std::mem::transmute(qi);
+                let init: Init = f(q, 0x0150e828)?;
+                if init() != OK {
+                    bail!("NVAPI: falha ao iniciar");
+                }
+                let create: Create = f(q, 0x0694d52e)?;
+                let load: One = f(q, 0x375dbd6b)?;
+                let find: FindApp = f(q, 0xeee566b2)?;
+                let mut s = Session {
+                    h: std::ptr::null_mut(),
+                    profile: std::ptr::null_mut(),
+                    destroy: f(q, 0xdad9cff8)?,
+                    save: f(q, 0xfcbc7e14)?,
+                    get: f(q, 0x73bf8338)?,
+                    set: f(q, 0x577dd202)?,
+                    restore: f(q, 0x53f0381e)?,
+                };
+                if create(&mut s.h) != OK {
+                    bail!("NVAPI: falha ao abrir os perfis");
+                }
+                if load(s.h) != OK {
+                    bail!("NVAPI: falha ao ler os perfis");
+                }
+                let mut name = [0u16; UNI];
+                for (i, c) in "cs2.exe".encode_utf16().enumerate() {
+                    name[i] = c;
+                }
+                let mut app: Box<Application> = Box::new(std::mem::zeroed());
+                app.version = APP_VER;
+                let r = find(s.h, name.as_ptr(), &mut s.profile, &mut *app);
+                if r == EXECUTABLE_NOT_FOUND {
+                    bail!(tr!(
+                        "O driver da NVIDIA ainda não tem perfil para o CS2. Atualize o driver e tente de novo.",
+                        "El driver de NVIDIA todavía no tiene perfil para CS2. Actualiza el driver e inténtalo de nuevo.",
+                        "The NVIDIA driver has no CS2 profile yet. Update the driver and try again."
+                    ));
+                }
+                if r != OK {
+                    bail!("NVAPI: perfil do CS2 ({r})");
+                }
+                Ok(s)
+            }
+        }
+
+        /// Valor gravado no perfil do CS2 (None = segue o padrão do driver).
+        pub fn get(&self, id: u32) -> Result<Option<u32>> {
+            unsafe {
+                let mut st: Box<Setting> = Box::new(std::mem::zeroed());
+                st.version = SETTING_VER;
+                match (self.get)(self.h, self.profile, id, &mut *st) {
+                    OK if st.location == 0 => Ok(Some(st.current[0])),
+                    OK | SETTING_NOT_FOUND => Ok(None),
+                    r => bail!("NVAPI: leitura {id:#x} ({r})"),
+                }
+            }
+        }
+
+        /// Grava (Some) ou volta ao padrão do driver (None).
+        pub fn put(&self, id: u32, value: Option<u32>) -> Result<()> {
+            unsafe {
+                let r = match value {
+                    Some(v) => {
+                        let mut st: Box<Setting> = Box::new(std::mem::zeroed());
+                        st.version = SETTING_VER;
+                        st.id = id;
+                        st.kind = 0; // NVDRS_DWORD_TYPE
+                        st.current[0] = v;
+                        (self.set)(self.h, self.profile, &mut *st)
+                    }
+                    None => match (self.restore)(self.h, self.profile, id) {
+                        SETTING_NOT_FOUND => OK,
+                        r => r,
+                    },
+                };
+                if r != OK {
+                    bail!("NVAPI: gravação {id:#x} ({r})");
+                }
+                if (self.save)(self.h) != OK {
+                    bail!("NVAPI: falha ao salvar os perfis");
+                }
+                Ok(())
+            }
+        }
+    }
+
+    impl Drop for Session {
+        fn drop(&mut self) {
+            unsafe {
+                if !self.h.is_null() {
+                    (self.destroy)(self.h);
+                }
+            }
+        }
+    }
+}
+
+pub fn nv_get(ids: &[u32]) -> Result<Vec<Option<u32>>> {
+    let s = nv::Session::open()?;
+    ids.iter().map(|id| s.get(*id)).collect()
+}
+
+pub fn nv_set(id: u32, value: Option<u32>) -> Result<()> {
+    nv::Session::open()?.put(id, value)
 }

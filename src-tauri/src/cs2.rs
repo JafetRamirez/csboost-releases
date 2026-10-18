@@ -84,7 +84,7 @@ pub fn cfg_dir() -> Option<PathBuf> {
     Some(install_dir()?.join("game").join("csgo").join("cfg"))
 }
 
-fn users(steam: &Path) -> Vec<SteamUser> {
+pub fn users(steam: &Path) -> Vec<SteamUser> {
     // nomes e "último logado" vêm do loginusers.vdf (chave = SteamID64)
     let mut personas: Vec<(String, String, bool)> = Vec::new();
     if let Ok(src) = std::fs::read_to_string(steam.join("config").join("loginusers.vdf")) {

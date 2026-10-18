@@ -9,7 +9,10 @@ mod diagnostics;
 mod engine;
 mod gpu;
 mod prefs;
+mod session;
+mod video;
 mod net;
+mod nvidia;
 mod journal;
 mod platform;
 mod vdf;
@@ -18,6 +21,7 @@ mod verify;
 /// Usado pelo desinstalador: `csboost.exe --revert-all` desfaz todos os
 /// ajustes do CSBoost sem abrir a janela.
 pub fn revert_all_cli() -> i32 {
+    session::end();
     match engine::revert_all() {
         Ok(r) if r.results.iter().all(|x| x.ok) => 0,
         _ => 1,
@@ -30,6 +34,10 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_process::init())
+        .setup(|_| {
+            session::start_watcher();
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             commands::run_diagnostics,
             commands::list_tweaks,
@@ -53,8 +61,20 @@ pub fn run() {
             commands::set_language,
             commands::gpu_in_use,
             commands::set_issue_dismissed,
+            commands::video_info,
+            commands::nvidia_info,
+            commands::nvidia_apply,
+            commands::session_status,
+            commands::session_set,
+            commands::video_apply,
             commands::net_test,
         ])
-        .run(tauri::generate_context!())
-        .expect("erro ao iniciar o CSBoost");
+        .build(tauri::generate_context!())
+        .expect("erro ao iniciar o CSBoost")
+        .run(|_, e| {
+            // ao fechar o app no meio da partida, devolve o plano de energia
+            if let tauri::RunEvent::Exit = e {
+                session::end();
+            }
+        });
 }

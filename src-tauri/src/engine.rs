@@ -196,6 +196,7 @@ pub fn undo_change(c: &Change) -> Result<()> {
             Ok(())
         }
         Change::DisplayRefresh { device, previous_hz, .. } => platform::set_display_refresh(device, *previous_hz),
+        Change::NvidiaSetting { setting_id, previous, .. } => platform::nv_set(*setting_id, *previous),
     }
 }
 
@@ -326,6 +327,7 @@ pub fn reapply(ids: &[String]) -> Result<BatchResult> {
                     _ => platform::power_set(applied),
                 },
                 Change::DisplayRefresh { device, applied_hz, .. } => platform::set_display_refresh(device, *applied_hz),
+                Change::NvidiaSetting { setting_id, applied, .. } => platform::nv_set(*setting_id, Some(*applied)),
                 // arquivo (autoexec): o conteúdo é do usuário, não regrava sozinho
                 Change::File { .. } => Ok(()),
             };
@@ -360,6 +362,9 @@ pub fn record_external(tweak_id: &str, title: &str, change: Change) -> Result<()
             (Some(Change::File { previous, .. }), Change::File { path, .. }) => Change::File { path, previous },
             (Some(Change::DisplayRefresh { previous_hz, .. }), Change::DisplayRefresh { device, applied_hz, .. }) => {
                 Change::DisplayRefresh { device, previous_hz, applied_hz }
+            }
+            (Some(Change::NvidiaSetting { previous, .. }), Change::NvidiaSetting { setting_id, applied, .. }) => {
+                Change::NvidiaSetting { setting_id, previous, applied }
             }
             (_, c) => c,
         };

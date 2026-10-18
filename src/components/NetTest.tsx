@@ -64,6 +64,11 @@ export function NetTest() {
               <span>{iface.wifi ? t("net.wifi") : t("net.cable")} · {iface.description}{iface.link_mbps ? ` · ${iface.link_mbps} Mbps` : ""}</span>
             </p>
           )}
+          {res.download_mbps != null && (
+            <p className="text-[14px] text-dim">
+              {t("net.traffic", { down: res.download_mbps.toFixed(1), up: (res.upload_mbps ?? 0).toFixed(1) })}
+            </p>
+          )}
           <ul className="space-y-1.5 text-[14.5px]">
             {res.tips.map((tip) => <li key={tip} className="rounded-lg bg-base px-3 py-2">{tip}</li>)}
           </ul>

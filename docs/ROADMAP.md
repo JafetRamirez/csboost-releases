@@ -1,6 +1,6 @@
 # CSBoost — Roadmap de melhorias
 
-## Status (atualizado na v0.5.0)
+## Status (atualizado na v0.6.0)
 - ✅ #1 Benchmark integrado (PresentMon) com comparação e imagem para compartilhar
 - ✅ #3 Desinstalador oferece "Reverter tudo" (não dispara em atualização)
 - ✅ #4 Código-fonte público no GitHub + SHA256 de cada instalador nas notas da versão
@@ -14,7 +14,11 @@
 - ⏸️ #5 Assinatura de código: SignPath Foundation **recusou em 11/10/2026** por falta de visibilidade pública (estrelas, forks, contribuidores, artigos, Reddit/YouTube). Pode pedir de novo quando o projeto tiver esses sinais. O workflow continua pronto e liga sozinho com as variáveis do SignPath. Opções pagas (SignPath pago, Certum, Azure) ficam em "Só com patrocínio"
 - ✅ Raio-X: "Já conferi, ignorar" por aviso (não conta na nota) e "Copiar diagnóstico" para pedir ajuda (parte do #22) (v0.5)
 - ✅ Pedido discreto de estrela no GitHub (Configurações e depois do primeiro benchmark), para a nova tentativa na SignPath (v0.5)
-- Próximos: #8 presets de vídeo, #7 Modo Sessão v1, #21 central de ajuda, #22 formulário de chamado, #7 Modo Sessão, #8 presets de vídeo, #10 perfil NVIDIA
+- ✅ #8 Presets de vídeo do CS2 (FPS máximo, Equilibrado, Visibilidade), só com o jogo fechado e só trocando chaves que já existem no cs2_video.txt (v0.6)
+- ✅ #7 Modo Sessão v1: plano de desempenho só enquanto o CS2 está aberto + aviso de apps pesados em segundo plano (v0.6). Fica para depois: prioridade do processo (PerfOptions/IFEO, chave vigiada por antivírus) e pausar Steam/OneDrive (sem API oficial)
+- ✅ #10 Perfil NVIDIA pela NVAPI oficial: modo de energia máximo e filtragem de textura em alto desempenho no perfil do cs2.exe (v0.6)
+- ✅ #13 Teste de rede mede o uso da internet durante o teste e avisa download em segundo plano (v0.6). Ajustes da placa de rede (EEE, interrupt moderation) ficam fora: pedem reiniciar o adaptador e não têm ganho comprovado no CS2 (UDP)
+- Próximos: #21 central de ajuda, #22 formulário de chamado, #7 Modo Sessão, #8 presets de vídeo, #10 perfil NVIDIA
 
 ### Correções para o próximo update
 - ✅ **Configs de pros → conversor de sensibilidade** (corrigido na v0.4) (`src/pages/Pros.tsx`, card "Mesma sensibilidade do … no seu mouse"): em janela estreita o card quebra. "Seu DPI" vira duas linhas, o resultado `sensitivity 1` quebra e o botão "Copiar" vaza para fora do card. Corrigir a responsividade: empilhar input e resultado quando faltar espaço, `whitespace-nowrap` no comando e botão dentro do card. (Visto em 08/10/2026, janela de ~1270 px.)
