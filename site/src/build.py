@@ -133,7 +133,11 @@ def page(lang):
         f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>\n'
         "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
         f"gtag('js',new Date());gtag('config','{GA}',{{content_group:'csboost',language:'{HREFLANG[lang]}'}});</script>\n"
+        '<!-- Vercel Web Analytics e Speed Insights (só no site; o app não envia nada) -->\n'
+        "<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};"
+        "window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script>\n"
         '<script defer src="/_vercel/insights/script.js"></script>\n'
+        '<script defer src="/_vercel/speed-insights/script.js"></script>\n'
     )
     html = html.replace("</head>", tags + "</head>", 1)
     html = html.replace('<meta name="theme-color"', head + '<meta name="theme-color"', 1)
