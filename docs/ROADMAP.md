@@ -101,6 +101,7 @@ Legenda — **Impacto**: o quanto melhora o resultado ou a confiança · **Esfor
 | 18 | **Distribuição na Microsoft Store / Epic** | Confiança e alcance; exige assinatura e empacotamento |
 | 19 | **Comunidade no Discord** com canal de suporte e de resultados | Os comentários já pedem um lugar para conversar |
 | 20 | **Overlay de FPS** | ⚠️ Só como **janela externa** sempre visível, nunca desenhado dentro do jogo. Avaliar se vale; o próprio CS2 já tem telemetria de FPS |
+| 23 | **Versão para Linux** (pedido de usuário em 10/2026) | Sem prioridade por enquanto. O CS2 roda nativo no Linux e o Tauri compila para Linux, mas quase todos os ajustes de hoje são do Windows (registro, plano de energia, Game DVR). No Linux seria outro conjunto: governador da CPU em `performance`, Feral GameMode, opções de inicialização, autoexec e configs de pros (já funcionam igual), e benchmark pelo log do MangoHud em vez do PresentMon. Ajustes de sistema pedem senha de administrador (pkexec). A Regra nº 1 vale igual: nada de tocar no processo do jogo. Distribuir como AppImage ou Flatpak |
 
 ### Só com patrocínio 💰
 
