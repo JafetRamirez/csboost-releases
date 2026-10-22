@@ -185,6 +185,7 @@
 .csb-depo__item{grid-column:span 2;display:flex;flex-direction:column;gap:18px;margin:0;padding:clamp(22px,2.2vw,30px);
   border-radius:var(--csb-raio);background:var(--csb-painel);box-shadow:inset 0 0 0 1px var(--csb-borda)}
 .csb-depo__item--destaque{grid-column:span 3}
+.csb-depo__item--largo{grid-column:span 6}
 .csb-depo__item blockquote{margin:0;font-size:1.08rem;line-height:1.55;color:var(--csb-texto)}
 .csb-depo__item--destaque blockquote{font-size:clamp(1.15rem,1.5vw,1.3rem)}
 .csb-depo__item blockquote::before{content:'\201C';display:block;font-family:var(--csb-fonte-titulo);font-size:3rem;line-height:.6;color:var(--csb-ambar);margin-bottom:6px}
@@ -192,8 +193,8 @@
 .csb-depo__item figcaption strong{color:var(--csb-texto);font-size:.95rem}
 .csb-depo__nota{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;background:rgba(249,171,25,.12);color:var(--csb-ambar);font-weight:700;font-variant-numeric:tabular-nums}
 .csb-depo__fonte{margin-top:22px;font-size:var(--csb-mini);color:var(--csb-texto-suave)}
-@media (max-width:900px){.csb-depo__item,.csb-depo__item--destaque{grid-column:span 3}}
-@media (max-width:640px){.csb-depo__grade{grid-template-columns:1fr}.csb-depo__item,.csb-depo__item--destaque{grid-column:auto}}
+@media (max-width:900px){.csb-depo__item,.csb-depo__item--destaque{grid-column:span 3}.csb-depo__item--largo{grid-column:span 6}}
+@media (max-width:640px){.csb-depo__grade{grid-template-columns:1fr}.csb-depo__item,.csb-depo__item--destaque,.csb-depo__item--largo{grid-column:auto}}
 .csb-grade{display:grid;gap:clamp(16px,2vw,24px)}
 .csb-grade--2{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
 .csb-grade--3{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
@@ -695,6 +696,10 @@
       <figure class="csb-depo__item" data-anim="sobe">
         <blockquote>Rapaz, vi aqui. Que incrível, hein!</blockquote>
         <figcaption><strong>Vitor H.</strong></figcaption>
+      </figure>
+      <figure class="csb-depo__item csb-depo__item--largo" data-anim="sobe">
+        <blockquote>Testei aqui, mano. Aplicativo bom demais. Meu PC já estava bem otimizado, mas tinha algumas coisas faltando que o aplicativo fez pra mim. Tem a parte de limpeza de cache e shaders, e as configs dos pros. Tô começando a produzir conteúdo no YouTube e fiz até um vídeo mostrando ele, kkk.</blockquote>
+        <figcaption><strong>Oficina do Celular</strong><span class="csb-depo__nota">Ryzen 7 5700X3D · RX 6750 XT</span></figcaption>
       </figure>
     </div>
     <p class="csb-depo__fonte" data-anim="sobe">Comentários reais no post de lançamento, num grupo de CS2 do Facebook. A nota é a do painel do CSBoost, de 0 a 100.</p>
