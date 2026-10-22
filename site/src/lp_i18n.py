@@ -25,6 +25,9 @@ T = {
     "Rapaz, vi aqui. Que incrível, hein!": (
         "Vaya, lo acabo de ver. ¡Qué increíble!",
         "Man, just saw this. Pretty amazing!"),
+    "Testei aqui, mano. Aplicativo bom demais. Meu PC já estava bem otimizado, mas tinha algumas coisas faltando que o aplicativo fez pra mim. Tem a parte de limpeza de cache e shaders, e as configs dos pros. Tô começando a produzir conteúdo no YouTube e fiz até um vídeo mostrando ele, kkk.": (
+        "Lo probé, hermano. La app es buenísima. Mi PC ya estaba bastante optimizada, pero le faltaban algunas cosas que la app hizo por mí. Tiene la limpieza de caché y shaders, y las configs de los pros. Estoy empezando a hacer contenido en YouTube y hasta grabé un video mostrándola, jaja.",
+        "Tested it, man. Really good app. My PC was already pretty optimized, but some things were missing and the app did them for me. It has cache and shader cleanup, plus the pro configs. I'm starting to make YouTube content and even made a video showing it, lol."),
     "Comentários reais no post de lançamento, num grupo de CS2 do Facebook. A nota é a do painel do CSBoost, de 0 a 100.": (
         "Comentarios reales en la publicación de lanzamiento, en un grupo de CS2 de Facebook (traducidos del portugués). La nota es la del panel de CSBoost, de 0 a 100.",
         "Real comments on the launch post in a Brazilian CS2 Facebook group (translated from Portuguese). The score is CSBoost's dashboard score, from 0 to 100."),
