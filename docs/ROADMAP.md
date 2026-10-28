@@ -18,7 +18,8 @@
 - ✅ #7 Modo Sessão v1: plano de desempenho só enquanto o CS2 está aberto + aviso de apps pesados em segundo plano (v0.6). Fica para depois: prioridade do processo (PerfOptions/IFEO, chave vigiada por antivírus) e pausar Steam/OneDrive (sem API oficial)
 - ✅ #10 Perfil NVIDIA pela NVAPI oficial: modo de energia máximo e filtragem de textura em alto desempenho no perfil do cs2.exe (v0.6). Validado em 28/10/2026 numa placa NVIDIA real: grava só os dois itens, mantém o que o usuário já tinha no perfil, o jogo abre normal e o Desfazer volta para "configuração global"
 - ✅ #13 Teste de rede mede o uso da internet durante o teste e avisa download em segundo plano (v0.6). Ajustes da placa de rede (EEE, interrupt moderation) ficam fora: pedem reiniciar o adaptador e não têm ganho comprovado no CS2 (UDP)
-- Próximos: validar presets de vídeo e Modo Sessão em PC real; v0.7 = #21 central de ajuda + #22 formulário de chamado; v0.8 = #17 guias de BIOS + guia do Adrenalin para placas AMD (só orientação, nada gravado no driver)
+- ✅ v0.6 inteira validada em PC real em 28/10/2026 (presets de vídeo com desfazer e bloqueio com o jogo aberto, Modo Sessão trocando e devolvendo o plano, perfil NVIDIA)
+- Próximos: v0.7 = #21 central de ajuda + #22 formulário de chamado; v0.8 = #17 guias de BIOS + guia do Adrenalin para placas AMD (só orientação, nada gravado no driver)
 
 ### Correções para o próximo update
 - ✅ **Configs de pros → conversor de sensibilidade** (corrigido na v0.4) (`src/pages/Pros.tsx`, card "Mesma sensibilidade do … no seu mouse"): em janela estreita o card quebra. "Seu DPI" vira duas linhas, o resultado `sensitivity 1` quebra e o botão "Copiar" vaza para fora do card. Corrigir a responsividade: empilhar input e resultado quando faltar espaço, `whitespace-nowrap` no comando e botão dentro do card. (Visto em 08/10/2026, janela de ~1270 px.)
