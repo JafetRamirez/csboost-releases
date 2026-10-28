@@ -22,6 +22,8 @@ W, H, P = L["W"], L["H"], dict(L["P"])
 _wm = json.loads((AQUI / "logo" / "wordmark.json").read_text())
 W, P["word"] = _wm["W"], _wm["d"]
 I18N = runpy.run_path(str(AQUI / "lp_i18n.py"))
+HELP = runpy.run_path(str(AQUI / "help_content.py"))["HELP"]
+HELP_PAGE = runpy.run_path(str(AQUI / "help_page.py"))
 
 SITE = "https://csboost.com.br"
 LANGS = ["pt", "es", "en"]
@@ -128,21 +130,24 @@ def page(lang):
     # caminhos absolutos (a página fica em /, /es/ e /en/)
     html = html.replace('src="img/', 'src="/img/')
     html = re.sub(r'content="img/(csboost-og[^"]*)"', rf'content="{SITE}/img/\1"', html)
-    tags = (
+    html = html.replace("</head>", analytics(lang) + "</head>", 1)
+    html = html.replace('<meta name="theme-color"', head + '<meta name="theme-color"', 1)
+    assert "jafetramirez.com.br/csboost" not in html
+    return html
+
+
+def analytics(lang, grupo="csboost"):
+    return (
         '<!-- analytics -->\n'
         f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>\n'
         "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
-        f"gtag('js',new Date());gtag('config','{GA}',{{content_group:'csboost',language:'{HREFLANG[lang]}'}});</script>\n"
+        f"gtag('js',new Date());gtag('config','{GA}',{{content_group:'{grupo}',language:'{HREFLANG[lang]}'}});</script>\n"
         '<!-- Vercel Web Analytics e Speed Insights (só no site; o app não envia nada) -->\n'
         "<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};"
         "window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments)};</script>\n"
         '<script defer src="/_vercel/insights/script.js"></script>\n'
         '<script defer src="/_vercel/speed-insights/script.js"></script>\n'
     )
-    html = html.replace("</head>", tags + "</head>", 1)
-    html = html.replace('<meta name="theme-color"', head + '<meta name="theme-color"', 1)
-    assert "jafetramirez.com.br/csboost" not in html
-    return html
 
 
 def sitemap():
@@ -152,6 +157,9 @@ def sitemap():
         alts = "".join(f'\n    <xhtml:link rel="alternate" hreflang="{HREFLANG[o]}" href="{url_of(o)}"/>' for o in LANGS)
         alts += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{url_of("en")}"/>'
         urls.append(f"  <url>\n    <loc>{url_of(l)}</loc>\n    <lastmod>{hoje}</lastmod>{alts}\n  </url>")
+    for l in LANGS:
+        alts = "".join(f'\n    <xhtml:link rel="alternate" hreflang="{HREFLANG[o]}" href="{SITE}/{HELP[o]['path']}"/>' for o in LANGS)
+        urls.append(f"  <url>\n    <loc>{SITE}/{HELP[l]['path']}</loc>\n    <lastmod>{hoje}</lastmod>{alts}\n  </url>")
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
             + "\n".join(urls) + "\n</urlset>\n")
@@ -165,6 +173,11 @@ def main():
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(page(lang), encoding="utf-8")
         print("ok", lang)
+    for lang in LANGS:
+        d = SAIDA / HELP[lang]["path"]
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(HELP_PAGE["render"](lang, HELP, LANGS, simbolo, analytics(lang, "csboost-ajuda"), SITE), encoding="utf-8")
+        print("ok ajuda", lang)
     shutil.copytree(AQUI / "img", SAIDA / "img")
     (SAIDA / "sitemap.xml").write_text(sitemap(), encoding="utf-8")
     (SAIDA / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")

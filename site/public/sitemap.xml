@@ -24,4 +24,25 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://csboost.com.br/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://csboost.com.br/en/"/>
   </url>
+  <url>
+    <loc>https://csboost.com.br/ajuda/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://csboost.com.br/ajuda/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://csboost.com.br/es/ayuda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://csboost.com.br/en/help/"/>
+  </url>
+  <url>
+    <loc>https://csboost.com.br/es/ayuda/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://csboost.com.br/ajuda/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://csboost.com.br/es/ayuda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://csboost.com.br/en/help/"/>
+  </url>
+  <url>
+    <loc>https://csboost.com.br/en/help/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://csboost.com.br/ajuda/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://csboost.com.br/es/ayuda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://csboost.com.br/en/help/"/>
+  </url>
 </urlset>

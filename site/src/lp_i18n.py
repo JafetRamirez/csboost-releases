@@ -51,6 +51,9 @@ T = {
     "Segurança": ("Seguridad", "Safety"),
     "Recursos": ("Funciones", "Features"),
     "Dúvidas": ("Preguntas", "FAQ"),
+    "Ajuda": ("Ayuda", "Help"),
+    "Central de ajuda": ("Centro de ayuda", "Help center"),
+    "/ajuda/": ("/es/ayuda/", "/en/help/"),
     "Baixar grátis": ("Descargar gratis", "Download free"),
     # hero
     "Otimizador gratuito para CS2": ("Optimizador gratuito para CS2", "Free optimizer for CS2"),
