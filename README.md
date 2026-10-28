@@ -100,6 +100,11 @@ Quem estiver com o app aberto vê o aviso "Versão X disponível — Atualizar a
 
 ## O que já funciona (v0.6)
 
+**Novo na 0.7:**
+- **Central de ajuda** em [csboost.com.br/ajuda](https://csboost.com.br/ajuda/) (também em `/es/ayuda` e `/en/help`): primeiros passos, solução dos problemas mais comuns e o que faz cada tela.
+- **Abrir chamado** pelo formulário da central: chega por e-mail para o Jafet (função `site/api/chamado.mjs` na Vercel, com Resend). Nada fica guardado em banco.
+- Botão **Ajuda** no menu e **Pedir ajuda** no Raio-X: copiam o diagnóstico (sem nada pessoal) e abrem a central no idioma do app. O app continua sem enviar nada sozinho.
+
 **Novo na 0.6:**
 - **Presets de vídeo do CS2** (FPS máximo, Equilibrado, Visibilidade): editam o `cs2_video.txt` da conta Steam com o jogo fechado, só trocando valores que já existem; o original vai para o Histórico.
 - **Modo Sessão:** com o CS2 aberto, plano de energia de desempenho; ao fechar o jogo, volta o de antes. Avisa apps pesados em segundo plano (OneDrive, torrents, launchers).

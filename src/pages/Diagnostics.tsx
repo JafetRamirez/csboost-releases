@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { ChevronDown, CircleCheck, ClipboardCopy, RotateCcw } from "lucide-react";
+import { ChevronDown, CircleCheck, ClipboardCopy, LifeBuoy, RotateCcw } from "lucide-react";
 import { IssueCard } from "../components/IssueCard";
 import { Button, Loading, PageHeader, Panel } from "../components/ui";
 import { useApp } from "../lib/store";
 import { errorText } from "../lib/api";
 import { diagnosticText } from "../lib/diagnosticText";
+import { openHelp } from "../lib/help";
 import { t } from "../i18n";
 
 export function Diagnostics() {
@@ -31,6 +32,9 @@ export function Diagnostics() {
           <div className="flex flex-wrap gap-2">
             <Button onClick={copy} icon={<ClipboardCopy size={16} />} title={t("diag.copyHint")}>
               {t("diag.copy")}
+            </Button>
+            <Button onClick={() => openHelp(report, notify)} icon={<LifeBuoy size={16} />} title={t("help.hint")}>
+              {t("help.ask")}
             </Button>
             <Button onClick={rescan} busy={scanning} icon={<RotateCcw size={16} />}>
               {t("dash.rescan")}

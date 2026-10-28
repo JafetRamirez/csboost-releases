@@ -1,7 +1,9 @@
-import { Activity, Crosshair, Gauge as GaugeIcon, History, ScanSearch, Settings, SlidersHorizontal, Users, Wrench } from "lucide-react";
+import { Activity, Crosshair, Gauge as GaugeIcon, History, LifeBuoy, ScanSearch, Settings, SlidersHorizontal, Users, Wrench } from "lucide-react";
 import logo from "../assets/brand/logo-light.png";
 import { Donate } from "./Donate";
 import { t } from "../i18n";
+import { useApp } from "../lib/store";
+import { openHelp } from "../lib/help";
 
 export type Page = "painel" | "raiox" | "otimizacoes" | "cs2" | "pros" | "benchmark" | "ferramentas" | "historico" | "config";
 
@@ -17,6 +19,7 @@ const items = (): { id: Page; label: string; icon: typeof Activity }[] => [
 ];
 
 export function Sidebar({ page, onNavigate, issueCount }: { page: Page; onNavigate: (p: Page) => void; issueCount: number }) {
+  const { report, notify } = useApp();
   const row = (id: Page, label: string, Icon: typeof Activity, badge?: number) => {
     const active = page === id;
     return (
@@ -50,7 +53,17 @@ export function Sidebar({ page, onNavigate, issueCount }: { page: Page; onNaviga
       </nav>
       <div className="mt-auto space-y-2">
         <Donate />
-        <div className="border-t border-line/60 pt-2">{row("config", t("nav.config"), Settings)}</div>
+        <div className="border-t border-line/60 pt-2 space-y-1">
+          <button
+            onClick={() => openHelp(report, notify)}
+            title={t("help.hint")}
+            className="flex items-center gap-3 w-full h-11 px-4 rounded-xl text-left font-cond font-semibold text-[15.5px] text-dim hover:text-fg hover:bg-raised/60 transition-colors cursor-pointer"
+          >
+            <LifeBuoy size={18} />
+            <span className="flex-1">{t("help.nav")}</span>
+          </button>
+          {row("config", t("nav.config"), Settings)}
+        </div>
       </div>
     </aside>
   );
