@@ -10,7 +10,7 @@
       "evidence": "proven",
       "requires_reboot": false,
       "laptop_warning": true,
-      "how_to_check": "Painel de Controle › Hardware e Sons › Opções de Energia — o plano marcado é o ativo.",
+      "how_to_check": "Painel de Controle › Hardware e Sons › Opções de Energia: o plano marcado é o ativo.",
       "presets": [
         "seguro",
         "competitivo",
@@ -27,12 +27,12 @@
         "es": {
           "title": "Plan de energía de alto rendimiento",
           "description": "Cambia el plan Equilibrado/Economizador por Alto rendimiento, que mantiene el procesador a alta frecuencia y evita caídas de FPS por ahorro de energía. En notebook, úsalo solo enchufado.",
-          "how_to_check": "Panel de control › Hardware y sonido › Opciones de energía — el plan marcado es el activo."
+          "how_to_check": "Panel de control › Hardware y sonido › Opciones de energía: el plan marcado es el activo."
         },
         "en": {
           "title": "High performance power plan",
           "description": "Switches the Balanced/Power saver plan to High performance, which keeps the processor at high clocks and avoids FPS drops from power saving. On a laptop, use it only when plugged in.",
-          "how_to_check": "Control Panel › Hardware and Sound › Power Options — the selected plan is the active one."
+          "how_to_check": "Control Panel › Hardware and Sound › Power Options: the selected plan is the active one."
         }
       }
     },
@@ -44,7 +44,7 @@
       "risk": "safe",
       "evidence": "proven",
       "requires_reboot": false,
-      "how_to_check": "Configurações › Sistema › Tela › Elementos gráficos — o cs2.exe aparece com 'Alto desempenho'.",
+      "how_to_check": "Configurações › Sistema › Tela › Elementos gráficos: o cs2.exe aparece com 'Alto desempenho'.",
       "presets": [
         "seguro",
         "competitivo",
@@ -60,12 +60,12 @@
         "es": {
           "title": "CS2 siempre en la placa de video dedicada",
           "description": "Le indica a Windows que ejecute cs2.exe en la GPU de alto rendimiento. Clave en notebooks con video integrado y dedicado, donde el juego a veces abre en la GPU débil.",
-          "how_to_check": "Configuración › Sistema › Pantalla › Gráficos — cs2.exe aparece con 'Alto rendimiento'."
+          "how_to_check": "Configuración › Sistema › Pantalla › Gráficos: cs2.exe aparece con 'Alto rendimiento'."
         },
         "en": {
           "title": "CS2 always on the dedicated graphics card",
           "description": "Tells Windows to run cs2.exe on the high-performance GPU. Essential on laptops with integrated and dedicated graphics, where the game sometimes opens on the weaker GPU.",
-          "how_to_check": "Settings › System › Display › Graphics — cs2.exe shows 'High performance'."
+          "how_to_check": "Settings › System › Display › Graphics: cs2.exe shows 'High performance'."
         }
       }
     },
@@ -77,7 +77,7 @@
       "risk": "safe",
       "evidence": "proven",
       "requires_reboot": false,
-      "how_to_check": "Configurações › Jogos › Capturas — 'Gravar o que aconteceu' fica desligado.",
+      "how_to_check": "Configurações › Jogos › Capturas: 'Gravar o que aconteceu' fica desligado.",
       "presets": [
         "seguro",
         "competitivo",
@@ -104,12 +104,12 @@
         "es": {
           "title": "Desactivar la grabación en segundo plano",
           "description": "La Xbox Game Bar puede quedarse grabando los últimos minutos de juego todo el tiempo, gastando GPU y disco. Apaga la captura automática (igual puedes grabar a mano).",
-          "how_to_check": "Configuración › Juegos › Capturas — 'Grabar lo que sucedió' queda desactivado."
+          "how_to_check": "Configuración › Juegos › Capturas: 'Grabar lo que sucedió' queda desactivado."
         },
         "en": {
           "title": "Turn off background recording",
           "description": "Xbox Game Bar can keep recording the last minutes of gameplay all the time, using GPU and disk. This turns off automatic capture (you can still record manually).",
-          "how_to_check": "Settings › Gaming › Captures — 'Record what happened' is off."
+          "how_to_check": "Settings › Gaming › Captures: 'Record what happened' is off."
         }
       }
     },
@@ -121,7 +121,7 @@
       "risk": "safe",
       "evidence": "situational",
       "requires_reboot": false,
-      "how_to_check": "Configurações › Jogos › Modo de Jogo — fica ligado.",
+      "how_to_check": "Configurações › Jogos › Modo de Jogo: fica ligado.",
       "presets": [
         "seguro",
         "competitivo",
@@ -150,12 +150,12 @@
         "es": {
           "title": "Activar el Modo de juego de Windows",
           "description": "Hace que Windows priorice el juego abierto y frene actualizaciones y tareas de mantenimiento durante la partida.",
-          "how_to_check": "Configuración › Juegos › Modo de juego — queda activado."
+          "how_to_check": "Configuración › Juegos › Modo de juego: queda activado."
         },
         "en": {
           "title": "Turn on Windows Game Mode",
           "description": "Makes Windows prioritize the game you are playing and hold back updates and maintenance tasks during the match.",
-          "how_to_check": "Settings › Gaming › Game Mode — stays on."
+          "how_to_check": "Settings › Gaming › Game Mode: stays on."
         }
       }
     },
@@ -167,7 +167,7 @@
       "risk": "safe",
       "evidence": "proven",
       "requires_reboot": true,
-      "how_to_check": "Painel de Controle › Mouse › Opções do ponteiro — 'Aumentar precisão do ponteiro' fica desmarcado (depois de sair e entrar na conta).",
+      "how_to_check": "Painel de Controle › Mouse › Opções do ponteiro: 'Aumentar precisão do ponteiro' fica desmarcado (depois de sair e entrar na conta).",
       "presets": [
         "seguro",
         "competitivo",
@@ -201,12 +201,12 @@
         "es": {
           "title": "Desactivar la aceleración del mouse",
           "description": "Desactiva 'Mejorar la precisión del puntero'. CS2 usa entrada directa, pero la aceleración confunde la memoria muscular en el escritorio y en los menús. Se aplica al cerrar sesión y volver a entrar.",
-          "how_to_check": "Panel de control › Mouse › Opciones de puntero — 'Mejorar la precisión del puntero' queda desmarcado (después de cerrar sesión y volver a entrar)."
+          "how_to_check": "Panel de control › Mouse › Opciones de puntero: 'Mejorar la precisión del puntero' queda desmarcado (después de cerrar sesión y volver a entrar)."
         },
         "en": {
           "title": "Turn off mouse acceleration",
           "description": "Disables 'Enhance pointer precision'. CS2 uses raw input, but acceleration throws off muscle memory on the desktop and in menus. Takes effect after you sign out and back in.",
-          "how_to_check": "Control Panel › Mouse › Pointer Options — 'Enhance pointer precision' is unchecked (after signing out and back in)."
+          "how_to_check": "Control Panel › Mouse › Pointer Options: 'Enhance pointer precision' is unchecked (after signing out and back in)."
         }
       }
     },
@@ -218,7 +218,7 @@
       "risk": "safe",
       "evidence": "situational",
       "requires_reboot": false,
-      "how_to_check": "Configurações › Windows Update › Opções avançadas › Otimização de Entrega — aparece como gerenciado pela organização.",
+      "how_to_check": "Configurações › Windows Update › Opções avançadas › Otimização de Entrega: aparece como gerenciado pela organização.",
       "presets": [
         "seguro",
         "competitivo",
@@ -238,12 +238,12 @@
         "es": {
           "title": "Dejar de enviar actualizaciones a otras PC",
           "description": "Por defecto, Windows puede usar tu internet para enviar partes de actualizaciones a otras computadoras. Apaga ese envío P2P (las actualizaciones siguen llegando normalmente).",
-          "how_to_check": "Configuración › Windows Update › Opciones avanzadas › Optimización de distribución — aparece como administrado por la organización."
+          "how_to_check": "Configuración › Windows Update › Opciones avanzadas › Optimización de distribución: aparece como administrado por la organización."
         },
         "en": {
           "title": "Stop sending updates to other PCs",
           "description": "By default, Windows can use your internet connection to send pieces of updates to other computers. This turns off that P2P upload (updates still arrive normally).",
-          "how_to_check": "Settings › Windows Update › Advanced options › Delivery Optimization — shows as managed by your organization."
+          "how_to_check": "Settings › Windows Update › Advanced options › Delivery Optimization: shows as managed by your organization."
         }
       }
     },
@@ -313,7 +313,7 @@
       "risk": "safe",
       "evidence": "weak",
       "requires_reboot": false,
-      "how_to_check": "Configurações › Privacidade › Diagnóstico e comentários — aparece como gerenciado pela organização.",
+      "how_to_check": "Configurações › Privacidade › Diagnóstico e comentários: aparece como gerenciado pela organização.",
       "presets": [
         "competitivo",
         "pc_fraco",
@@ -332,12 +332,12 @@
         "es": {
           "title": "Telemetría al mínimo",
           "description": "Reduce el envío de datos de diagnóstico a Microsoft al nivel mínimo que permite tu edición de Windows.",
-          "how_to_check": "Configuración › Privacidad y seguridad › Diagnóstico y comentarios — aparece como administrado por la organización."
+          "how_to_check": "Configuración › Privacidad y seguridad › Diagnóstico y comentarios: aparece como administrado por la organización."
         },
         "en": {
           "title": "Minimum telemetry",
           "description": "Reduces the diagnostic data sent to Microsoft to the lowest level your Windows edition allows.",
-          "how_to_check": "Settings › Privacy & security › Diagnostics & feedback — shows as managed by your organization."
+          "how_to_check": "Settings › Privacy & security › Diagnostics & feedback: shows as managed by your organization."
         }
       }
     },
@@ -385,7 +385,7 @@
       "risk": "safe",
       "evidence": "weak",
       "requires_reboot": false,
-      "how_to_check": "Configurações › Personalização › Cores — 'Efeitos de transparência' desligado.",
+      "how_to_check": "Configurações › Personalização › Cores: 'Efeitos de transparência' desligado.",
       "presets": [
         "pc_fraco",
         "avancado"
@@ -403,12 +403,12 @@
         "es": {
           "title": "Desactivar la transparencia de Windows",
           "description": "Quita el efecto de vidrio de la barra de tareas y del menú Inicio. La mejora es pequeña, pero ayuda en PC más modestas.",
-          "how_to_check": "Configuración › Personalización › Colores — 'Efectos de transparencia' desactivado."
+          "how_to_check": "Configuración › Personalización › Colores: 'Efectos de transparencia' desactivado."
         },
         "en": {
           "title": "Turn off Windows transparency",
           "description": "Removes the glass effect from the taskbar and Start menu. A small gain, but it helps on weaker PCs.",
-          "how_to_check": "Settings › Personalization › Colors — 'Transparency effects' off."
+          "how_to_check": "Settings › Personalization › Colors: 'Transparency effects' off."
         }
       }
     },
@@ -451,11 +451,11 @@
       "id": "hags.enable",
       "category": "graficos",
       "title": "Agendamento de GPU acelerado por hardware",
-      "description": "Deixa a placa de vídeo gerenciar a própria memória. Em algumas máquinas melhora o 1% low, em outras piora — teste com o benchmark antes e depois. Requer reiniciar.",
+      "description": "Deixa a placa de vídeo gerenciar a própria memória. Em algumas máquinas melhora o 1% low, em outras piora. Teste com o benchmark antes e depois. Requer reiniciar.",
       "risk": "moderate",
       "evidence": "situational",
       "requires_reboot": true,
-      "how_to_check": "Configurações › Sistema › Tela › Elementos gráficos › Configurações padrão — 'Agendamento de GPU acelerado por hardware' ligado (após reiniciar).",
+      "how_to_check": "Configurações › Sistema › Tela › Elementos gráficos › Configurações padrão: 'Agendamento de GPU acelerado por hardware' ligado (após reiniciar).",
       "presets": [
         "avancado"
       ],
@@ -472,12 +472,12 @@
         "es": {
           "title": "Programación de GPU acelerada por hardware",
           "description": "Deja que la placa de video administre su propia memoria. En algunas PC mejora el 1% low y en otras lo empeora: prueba con el benchmark antes y después. Requiere reiniciar.",
-          "how_to_check": "Configuración › Sistema › Pantalla › Gráficos › Cambiar la configuración de gráficos predeterminada — 'Programación de GPU acelerada por hardware' activada (después de reiniciar)."
+          "how_to_check": "Configuración › Sistema › Pantalla › Gráficos › Cambiar la configuración de gráficos predeterminada: 'Programación de GPU acelerada por hardware' activada (después de reiniciar)."
         },
         "en": {
           "title": "Hardware-accelerated GPU scheduling",
-          "description": "Lets the graphics card manage its own memory. On some PCs it improves 1% lows, on others it makes them worse — test with the benchmark before and after. Requires a restart.",
-          "how_to_check": "Settings › System › Display › Graphics › Change default graphics settings — 'Hardware-accelerated GPU scheduling' on (after restarting)."
+          "description": "Lets the graphics card manage its own memory. On some PCs it improves 1% lows, on others it makes them worse. Test with the benchmark before and after. Requires a restart.",
+          "how_to_check": "Settings › System › Display › Graphics › Change default graphics settings: 'Hardware-accelerated GPU scheduling' on (after restarting)."
         }
       }
     },
@@ -521,7 +521,7 @@
       "id": "mmcss.responsiveness",
       "category": "latencia",
       "title": "Menos CPU reservada para multimídia",
-      "description": "O Windows reserva 20% da CPU para tarefas de áudio/vídeo em segundo plano. Reduz para 10%. Efeito debatido — só para quem quer testar tudo.",
+      "description": "O Windows reserva 20% da CPU para tarefas de áudio/vídeo em segundo plano. Reduz para 10%. Efeito debatido, só para quem quer testar tudo.",
       "risk": "moderate",
       "evidence": "weak",
       "requires_reboot": true,
@@ -546,7 +546,7 @@
         },
         "en": {
           "title": "Less CPU reserved for multimedia",
-          "description": "Windows reserves 20% of the CPU for background audio/video tasks. This lowers it to 10%. The effect is debated — only for those who want to try everything.",
+          "description": "Windows reserves 20% of the CPU for background audio/video tasks. This lowers it to 10%. The effect is debated, only for those who want to try everything.",
           "how_to_check": "Internal Windows setting; only takes effect after restarting the PC."
         }
       }

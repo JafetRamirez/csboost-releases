@@ -102,7 +102,7 @@ pub fn run() -> Report {
             issues.push(Issue {
                 id: format!("display.{}", d.device),
                 severity: Severity::Critical,
-                title: tr!("Monitor em {} Hz — ele aguenta {} Hz", "Monitor a {} Hz — soporta {} Hz", "Monitor at {} Hz — it supports {} Hz", d.current_hz, d.max_hz),
+                title: tr!("Monitor em {} Hz, mas ele aguenta {} Hz", "Monitor a {} Hz, pero soporta {} Hz", "Monitor at {} Hz, but it supports {} Hz", d.current_hz, d.max_hz),
                 detail: {
                     let name = if d.name.is_empty() { tr!("Seu monitor", "Tu monitor", "Your monitor") } else { d.name.clone() };
                     tr!(
@@ -154,7 +154,7 @@ pub fn run() -> Report {
             severity: Severity::Critical,
             title: tr!("Plano de energia em Economia", "Plan de energía en Ahorro", "Power plan set to Power saver"),
             detail: tr!(
-                "O processador está limitado para gastar menos energia — isso derruba o FPS no CS2, que depende muito da CPU.",
+                "O processador está limitado para gastar menos energia, e isso derruba o FPS no CS2, que depende muito da CPU.",
                 "El procesador está limitado para gastar menos energía, y eso baja los FPS en CS2, que depende mucho de la CPU.",
                 "The processor is limited to use less power, which drops FPS in CS2, a game that leans heavily on the CPU."
             ),
@@ -197,7 +197,7 @@ pub fn run() -> Report {
             issues.push(Issue {
                 id: "ram.xmp".into(),
                 severity: Severity::Warning,
-                title: tr!("Memória {label} a {cfg} MT/s — pode estar sem XMP/EXPO", "Memoria {label} a {cfg} MT/s — puede estar sin XMP/EXPO", "{label} memory at {cfg} MT/s — XMP/EXPO may be off"),
+                title: tr!("Memória {label} a {cfg} MT/s: pode estar sem XMP/EXPO", "Memoria {label} a {cfg} MT/s: puede estar sin XMP/EXPO", "{label} memory at {cfg} MT/s: XMP/EXPO may be off"),
                 detail: tr!(
                     "Pentes de memória gamer vêm de fábrica numa velocidade básica. Ativar o perfil XMP (Intel) ou EXPO (AMD) na BIOS costuma dar ganho real no CS2.",
                     "Las memorias gamer vienen de fábrica a una velocidad básica. Activar el perfil XMP (Intel) o EXPO (AMD) en la BIOS suele dar una mejora real en CS2.",

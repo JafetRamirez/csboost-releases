@@ -90,7 +90,7 @@ export function report(): Report {
     issues.push({
       id: "display.\\\\.\\DISPLAY1",
       severity: "critical",
-      title: m(`Monitor em ${displayHz} Hz — ele aguenta 165 Hz`, `Monitor a ${displayHz} Hz — soporta 165 Hz`, `Monitor at ${displayHz} Hz — it supports 165 Hz`),
+      title: m(`Monitor em ${displayHz} Hz, mas ele aguenta 165 Hz`, `Monitor a ${displayHz} Hz, pero soporta 165 Hz`, `Monitor at ${displayHz} Hz, but it supports 165 Hz`),
       detail: m(
         "AOC 24G2 está rodando abaixo do que suporta. Você está vendo menos quadros do que o PC gera. É a correção com maior efeito na fluidez.",
         "AOC 24G2 está funcionando por debajo de lo que soporta. Estás viendo menos cuadros de los que genera la PC. Es la corrección con más efecto en la fluidez.",
@@ -113,7 +113,7 @@ export function report(): Report {
   issues.push({
     id: "ram.xmp",
     severity: "warning",
-    title: m("Memória DDR4 a 2666 MT/s — pode estar sem XMP/EXPO", "Memoria DDR4 a 2666 MT/s — puede estar sin XMP/EXPO", "DDR4 memory at 2666 MT/s — XMP/EXPO may be off"),
+    title: m("Memória DDR4 a 2666 MT/s: pode estar sem XMP/EXPO", "Memoria DDR4 a 2666 MT/s: puede estar sin XMP/EXPO", "DDR4 memory at 2666 MT/s: XMP/EXPO may be off"),
     detail: m(
       "Pentes de memória gamer vêm de fábrica numa velocidade básica. Ativar o perfil XMP (Intel) ou EXPO (AMD) na BIOS costuma dar ganho real no CS2.",
       "Las memorias gamer vienen de fábrica a una velocidad básica. Activar el perfil XMP (Intel) o EXPO (AMD) en la BIOS suele dar una mejora real en CS2.",
