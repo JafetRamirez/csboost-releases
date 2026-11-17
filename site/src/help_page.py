@@ -161,7 +161,7 @@ def render(lang, C, all_langs, simbolo, analytics, site):
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">{simbolo}</svg>
 <header><div class="wrap hd">
-  <a class="logo" href="{home}" aria-label="CSBoost — {u['home']}"><svg viewBox="0 0 3631 513" width="160" height="23" role="img" aria-label="CSBoost"><use href="#csb-logo-simbolo"/></svg></a>
+  <a class="logo" href="{home}" aria-label="CSBoost - {u['home']}"><svg viewBox="0 0 3631 513" width="160" height="23" role="img" aria-label="CSBoost"><use href="#csb-logo-simbolo"/></svg></a>
   <nav class="idi" aria-label="Idioma">{idi}</nav>
   <a class="bt" href="https://github.com/JafetRamirez/csboost-releases/releases/latest">{u['download']}</a>
 </div></header>

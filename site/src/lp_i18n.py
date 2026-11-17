@@ -32,15 +32,15 @@ T = {
         "Comentarios reales en la publicación de lanzamiento, en un grupo de CS2 de Facebook (traducidos del portugués). La nota es la del panel de CSBoost, de 0 a 100.",
         "Real comments on the launch post in a Brazilian CS2 Facebook group (translated from Portuguese). The score is CSBoost's dashboard score, from 0 to 100."),
     # cabeçalho e meta
-    "CSBoost — otimizador grátis para mais FPS no CS2 (Windows)": (
-        "CSBoost — optimizador gratis para más FPS en CS2 (Windows)",
-        "CSBoost — free optimizer for more FPS in CS2 (Windows)"),
+    "CSBoost | otimizador grátis para mais FPS no CS2 (Windows)": (
+        "CSBoost | optimizador gratis para más FPS en CS2 (Windows)",
+        "CSBoost | free optimizer for more FPS in CS2 (Windows)"),
     "O CSBoost faz um Raio-X do Windows, corrige o que segura seu FPS no CS2 e deixa desfazer tudo. Grátis, sem anúncio, código aberto e sem tocar no jogo.": (
         "CSBoost le hace unos Rayos X a Windows, corrige lo que frena tus FPS en CS2 y te deja deshacer todo. Gratis, sin anuncios, de código abierto y sin tocar el juego.",
         "CSBoost scans Windows, fixes what holds back your FPS in CS2 and lets you undo everything. Free, ad-free, open source and it never touches the game."),
-    "CSBoost — FPS mais estável no CS2, sem tocar no jogo": (
-        "CSBoost — FPS más estables en CS2, sin tocar el juego",
-        "CSBoost — steadier FPS in CS2, without touching the game"),
+    "CSBoost | FPS mais estável no CS2, sem tocar no jogo": (
+        "CSBoost | FPS más estables en CS2, sin tocar el juego",
+        "CSBoost | steadier FPS in CS2, without touching the game"),
     "Raio-X do PC, ajustes do Windows reversíveis, benchmark com 1% low e configs de 30 pros. Grátis e de código aberto.": (
         "Rayos X de la PC, ajustes de Windows reversibles, benchmark con 1% low y configs de 30 pros. Gratis y de código abierto.",
         "PC scan, reversible Windows tweaks, a benchmark with 1% lows and configs from 30 pros. Free and open source."),

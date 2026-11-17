@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://csboost.com.br/sitemap.xml
+Sitemap: https://www.csboost.com.br/sitemap.xml

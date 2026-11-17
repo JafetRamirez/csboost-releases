@@ -9,7 +9,7 @@ HELP = {
 "pt": {
   "html_lang": "pt-BR",
   "path": "ajuda/",
-  "title": "Central de ajuda do CSBoost — dúvidas, erros e chamado",
+  "title": "Central de ajuda do CSBoost | dúvidas, erros e chamado",
   "desc": "Como usar cada tela do CSBoost, como resolver erro 5, aviso do Windows e do antivírus, CS2 na placa integrada, XMP e mais. Abra um chamado se precisar.",
   "ui": {
     "home": "Voltar ao site", "download": "Baixar grátis", "kicker": "Central de ajuda",
@@ -86,7 +86,7 @@ HELP = {
 "es": {
   "html_lang": "es",
   "path": "es/ayuda/",
-  "title": "Centro de ayuda de CSBoost — dudas, errores y tickets",
+  "title": "Centro de ayuda de CSBoost | dudas, errores y tickets",
   "desc": "Cómo usar cada pantalla de CSBoost y cómo resolver el error 5, el aviso de Windows y del antivirus, CS2 en la gráfica integrada, XMP y más. Abre un ticket si lo necesitas.",
   "ui": {
     "home": "Volver al sitio", "download": "Descargar gratis", "kicker": "Centro de ayuda",
@@ -163,7 +163,7 @@ HELP = {
 "en": {
   "html_lang": "en",
   "path": "en/help/",
-  "title": "CSBoost help center — questions, errors and support tickets",
+  "title": "CSBoost help center | questions, errors and support tickets",
   "desc": "How to use every CSBoost screen and how to fix error 5, Windows and antivirus warnings, CS2 on the integrated GPU, XMP and more. Open a ticket if you need to.",
   "ui": {
     "home": "Back to site", "download": "Free download", "kicker": "Help center",

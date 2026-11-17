@@ -25,7 +25,7 @@ I18N = runpy.run_path(str(AQUI / "lp_i18n.py"))
 HELP = runpy.run_path(str(AQUI / "help_content.py"))["HELP"]
 HELP_PAGE = runpy.run_path(str(AQUI / "help_page.py"))
 
-SITE = "https://csboost.com.br"
+SITE = "https://www.csboost.com.br"
 LANGS = ["pt", "es", "en"]
 PATH = {"pt": "", "es": "es/", "en": "en/"}
 HREFLANG = {"pt": "pt-BR", "es": "es", "en": "en"}
