@@ -39,6 +39,7 @@ export const en: Dict = {
   "help.ask": "Get help",
   "help.hint": "Opens the CSBoost help center in your browser and copies the diagnostics so you can paste them into a ticket if needed.",
   "help.copied": "Diagnostics copied. If you open a ticket, paste them into the Diagnostics field with Ctrl+V.",
+  "issue.guide": "Read the full guide",
   "issue.dismiss": "Already checked, ignore",
   "issue.restore": "Show again",
   "issue.dismissed": "Warning ignored. It no longer counts toward the score.",

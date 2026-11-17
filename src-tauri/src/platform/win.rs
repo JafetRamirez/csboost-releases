@@ -412,6 +412,8 @@ pub fn hardware_info() -> Result<HardwareInfo> {
             }
         }
         if let Ok(v) = wmi.query::<WmiGpu>() {
+            // "Microsoft Basic Display Adapter": placa sem driver do fabricante.
+            info.no_driver = v.iter().any(|g| g.name.as_deref().is_some_and(|n| n.to_lowercase().contains("basic display")));
             info.gpus = v
                 .into_iter()
                 .filter_map(|g| {

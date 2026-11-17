@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { ChevronDown, Wrench } from "lucide-react";
+import { BookOpen, ChevronDown, Wrench } from "lucide-react";
 import type { Issue } from "../lib/types";
-import { api, errorText } from "../lib/api";
+import { api, errorText, openUrl } from "../lib/api";
+import { guideUrl } from "../lib/help";
 import { useApp } from "../lib/store";
 import { Button } from "./ui";
 import { t } from "../i18n";
@@ -17,6 +18,7 @@ export function IssueCard({ issue, compact = false, dismissed = false }: { issue
   const [busy, setBusy] = useState(false);
   const [open, setOpen] = useState(false);
   const sev = tone()[issue.severity];
+  const guide = guideUrl(issue.id);
 
   async function fix() {
     if (!issue.fix) return;
@@ -68,9 +70,20 @@ export function IssueCard({ issue, compact = false, dismissed = false }: { issue
         <h3 className="font-cond font-bold text-[17.5px] leading-snug mt-0.5">{issue.title}</h3>
         {!compact && <p className="text-dim text-[14.5px] mt-1 max-w-[68ch]">{issue.detail}</p>}
         {!compact && (
-          <button onClick={toggleDismiss} className="mt-2 text-[13px] text-faint hover:text-fg underline-offset-2 hover:underline cursor-pointer">
-            {dismissed ? t("issue.restore") : t("issue.dismiss")}
-          </button>
+          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
+            <button onClick={toggleDismiss} className="text-[13px] text-faint hover:text-fg underline-offset-2 hover:underline cursor-pointer">
+              {dismissed ? t("issue.restore") : t("issue.dismiss")}
+            </button>
+            {guide && (
+              <button
+                onClick={() => openUrl(guide)}
+                className="inline-flex items-center gap-1.5 text-[13px] text-amber hover:text-fg underline-offset-2 hover:underline cursor-pointer"
+              >
+                <BookOpen size={14} />
+                {t("issue.guide")}
+              </button>
+            )}
+          </div>
         )}
         {open && issue.fix?.kind === "guide" && (
           <ol className="mt-3 space-y-1.5 text-[14.5px] list-decimal pl-5 marker:text-amber">

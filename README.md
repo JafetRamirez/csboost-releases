@@ -100,6 +100,12 @@ Quem estiver com o app aberto vê o aviso "Versão X disponível — Atualizar a
 
 ## O que já funciona (v0.6)
 
+**Novo na 0.8:**
+- **Guias no site, um por assunto** (pt, es, en): como aumentar o FPS no CS2, XMP/EXPO na BIOS por fabricante, Resizable BAR, autoexec, opções de inicialização, CS2 na placa integrada, driver de vídeo e AMD Adrenalin (só orientação, nada gravado no driver). Ficam em `site/src/guides_content.py`.
+- Raio-X: **Ver guia completo** nos avisos de memória, placa de vídeo, driver e plano de energia, abrindo o guia no idioma do app.
+- Raio-X: aviso de **placa de vídeo sem driver** ("Adaptador de Vídeo Básico da Microsoft") e aviso de driver antigo a partir de 6 meses (informativo até 11 meses, atenção a partir de 12).
+- Site: endereço oficial com www e títulos sem travessão longo.
+
 **Novo na 0.7:**
 - **Central de ajuda** em [csboost.com.br/ajuda](https://csboost.com.br/ajuda/) (também em `/es/ayuda` e `/en/help`): primeiros passos, solução dos problemas mais comuns e o que faz cada tela.
 - **Abrir chamado** pelo formulário da central: chega por e-mail para o Jafet (função `site/api/chamado.mjs` na Vercel, com Resend). Nada fica guardado em banco.

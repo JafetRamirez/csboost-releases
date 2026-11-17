@@ -84,6 +84,7 @@ export interface HardwareInfo {
   ram_modules: RamModule[];
   disk_free_gb: number | null;
   disk_total_gb: number | null;
+  no_driver: boolean;
 }
 
 export interface Report {

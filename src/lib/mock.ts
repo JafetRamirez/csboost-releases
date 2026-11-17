@@ -158,6 +158,7 @@ export function report(): Report {
       ],
       disk_free_gb: 182,
       disk_total_gb: 476,
+      no_driver: false,
     },
     displays: [{ device: "\\\\.\\DISPLAY1", name: "AOC 24G2", primary: true, width: 1920, height: 1080, current_hz: displayHz, max_hz: 165 }],
     power: { has_battery: false, on_ac: true },

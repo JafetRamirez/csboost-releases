@@ -316,10 +316,28 @@ pub fn run() -> Report {
         }
     }
 
-    // 6. Driver de vídeo antigo
+    // 6. Placa sem driver e driver de vídeo antigo (só lê nome e data do driver pelo WMI)
+    if hardware.no_driver {
+        issues.push(Issue {
+            id: "gpu.no_driver".into(),
+            severity: Severity::Critical,
+            title: tr!("Placa de vídeo sem driver", "Tarjeta gráfica sin driver", "Graphics card without a driver"),
+            detail: tr!(
+                "O Windows está usando o \"Adaptador de Vídeo Básico da Microsoft\". Sem o driver do fabricante, o CS2 roda muito mal ou nem abre.",
+                "Windows está usando el \"Adaptador de pantalla básico de Microsoft\". Sin el driver del fabricante, CS2 funciona muy mal o ni siquiera abre.",
+                "Windows is using the \"Microsoft Basic Display Adapter\". Without the maker's driver, CS2 runs very badly or won't even open."
+            ),
+            fix: Some(Fix::Guide {
+                steps: vec![
+                    tr!("Baixe o driver no site oficial: nvidia.com/drivers, amd.com/support ou intel.com/support.", "Descarga el driver del sitio oficial: nvidia.com/drivers, amd.com/support o intel.com/support.", "Download the driver from the official site: nvidia.com/drivers, amd.com/support or intel.com/support."),
+                    tr!("Instale e reinicie o PC.", "Instálalo y reinicia la PC.", "Install it and restart the PC."),
+                ],
+            }),
+        });
+    }
     for g in hardware.gpus.iter().filter(|g| !is_integrated(&g.name)) {
         if let Some(age) = g.driver_date.as_deref().and_then(months_since) {
-            if age >= 12 {
+            if age >= 6 {
                 let n = g.name.to_lowercase();
                 let site = if n.contains("nvidia") || n.contains("geforce") {
                     tr!("nvidia.com/drivers ou pelo app NVIDIA", "nvidia.com/drivers o desde la app de NVIDIA", "nvidia.com/drivers or the NVIDIA app")
@@ -330,7 +348,8 @@ pub fn run() -> Report {
                 };
                 issues.push(Issue {
                     id: format!("gpu.driver.{}", g.name),
-                    severity: Severity::Warning,
+                    // 6 a 11 meses: só informa; 12 ou mais: atenção.
+                    severity: if age >= 12 { Severity::Warning } else { Severity::Info },
                     title: tr!("Driver de vídeo com {age} meses", "Driver de video de hace {age} meses", "Graphics driver is {age} months old"),
                     detail: {
                         let (name, date) = (g.name.clone(), g.driver_date.clone().unwrap_or_default());

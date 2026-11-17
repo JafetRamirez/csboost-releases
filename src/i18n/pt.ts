@@ -37,6 +37,7 @@ export const pt = {
   "help.ask": "Pedir ajuda",
   "help.hint": "Abre a central de ajuda do CSBoost no navegador e copia o diagnóstico para você colar no chamado, se precisar.",
   "help.copied": "Diagnóstico copiado. Se for abrir um chamado, cole no campo Diagnóstico com Ctrl+V.",
+  "issue.guide": "Ver guia completo",
   "issue.dismiss": "Já conferi, ignorar",
   "issue.restore": "Mostrar de novo",
   "issue.dismissed": "Aviso ignorado. Ele não conta mais na nota.",

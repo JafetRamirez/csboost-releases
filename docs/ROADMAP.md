@@ -1,6 +1,6 @@
 # CSBoost — Roadmap de melhorias
 
-## Status (atualizado na v0.7.0)
+## Status (atualizado na v0.8.0)
 - ✅ #1 Benchmark integrado (PresentMon) com comparação e imagem para compartilhar
 - ✅ #3 Desinstalador oferece "Reverter tudo" (não dispara em atualização)
 - ✅ #4 Código-fonte público no GitHub + SHA256 de cada instalador nas notas da versão
@@ -20,7 +20,8 @@
 - ✅ #13 Teste de rede mede o uso da internet durante o teste e avisa download em segundo plano (v0.6). Ajustes da placa de rede (EEE, interrupt moderation) ficam fora: pedem reiniciar o adaptador e não têm ganho comprovado no CS2 (UDP)
 - ✅ v0.6 inteira validada em PC real em 28/10/2026 (presets de vídeo com desfazer e bloqueio com o jogo aberto, Modo Sessão trocando e devolvendo o plano, perfil NVIDIA)
 - ✅ #21 Central de ajuda em csboost.com.br/ajuda (pt, es, en) e #22 formulário de chamado por e-mail (Resend, sem banco) + botão Ajuda no app que copia o diagnóstico (v0.7)
-- Próximos: v0.8 = #17 guias de BIOS + guia do Adrenalin para placas AMD (só orientação, nada gravado no driver)
+- ✅ #17 Guias de BIOS (XMP/EXPO por fabricante, Resizable BAR) e mais 6 guias como páginas próprias no site (pt, es, en), incluindo AMD Adrenalin só como orientação; Raio-X com "Ver guia completo", aviso de placa sem driver e driver antigo a partir de 6 meses (v0.8)
+- Próximos: v0.9 = #19 Discord, contador de downloads no site, pedido de estrela depois de uma otimização que deu certo e novo pedido na SignPath com links externos
 
 ### Correções para o próximo update
 - ✅ **Configs de pros → conversor de sensibilidade** (corrigido na v0.4) (`src/pages/Pros.tsx`, card "Mesma sensibilidade do … no seu mouse"): em janela estreita o card quebra. "Seu DPI" vira duas linhas, o resultado `sensitivity 1` quebra e o botão "Copiar" vaza para fora do card. Corrigir a responsividade: empilhar input e resultado quando faltar espaço, `whitespace-nowrap` no comando e botão dentro do card. (Visto em 08/10/2026, janela de ~1270 px.)

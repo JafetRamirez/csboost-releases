@@ -104,6 +104,8 @@ pub struct HardwareInfo {
     pub ram_modules: Vec<RamModule>,
     pub disk_free_gb: Option<f64>,
     pub disk_total_gb: Option<f64>,
+    /// Alguma placa aparece como "Adaptador de Vídeo Básico da Microsoft" (sem driver).
+    pub no_driver: bool,
 }
 
 pub(crate) fn guid_to_string(d1: u32, d2: u16, d3: u16, d4: [u8; 8]) -> String {
