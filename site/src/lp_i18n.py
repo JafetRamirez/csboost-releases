@@ -54,6 +54,8 @@ T = {
     "Ajuda": ("Ayuda", "Help"),
     "Central de ajuda": ("Centro de ayuda", "Help center"),
     "/ajuda/": ("/es/ayuda/", "/en/help/"),
+    "/ajuda/aumentar-fps-cs2/": ("/es/ayuda/aumentar-fps-cs2/", "/en/help/increase-fps-cs2/"),
+    "Como aumentar o FPS no CS2": ("Cómo aumentar los FPS en CS2", "How to increase FPS in CS2"),
     "Baixar grátis": ("Descargar gratis", "Download free"),
     # hero
     "Otimizador gratuito para CS2": ("Optimizador gratuito para CS2", "Free optimizer for CS2"),

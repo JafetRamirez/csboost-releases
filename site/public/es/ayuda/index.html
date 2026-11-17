@@ -93,6 +93,25 @@ textarea#diagnostico{min-height:150px;font-family:Consolas,Menlo,monospace;font-
 .msg.bom{background:rgba(58,200,120,.14);color:#9ff0c0}.msg.ruim{background:rgba(240,80,80,.14);color:#ffb3b3}
 footer{border-top:1px solid var(--borda);padding:28px 0 40px;color:var(--suave);font-size:.85rem}
 @media (max-width:640px){.hd .bt{display:none}.hd{gap:12px}}
+
+.crumb{font-size:.9rem;color:var(--suave);margin:0 0 14px}.crumb a{color:var(--suave)}
+article.guia{max-width:760px}
+article.guia h2{font-size:clamp(1.45rem,2.6vw,1.9rem);font-weight:800;margin:38px 0 10px}
+article.guia p,article.guia li{color:var(--suave)}
+article.guia strong{color:var(--txt)}
+article.guia ul,article.guia ol{padding-left:1.25em}article.guia li{margin:6px 0}
+article.guia pre{background:var(--painel);border:1px solid var(--borda);border-radius:12px;padding:16px;overflow-x:auto}
+article.guia pre code{background:none;padding:0;font-size:.9rem;color:var(--txt)}
+article.guia code{word-break:break-word}
+.cta{margin:44px 0 0;padding:24px;border-radius:var(--raio);background:linear-gradient(135deg,rgba(40,57,127,.55),rgba(249,171,25,.12));border:1px solid var(--borda2)}
+.cta h2{margin:0 0 8px!important;font-size:1.5rem!important}
+.cta p{margin:0 0 16px}
+.rel{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));margin-top:14px}
+.gcard{display:block;background:var(--painel);border:1px solid var(--borda);border-radius:var(--raio);padding:18px 20px;text-decoration:none;color:var(--txt)}
+.gcard:hover{border-color:var(--a);color:var(--txt)}
+.gcard strong{display:block;font-family:var(--ft);font-size:1.15rem;line-height:1.2}
+.gcard span{display:block;margin-top:6px;color:var(--suave);font-size:.92rem}
+.guias{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
 </style>
 <!-- analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WYPCC7WB42"></script>
@@ -115,12 +134,18 @@ footer{border-top:1px solid var(--borda);padding:28px 0 40px;color:var(--suave);
   <h1>¿Cómo podemos <em>ayudarte?</em></h1>
   <p class="lead">Todo sobre cada pantalla de CSBoost y la solución de los problemas más comunes. Si no encuentras la respuesta, abre un ticket al final de la página.</p>
   <ul class="toc">
+    <li><a href="#guias">Guías</a></li>
     <li><a href="#comecar">Primeros pasos</a></li>
     <li><a href="#resolver">Cómo resolver</a></li>
     <li><a href="#telas">Las pantallas de la app</a></li>
     <li><a href="#chamado">Abrir un ticket</a></li>
   </ul>
 </div>
+<section id="guias"><div class="wrap">
+  <div class="sh"><h2>Guías</h2></div>
+  <p class="lead" style="margin:-8px 0 22px">Paso a paso de los temas que más aparecen en Rayos X y en los tickets.</p>
+  <div class="guias"><a class="gcard" href="/es/ayuda/aumentar-fps-cs2/"><strong>Cómo aumentar los FPS en CS2</strong><span>Checklist por orden de impacto: del monitor a Windows.</span></a><a class="gcard" href="/es/ayuda/xmp-expo/"><strong>Cómo activar XMP/EXPO en la BIOS</strong><span>Paso a paso por fabricante de placa madre.</span></a><a class="gcard" href="/es/ayuda/resizable-bar/"><strong>Resizable BAR: qué es y cómo activarlo</strong><span>Cómo revisarlo, activarlo con seguridad y la mejora real.</span></a><a class="gcard" href="/es/ayuda/autoexec-cs2/"><strong>autoexec.cfg en CS2</strong><span>Dónde está, cómo crearlo y un modelo para empezar.</span></a><a class="gcard" href="/es/ayuda/opciones-de-lanzamiento-cs2/"><strong>Opciones de lanzamiento de CS2</strong><span>Lo que sirve, lo que no hace nada y lo que hay que evitar.</span></a><a class="gcard" href="/es/ayuda/cs2-grafica-integrada/"><strong>CS2 en la gráfica integrada</strong><span>Notebook y PC de escritorio: cómo forzar la tarjeta dedicada.</span></a><a class="gcard" href="/es/ayuda/driver-de-video/"><strong>Cómo actualizar el driver de video</strong><span>Actualizar desde la fuente oficial y qué hacer si falla.</span></a><a class="gcard" href="/es/ayuda/amd-adrenalin-cs2/"><strong>AMD Adrenalin para CS2</strong><span>Ajustes seguros para tarjetas Radeon, sin riesgo de VAC.</span></a></div>
+</div></section>
 <section id="comecar"><div class="wrap">
   <div class="sh"><h2>Primeros pasos</h2></div>
   <ol class="passos"><li><h3>Descarga e instala</h3><p>Descarga el instalador en el <a href="/es/">sitio</a> o en la <a href="https://github.com/JafetRamirez/csboost-releases/releases/latest" target="_blank" rel="noopener">página de versiones de GitHub</a>. Funciona en Windows 10 y 11. Si Windows muestra <em>"Windows protegió tu PC"</em>, mira <a href="#smartscreen">cómo pasar el aviso</a>.</p></li><li><h3>Deja que la app abra como administrador</h3><p>CSBoost pide permiso de administrador al abrir, porque muchos ajustes están en partes de Windows que solo el administrador puede cambiar. Haz clic en <strong>Sí</strong>. Sin eso, parte de los ajustes falla.</p></li><li><h3>Mira la nota de tu PC</h3><p>El <strong>Panel</strong> analiza la PC y da una nota de 0 a 100. <strong>Rayos X de la PC</strong> muestra lo que frena tus FPS, de mayor a menor impacto.</p></li><li><h3>Elige el modo y optimiza</h3><p>En el Panel, elige <strong>Seguro</strong> (recomendado la primera vez), <strong>Competitivo</strong> o <strong>PC modesta</strong> y haz clic en <strong>Optimizar ahora</strong>. Antes de cambiar nada, CSBoost crea un punto de restauración de Windows y guarda el valor anterior de cada ajuste.</p></li><li><h3>Mide el resultado</h3><p>Usa el <strong>Benchmark</strong> en el mismo mapa antes y después. Es la forma honesta de saber la mejora real en tu PC.</p></li></ol>

@@ -111,7 +111,7 @@ def _plain(s):
     return _html.unescape(re.sub(r"<[^>]+>", " ", s)).replace("  ", " ").strip()
 
 
-def render(lang, C, all_langs, simbolo, analytics, site):
+def render(lang, C, all_langs, simbolo, analytics, site, guides_html="", guides_t="", guides_lead="", extra_css=""):
     H = C[lang]
     u = H["ui"]
     fm = H["form"]
@@ -156,7 +156,7 @@ def render(lang, C, all_langs, simbolo, analytics, site):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Barlow+Semi+Condensed:ital,wght@0,700;0,800;1,800&display=swap" rel="stylesheet">
 <script type="application/ld+json">{json.dumps(faq_ld, ensure_ascii=False)}</script>
-<style>{CSS}</style>
+<style>{CSS}{extra_css}</style>
 {analytics}</head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">{simbolo}</svg>
@@ -171,12 +171,18 @@ def render(lang, C, all_langs, simbolo, analytics, site):
   <h1>{u['h1']}</h1>
   <p class="lead">{u['lead']}</p>
   <ul class="toc">
+    <li><a href="#guias">{guides_t}</a></li>
     <li><a href="#comecar">{u['s_start']}</a></li>
     <li><a href="#resolver">{u['s_fix']}</a></li>
     <li><a href="#telas">{u['s_screens']}</a></li>
     <li><a href="#chamado">{u['s_ticket']}</a></li>
   </ul>
 </div>
+<section id="guias"><div class="wrap">
+  <div class="sh"><h2>{guides_t}</h2></div>
+  <p class="lead" style="margin:-8px 0 22px">{guides_lead}</p>
+  <div class="guias">{guides_html}</div>
+</div></section>
 <section id="comecar"><div class="wrap">
   <div class="sh"><h2>{u['s_start']}</h2></div>
   <ol class="passos">{passos}</ol>

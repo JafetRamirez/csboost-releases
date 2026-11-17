@@ -24,6 +24,9 @@ W, P["word"] = _wm["W"], _wm["d"]
 I18N = runpy.run_path(str(AQUI / "lp_i18n.py"))
 HELP = runpy.run_path(str(AQUI / "help_content.py"))["HELP"]
 HELP_PAGE = runpy.run_path(str(AQUI / "help_page.py"))
+_G = runpy.run_path(str(AQUI / "guides_content.py"))
+GUIDES, GUI = _G["GUIDES"], _G["UI"]
+GUIDE_PAGE = runpy.run_path(str(AQUI / "guides_page.py"))
 
 SITE = "https://www.csboost.com.br"
 LANGS = ["pt", "es", "en"]
@@ -160,6 +163,10 @@ def sitemap():
     for l in LANGS:
         alts = "".join(f'\n    <xhtml:link rel="alternate" hreflang="{HREFLANG[o]}" href="{SITE}/{HELP[o]['path']}"/>' for o in LANGS)
         urls.append(f"  <url>\n    <loc>{SITE}/{HELP[l]['path']}</loc>\n    <lastmod>{hoje}</lastmod>{alts}\n  </url>")
+    for g in GUIDES:
+        for l in LANGS:
+            alts = "".join(f'\n    <xhtml:link rel="alternate" hreflang="{HREFLANG[o]}" href="{SITE}{GUIDE_PAGE['guide_path'](g, o, HELP)}"/>' for o in LANGS)
+            urls.append(f"  <url>\n    <loc>{SITE}{GUIDE_PAGE['guide_path'](g, l, HELP)}</loc>\n    <lastmod>{hoje}</lastmod>{alts}\n  </url>")
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
             + "\n".join(urls) + "\n</urlset>\n")
@@ -176,8 +183,16 @@ def main():
     for lang in LANGS:
         d = SAIDA / HELP[lang]["path"]
         d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(HELP_PAGE["render"](lang, HELP, LANGS, simbolo, analytics(lang, "csboost-ajuda"), SITE), encoding="utf-8")
+        gh = GUIDE_PAGE["cards"](lang, GUIDES, HELP)
+        (d / "index.html").write_text(HELP_PAGE["render"](lang, HELP, LANGS, simbolo, analytics(lang, "csboost-ajuda"), SITE,
+                                                          gh, GUI[lang]["guides"], GUI[lang]["guides_lead"], GUIDE_PAGE["ART_CSS"]), encoding="utf-8")
         print("ok ajuda", lang)
+        for g in GUIDES:
+            gd = SAIDA / GUIDE_PAGE["guide_path"](g, lang, HELP).strip("/")
+            gd.mkdir(parents=True, exist_ok=True)
+            (gd / "index.html").write_text(GUIDE_PAGE["render"](g, lang, GUIDES, GUI, HELP, LANGS, simbolo, analytics(lang, "csboost-guia"),
+                                                                SITE, HELP_PAGE["CSS"], datetime.date.today().isoformat(), VERSAO_URL), encoding="utf-8")
+        print("ok guias", lang, len(GUIDES))
     shutil.copytree(AQUI / "img", SAIDA / "img")
     (SAIDA / "sitemap.xml").write_text(sitemap(), encoding="utf-8")
     (SAIDA / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
