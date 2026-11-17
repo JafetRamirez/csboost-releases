@@ -8,9 +8,9 @@ import { diagnosticText } from "./diagnosticText";
 import { getLang, t } from "../i18n";
 
 const HELP: Record<"pt" | "es" | "en", string> = {
-  pt: "https://csboost.com.br/ajuda/",
-  es: "https://csboost.com.br/es/ayuda/",
-  en: "https://csboost.com.br/en/help/",
+  pt: "https://www.csboost.com.br/ajuda/",
+  es: "https://www.csboost.com.br/es/ayuda/",
+  en: "https://www.csboost.com.br/en/help/",
 };
 
 export function helpUrl(): string {
